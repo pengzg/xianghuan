@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 不使用namespace的话sql搜索定位会比较方便 -->
+<mapper namespace="com.xianghuan.auth.system.dao.ISysOrgDao">
+	<sql id="Base_Column_List">
+		so_orgid,so_orgcode,so_orgname,so_contactname,so_contactphone,so_fax,so_orgadds,so_orgparid,so_orgpic,so_status,so_version,so_ts,so_dr,so_bpa_id,so_me_limit,so_per_limit,so_agent_level_limit,so_id_ext,so_code_ext,so_name_ext,so_type,so_brand
+	</sql>
+	<sql id="Base_Column_insert">
+        	#{so_orgid,jdbcType=VARCHAR},
+        	#{so_orgcode,jdbcType=VARCHAR},
+        	#{so_orgname,jdbcType=VARCHAR},
+        	#{so_contactname,jdbcType=VARCHAR},
+        	#{so_contactphone,jdbcType=VARCHAR},
+        	#{so_fax,jdbcType=VARCHAR},
+        	#{so_orgadds,jdbcType=VARCHAR},
+        	#{so_orgparid,jdbcType=VARCHAR},
+        	#{so_orgpic,jdbcType=VARCHAR},
+        	#{so_status,jdbcType=VARCHAR},
+        	#{so_version,jdbcType=DECIMAL},
+        	#{so_ts,jdbcType=VARCHAR},
+        	#{so_dr,jdbcType=CHAR},
+        	#{so_bpa_id,jdbcType=VARCHAR},
+        	#{so_me_limit,jdbcType=DECIMAL},
+        	#{so_per_limit,jdbcType=DECIMAL},
+        	#{so_agent_level_limit,jdbcType=DECIMAL},
+        	#{so_id_ext,jdbcType=VARCHAR},
+        	#{so_code_ext,jdbcType=VARCHAR},
+        	#{so_name_ext,jdbcType=VARCHAR},
+        	#{so_type,jdbcType=VARCHAR},
+        	#{so_brand,jdbcType=VARCHAR}
+	</sql>
+	<sql id="Base_query_column">
+		so_orgid,so_orgcode,so_orgname,so_contactname,so_contactphone,so_fax,so_orgadds,so_orgparid,so_orgpic,so_status,so_version,so_ts,so_dr,so_bpa_id,so_me_limit,so_per_limit,so_agent_level_limit,so_id_ext,so_code_ext,so_name_ext,so_type,so_brand
+	</sql>
+
+	<insert id="insert" parameterType="com.xianghuan.auth.system.model.SysOrg" keyProperty="so_orgid" >
+        INSERT INTO sys_org ( <include refid="Base_Column_List" /> )  VALUES (
+            <include refid="Base_Column_insert" /> 
+        )
+	</insert>
+	
+	<insert id="insertBatch" keyProperty="so_orgid">
+		insert into sys_org  ( <include refid="Base_Column_List" /> )   values
+		<foreach collection="array" item="item" index="index" separator=",">
+		   <include refid="Base_Column_insert" /> 
+        </foreach>
+	</insert>
+
+   <update id="update" parameterType="com.xianghuan.auth.system.model.SysOrg" flushCache="true">
+        UPDATE sys_org SET
+	        	<if test=" so_orgcode!= null">
+	        		so_orgcode = #{so_orgcode,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" so_orgname!= null">
+	        		so_orgname = #{so_orgname,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" so_contactname!= null">
+	        		so_contactname = #{so_contactname,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" so_contactphone!= null">
+	        		so_contactphone = #{so_contactphone,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" so_fax!= null">
+	        		so_fax = #{so_fax,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" so_orgadds!= null">
+	        		so_orgadds = #{so_orgadds,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" so_orgparid!= null">
+	        		so_orgparid = #{so_orgparid,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" so_orgpic!= null">
+	        		so_orgpic = #{so_orgpic,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" so_status!= null">
+	        		so_status = #{so_status,jdbcType=VARCHAR} ,
+	        	</if>	     
+	        	<if test=" so_ts!= null">
+	        		so_ts = #{so_ts,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" so_dr!= null">
+	        		so_dr = #{so_dr,jdbcType=CHAR} ,
+	        	</if>
+	        	<if test=" so_bpa_id!= null">
+	        		so_bpa_id = #{so_bpa_id,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" so_me_limit!= null">
+	        		so_me_limit = #{so_me_limit,jdbcType=DECIMAL} ,
+	        	</if>
+	        	<if test=" so_per_limit!= null">
+	        		so_per_limit = #{so_per_limit,jdbcType=DECIMAL} ,
+	        	</if>
+	        	<if test=" so_agent_level_limit!= null">
+	        		so_agent_level_limit = #{so_agent_level_limit,jdbcType=DECIMAL} ,
+	        	</if>
+	        	<if test=" so_id_ext!= null">
+	        		so_id_ext = #{so_id_ext,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" so_code_ext!= null">
+	        		so_code_ext = #{so_code_ext,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" so_name_ext!= null">
+	        		so_name_ext = #{so_name_ext,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" so_type!= null">
+	        		so_type = #{so_type,jdbcType=VARCHAR}, 
+	        	</if>
+	        	<if test=" so_brand!= null">
+	        		so_brand = #{so_brand,jdbcType=VARCHAR}, 
+	        	</if>
+	        	so_version = #{so_version,jdbcType=INTEGER} 
+        WHERE 
+	        so_orgid = #{so_orgid,jdbcType=VARCHAR} 
+	</update>  
+	<update id="update_bak" parameterType="com.xianghuan.auth.system.model.SysOrg" flushCache="true">
+        UPDATE sys_org SET
+	        <if test="so_orgcode != null">so_orgcode = #{so_orgcode,jdbcType=VARCHAR} ,</if>
+	        <if test="so_orgname != null">so_orgname = #{so_orgname,jdbcType=VARCHAR} ,</if>
+	        <if test="so_contactname != null">so_contactname = #{so_contactname,jdbcType=VARCHAR} ,</if>
+	        <if test="so_contactphone != null">so_contactphone = #{so_contactphone,jdbcType=VARCHAR} ,</if>
+	        <if test="so_fax != null">so_fax = #{so_fax,jdbcType=VARCHAR} ,</if>
+	        <if test="so_orgadds != null">so_orgadds = #{so_orgadds,jdbcType=VARCHAR} ,</if>
+	        <if test="so_orgparid != null">so_orgparid = #{so_orgparid,jdbcType=VARCHAR} ,</if>
+	        <if test="so_orgpic != null">so_orgpic = #{so_orgpic,jdbcType=VARCHAR} ,</if>
+	        <if test="so_status != null">so_status = #{so_status,jdbcType=VARCHAR} ,</if>
+	        <if test="so_ts != null">so_ts = #{so_ts,jdbcType=VARCHAR} ,</if>
+	        <if test="so_dr != null">so_dr = #{so_dr,jdbcType=INTEGER},</if>
+	        so_version = #{so_version,jdbcType=INTEGER} 
+        WHERE 
+	        so_orgid = #{so_orgid,jdbcType=VARCHAR} 
+	</update>  
+	
+	<update id="updateBatch" flushCache="true">
+	    <foreach collection="array" item="item" open="begin" separator="" close="end;">
+		        UPDATE sys_org SET
+			        so_orgcode = #{so_orgcode} ,
+			        so_orgname = #{so_orgname} ,
+			        so_contactname = #{so_contactname} ,
+			        so_contactphone = #{so_contactphone} ,
+			        so_fax = #{so_fax} ,
+			        so_orgadds = #{so_orgadds} ,
+			        so_orgparid = #{so_orgparid} ,
+			        so_orgpic = #{so_orgpic} ,
+			        so_status = #{so_status} ,
+			        so_version = #{so_version} ,
+			        so_ts = #{so_ts} ,
+			        so_dr = #{so_dr} ,
+			        so_bpa_id = #{so_bpa_id,jdbcType=VARCHAR} ,
+			        so_me_limit = #{so_me_limit,jdbcType=DECIMAL} ,
+			        so_per_limit = #{so_per_limit,jdbcType=DECIMAL} ,
+			        so_agent_level_limit = #{so_agent_level_limit,jdbcType=DECIMAL} ,
+			        so_id_ext = #{so_id_ext,jdbcType=VARCHAR} ,
+			        so_code_ext = #{so_code_ext,jdbcType=VARCHAR} ,
+			        so_name_ext = #{so_name_ext,jdbcType=VARCHAR} ,
+			        so_type = #{so_type,jdbcType=VARCHAR} 
+		        WHERE 
+			        so_orgid = #{so_orgid} 
+		</foreach>
+	</update>
+
+	<delete id="delete" parameterType="string">
+	     UPDATE sys_org SET so_dr = 0 WHERE so_orgId = #{so_orgId} 
+	</delete>
+	
+	<delete id="deleteBatch">
+	    delete from sys_org where so_orgid in
+	    <foreach collection="array" item="item"  open="(" separator="," close=")">
+	       #item#
+	    </foreach>
+	</delete>
+	
+	<select id="find" resultType="com.xianghuan.auth.system.model.SysOrg" parameterType="string">
+		select
+		<include refid="Base_Column_List" />
+		from sys_org where so_orgid= #{so_orgid}
+	</select>
+	
+	<select id="getRecordCount" resultType="int" parameterType="java.util.Map">
+		select count(1) from sys_org where 1 = 1 and  so_dr = 1
+		<if test="so_orgname != null">
+			and so_orgname like CONCAT('%',#{so_orgname},'%')
+		</if>
+		<if test="so_contactphone != null">
+			and so_contactphone = #{so_contactphone}
+		</if>
+	</select>
+	
+	<select id="queryByCondition" resultType="com.xianghuan.auth.system.model.SysOrg"  parameterType="java.util.Map">
+		select t.so_orgid as so_orgid,
+			   t.so_orgcode as so_orgcode,
+			   t.so_orgname as so_orgname,
+			   t.so_contactname as so_contactname,
+			   t.so_contactphone as so_contactphone,
+			   t.so_fax as so_fax,
+			   t.so_orgadds as so_orgadds,
+			   t.so_orgparid as so_orgparid,
+			   t.so_orgpic as so_orgpic,
+			   t.so_status as so_status,
+			   t.so_version as so_version,
+			   t.so_ts as so_ts,
+			   t.so_dr as so_dr,
+			   t.so_bpa_id as so_bpa_id,
+			   t.so_me_limit as so_me_limit,
+			   t.so_per_limit as so_per_limit,
+			   t.so_agent_level_limit as so_agent_level_limit,
+			   t.so_id_ext as so_id_ext,
+			   t.so_code_ext as so_code_ext,
+			   t.so_name_ext as so_name_ext,
+			   t.so_type as so_type,
+			   p.so_orgname as org_name, 
+			   t.so_brand
+			   from sys_org t left join sys_org p on t.so_orgparid = p.so_orgid where t.so_dr = 1
+		<if test="so_orgname != null">
+			and t.so_orgname like CONCAT('%',#{so_orgname},'%')
+		</if>
+		<if test="so_contactphone != null">
+			and t.so_contactphone = #{so_contactphone}
+		</if>
+		<if test="orgsList != null">
+			and t.so_orgid in 
+			<foreach collection="orgsList" item="item" index="index"  open="(" close=")" separator="," >
+				${item}
+			</foreach>
+		</if>
+	</select>
+	
+	<select id="select" resultType="com.xianghuan.auth.system.model.SysOrg"  parameterType="java.util.Map">
+		select t.so_orgid as so_orgid,
+			   t.so_orgcode as so_orgcode,
+			   t.so_orgname as so_orgname,
+			   t.so_contactname as so_contactname,
+			   t.so_contactphone as so_contactphone,
+			   t.so_fax as so_fax,
+			   t.so_orgadds as so_orgadds,
+			   t.so_orgparid as so_orgparid,
+			   t.so_orgpic as so_orgpic,
+			   t.so_status as so_status,
+			   t.so_version as so_version,
+			   t.so_ts as so_ts,
+			   t.so_dr as so_dr,
+			   t.so_bpa_id as so_bpa_id,
+			   t.so_me_limit as so_me_limit,
+			   t.so_per_limit as so_per_limit,
+			   t.so_agent_level_limit as so_agent_level_limit,
+			   t.so_id_ext as so_id_ext,
+			   t.so_code_ext as so_code_ext,
+			   t.so_name_ext as so_name_ext,
+			   t.so_type as so_type,
+			   p.so_orgname as org_name 
+		from 
+			sys_org t left join sys_org p on t.so_orgparid = p.so_orgid 
+		where t.so_status = 1 and t.so_dr = 1 
+		<if test="so_orgname != null and so_orgname != '' ">
+			and t.so_orgname = #{so_orgname} 
+		</if>
+		<if test="so_orgcode != null and so_orgcode != '' ">
+			and t.so_orgcode = #{so_orgcode}
+		</if>
+		<if test="so_contactphone != null and so_contactphone != '' ">
+			and t.so_contactphone = #{so_contactphone}
+		</if>
+		<if test="sqlWhere != null">
+			#sqlWhere#
+		</if>
+		<if test="orgsList != null">
+			and t.so_orgid in 
+			<foreach collection="orgsList" item="item" index="index"  open="(" close=")" separator="," >
+				${item}
+			</foreach>
+		</if>
+		<if test="sur_userid != null and sur_userid !='' ">
+			and exists (select 1
+	           from sys_user_org suo
+	          where suo.suo_orgid = t.so_orgid
+	            and suo.suo_userid =  #{sur_userid} )			
+		</if>
+		
+	</select>
+	
+	<select id="findMax" resultType="string"  parameterType="java.util.Map">
+		SELECT MAX(SO_ORGID) FROM sys_org
+	</select>
+	
+	
+	<!-- 批量添加数据 -->
+	<insert id="insertBatch_list">
+		insert into sys_org  ( <include refid="Base_Column_List" /> )
+		<foreach collection="list" item="item" index="index" separator="union all" >
+		 	select 		
+				#{item.so_orgid,jdbcType=VARCHAR},
+	        	#{item.so_orgcode,jdbcType=VARCHAR},
+	        	#{item.so_orgname,jdbcType=VARCHAR},
+	        	#{item.so_contactname,jdbcType=VARCHAR},
+	        	#{item.so_contactphone,jdbcType=VARCHAR},
+	        	#{item.so_fax,jdbcType=VARCHAR},
+	        	#{item.so_orgadds,jdbcType=VARCHAR},
+	        	#{item.so_orgparid,jdbcType=VARCHAR},
+	        	#{item.so_orgpic,jdbcType=VARCHAR},
+	        	#{item.so_status,jdbcType=VARCHAR},
+	        	#{item.so_version,jdbcType=DECIMAL},
+	        	#{item.so_ts,jdbcType=VARCHAR},
+	        	#{item.so_dr,jdbcType=CHAR},
+	        	#{item.so_bpa_id,jdbcType=VARCHAR},
+	        	#{item.so_me_limit,jdbcType=DECIMAL},
+	        	#{item.so_per_limit,jdbcType=DECIMAL},
+	        	#{item.so_agent_level_limit,jdbcType=DECIMAL},
+	        	#{item.so_id_ext,jdbcType=VARCHAR},
+	        	#{item.so_code_ext,jdbcType=VARCHAR},
+	        	#{item.so_name_ext,jdbcType=VARCHAR},
+	        	#{item.so_type,jdbcType=VARCHAR},
+	        	#{item.so_brand,jdbcType=VARCHAR}
+		 	from dual		 	
+        </foreach>
+	</insert>
+	
+</mapper>

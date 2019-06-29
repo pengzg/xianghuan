@@ -1,0 +1,108 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%
+	String contextPath = request.getContextPath();
+%>
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<jsp:include page="../../../../inc.jsp"></jsp:include>
+<script type="text/javascript">
+
+</script>
+</head>
+<body>
+	<form method="post" class="form">
+		<fieldset>
+			<legend>基本信息</legend>
+			<table class="table" style="width: 100%;">
+				<tr>	
+					<th>主键ID</th>
+					<td>
+						${bean.suu_id}
+					</td>
+				</tr>	
+				<tr>	
+					<th>用户ID</th>
+					<td>
+						${bean.suu_ub_id}
+					</td>
+				</tr>	
+				<tr>	
+					<th>用户名称</th>
+					<td>
+						${bean.suu_ub_name}
+					</td>
+				</tr>	
+				<tr>	
+					<th>用户类型1.部门；2代理；3商户；4推广人；5终端用户</th>
+					<td>
+						${bean.suu_ub_type}
+					</td>
+				</tr>	
+				<tr>	
+					<th>状态（0.禁用；1.启用）</th>
+					<td>
+						${bean.suu_status}
+					</td>
+				</tr>	
+				<tr>	
+					<th>删除标志位:0删除，1未删除</th>
+					<td>
+						${bean.suu_dr}
+					</td>
+				</tr>	
+				<tr>	
+					<th>时间</th>
+					<td>
+						${bean.suu_ts}
+					</td>
+				</tr>	
+				<tr>	
+					<th>版本号</th>
+					<td>
+						${bean.suu_version}
+					</td>
+				</tr>	
+				<tr>	
+					<th>新增人</th>
+					<td>
+						${bean.suu_adduser}
+					</td>
+				</tr>	
+				<tr>	
+					<th>新增日期</th>
+					<td>
+						${bean.suu_adddate}
+					</td>
+				</tr>	
+				<tr>	
+					<th>最后修改人</th>
+					<td>
+						${bean.suu_modifyuser}
+					</td>
+				</tr>	
+				<tr>	
+					<th>最后修改日期</th>
+					<td>
+						${bean.suu_modifydate}
+					</td>
+				</tr>	
+				<tr>	
+					<th>删除人</th>
+					<td>
+						${bean.suu_deleteuser}
+					</td>
+				</tr>	
+				<tr>	
+					<th>删除日期</th>
+					<td>
+						${bean.suu_deletedate}
+					</td>
+				</tr>	
+			</table>
+		</fieldset>
+	</form>
+</body>
+</html>

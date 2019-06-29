@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 不使用namespace的话sql搜索定位会比较方便 -->
+<mapper namespace="com.xianghuan.admin.house.dao.IHouseBaseDao">
+	<sql id="Base_Column_List">
+		hb_id,hb_rent_type,hb_title,hb_summary,hb_intro,hb_cover,hb_userid,hb_house_type,hb_house_area,hb_contacts_mobile,hb_room_type,hb_room_area,hb_contacts_name,hb_posttime,hb_address,hb_price,hb_price_range,hb_lng,hb_lat,hb_isshow,hb_tag,hb_checkstatus,hb_status,hb_dr,hb_addtime,hb_updatetime
+	</sql>
+	<sql id="Base_Column_insert">
+        	#{hb_id,jdbcType=INTEGER},
+        	#{hb_rent_type,jdbcType=INTEGER},
+        	#{hb_title,jdbcType=VARCHAR},
+        	#{hb_summary,jdbcType=VARCHAR},
+        	#{hb_intro,jdbcType=LONGVARCHAR},
+        	#{hb_cover,jdbcType=VARCHAR},
+        	#{hb_userid,jdbcType=INTEGER},
+        	#{hb_house_type,jdbcType=INTEGER},
+        	#{hb_house_area,jdbcType=INTEGER},
+        	#{hb_contacts_mobile,jdbcType=VARCHAR},
+        	#{hb_room_type,jdbcType=INTEGER},
+        	#{hb_room_area,jdbcType=INTEGER},
+        	#{hb_contacts_name,jdbcType=VARCHAR},
+        	#{hb_posttime,jdbcType=VARCHAR},
+        	#{hb_address,jdbcType=VARCHAR},
+        	#{hb_price,jdbcType=DECIMAL},
+        	#{hb_price_range,jdbcType=INTEGER},
+        	#{hb_lng,jdbcType=VARCHAR},
+        	#{hb_lat,jdbcType=VARCHAR},
+        	#{hb_isshow,jdbcType=VARCHAR},
+        	#{hb_tag,jdbcType=VARCHAR},
+        	#{hb_checkstatus,jdbcType=INTEGER},
+        	#{hb_status,jdbcType=INTEGER},
+        	#{hb_dr,jdbcType=INTEGER},
+        	#{hb_addtime,jdbcType=VARCHAR},
+        	#{hb_updatetime,jdbcType=VARCHAR}
+	</sql>
+	<sql id="Base_query_column">
+		hb_id,hb_rent_type,hb_title,hb_summary,hb_intro,hb_cover,hb_userid,hb_house_type,hb_house_area,hb_contacts_mobile,hb_room_type,hb_room_area,hb_contacts_name,hb_posttime,hb_address,hb_price,hb_price_range,hb_lng,hb_lat,hb_isshow,hb_tag,hb_checkstatus,hb_status,hb_dr,hb_addtime,hb_updatetime
+	</sql>
+	<sql id="Base_query_where">
+		 	<if test="hb_rent_type != null and hb_rent_type != ''">
+	          and hb_rent_type = #{hb_rent_type}
+	         </if>
+		 	<if test="hb_title != null and hb_title != ''">
+	          and hb_title = #{hb_title}
+	         </if>
+		 	<if test="hb_summary != null and hb_summary != ''">
+	          and hb_summary = #{hb_summary}
+	         </if>
+		 	<if test="hb_intro != null and hb_intro != ''">
+	          and hb_intro = #{hb_intro}
+	         </if>
+		 	<if test="hb_cover != null and hb_cover != ''">
+	          and hb_cover = #{hb_cover}
+	         </if>
+		 	<if test="hb_userid != null and hb_userid != ''">
+	          and hb_userid = #{hb_userid}
+	         </if>
+		 	<if test="hb_house_type != null and hb_house_type != ''">
+	          and hb_house_type = #{hb_house_type}
+	         </if>
+		 	<if test="hb_house_area != null and hb_house_area != ''">
+	          and hb_house_area = #{hb_house_area}
+	         </if>
+		 	<if test="hb_contacts_mobile != null and hb_contacts_mobile != ''">
+	          and hb_contacts_mobile = #{hb_contacts_mobile}
+	         </if>
+		 	<if test="hb_room_type != null and hb_room_type != ''">
+	          and hb_room_type = #{hb_room_type}
+	         </if>
+		 	<if test="hb_room_area != null and hb_room_area != ''">
+	          and hb_room_area = #{hb_room_area}
+	         </if>
+		 	<if test="hb_contacts_name != null and hb_contacts_name != ''">
+	          and hb_contacts_name = #{hb_contacts_name}
+	         </if>
+		 	<if test="hb_posttime != null and hb_posttime != ''">
+	          and hb_posttime = #{hb_posttime}
+	         </if>
+		 	<if test="hb_address != null and hb_address != ''">
+	          and hb_address = #{hb_address}
+	         </if>
+		 	<if test="hb_price != null and hb_price != ''">
+	          and hb_price = #{hb_price}
+	         </if>
+		 	<if test="hb_price_range != null and hb_price_range != ''">
+	          and hb_price_range = #{hb_price_range}
+	         </if>
+		 	<if test="hb_lng != null and hb_lng != ''">
+	          and hb_lng = #{hb_lng}
+	         </if>
+		 	<if test="hb_lat != null and hb_lat != ''">
+	          and hb_lat = #{hb_lat}
+	         </if>
+		 	<if test="hb_isshow != null and hb_isshow != ''">
+	          and hb_isshow = #{hb_isshow}
+	         </if>
+		 	<if test="hb_tag != null and hb_tag != ''">
+	          and hb_tag = #{hb_tag}
+	         </if>
+		 	<if test="hb_checkstatus != null and hb_checkstatus != ''">
+	          and hb_checkstatus = #{hb_checkstatus}
+	         </if>
+		 	<if test="hb_status != null and hb_status != ''">
+	          and hb_status = #{hb_status}
+	         </if>
+		 	<if test="hb_dr != null and hb_dr != ''">
+	          and hb_dr = #{hb_dr}
+	         </if>
+		 	<if test="hb_addtime != null and hb_addtime != ''">
+	          and hb_addtime = #{hb_addtime}
+	         </if>
+		 	<if test="hb_updatetime != null and hb_updatetime != ''">
+	          and hb_updatetime = #{hb_updatetime}
+	        </if>
+	         
+		 	<if test="tag_id_arr != null"> 
+				AND EXISTS (
+					SELECT
+						1
+					FROM
+						base_tag_relation btr
+					WHERE
+						btr_type = 2
+					AND btr_typeid = hb_id
+					AND btr_dr = 1
+					AND btr_btid IN 
+						<foreach collection="tag_id_arr" item="item"  open="(" separator="," close=")">
+				        #{item}
+				    	</foreach>
+				)
+			</if>
+			<if test="hb_roome_type_arr != null"> 
+				AND hb_room_type IN 
+					<foreach collection="hb_roome_type_arr" item="item"  open="(" separator="," close=")">
+			        #{item}
+			    	</foreach>
+			</if>
+			<if test="hb_rent_type_arr != null"> 
+				AND hb_rent_type IN 
+					<foreach collection="hb_rent_type_arr" item="item"  open="(" separator="," close=")">
+			        #{item}
+			    	</foreach>
+			</if>
+			<if test="hb_price_range_arr != null"> 
+				AND hb_price_range IN
+					<foreach collection="hb_price_range_arr" item="item"  open="(" separator="," close=")">
+			        #{item}
+			    	</foreach>
+			</if>
+			<if test="searchKey != null and searchKey != ''">
+	          AND (
+					hb_address LIKE CONCAT("%", #{searchKey}, "%")
+					OR hb_title LIKE CONCAT("%", #{searchKey}, "%")
+					OR hb_summary LIKE CONCAT("%", #{searchKey}, "%")
+					OR hb_intro LIKE CONCAT("%", #{searchKey}, "%")
+					OR hb_contacts_mobile LIKE CONCAT("%", #{searchKey}, "%")
+					OR hb_contacts_name LIKE CONCAT("%", #{searchKey}, "%")
+				)
+	        </if>
+	        <if test="address_like != null and address_like != ''">
+	          AND hb_address LIKE CONCAT("%", #{searchKey}, "%")
+	        </if>
+	</sql>
+	
+	<insert id="insert" parameterType="com.xianghuan.admin.house.model.HouseBase" keyProperty="hb_id"  useGeneratedKeys="true">
+        INSERT INTO house_base ( <include refid="Base_Column_List" /> )  VALUES (
+            <include refid="Base_Column_insert" /> 
+        )
+	</insert>
+	
+	<insert id="insertBatch" keyProperty="hb_id">
+		insert into house_base  ( <include refid="Base_Column_List" /> )   values
+		<foreach collection="array" item="item" index="index" separator=",">
+		   <include refid="Base_Column_insert" /> 
+        </foreach>
+	</insert>
+
+	<update id="update" parameterType="com.xianghuan.admin.house.model.HouseBase" flushCache="true">
+        UPDATE house_base SET
+	        hb_rent_type = #{hb_rent_type,jdbcType=INTEGER} ,
+	        hb_title = #{hb_title,jdbcType=VARCHAR} ,
+	        hb_summary = #{hb_summary,jdbcType=VARCHAR} ,
+	        hb_intro = #{hb_intro,jdbcType=LONGVARCHAR} ,
+	        hb_cover = #{hb_cover,jdbcType=VARCHAR} ,
+	        hb_userid = #{hb_userid,jdbcType=INTEGER} ,
+	        hb_house_type = #{hb_house_type,jdbcType=INTEGER} ,
+	        hb_house_area = #{hb_house_area,jdbcType=INTEGER} ,
+	        hb_contacts_mobile = #{hb_contacts_mobile,jdbcType=VARCHAR} ,
+	        hb_room_type = #{hb_room_type,jdbcType=INTEGER} ,
+	        hb_room_area = #{hb_room_area,jdbcType=INTEGER} ,
+	        hb_contacts_name = #{hb_contacts_name,jdbcType=VARCHAR} ,
+	        hb_posttime = #{hb_posttime,jdbcType=VARCHAR} ,
+	        hb_address = #{hb_address,jdbcType=VARCHAR} ,
+	        hb_price = #{hb_price,jdbcType=DECIMAL} ,
+	        hb_price_range = #{hb_price_range,jdbcType=INTEGER} ,
+	        hb_lng = #{hb_lng,jdbcType=VARCHAR} ,
+	        hb_lat = #{hb_lat,jdbcType=VARCHAR} ,
+	        hb_isshow = #{hb_isshow,jdbcType=VARCHAR} ,
+	        hb_tag = #{hb_tag,jdbcType=VARCHAR} ,
+	        hb_checkstatus = #{hb_checkstatus,jdbcType=INTEGER} ,
+	        hb_status = #{hb_status,jdbcType=INTEGER} ,
+	        hb_dr = #{hb_dr,jdbcType=INTEGER} ,
+	        hb_addtime = #{hb_addtime,jdbcType=VARCHAR} ,
+	        hb_updatetime = #{hb_updatetime,jdbcType=VARCHAR} 
+        WHERE 
+	        hb_id = #{hb_id,jdbcType=INTEGER} 
+	</update> 
+	
+	<update id="updateSelect" parameterType="com.xianghuan.admin.house.model.HouseBase" flushCache="true">
+        UPDATE house_base SET
+	        	<if test=" hb_rent_type!= null  and hb_rent_type != ''">
+	        		hb_rent_type = #{hb_rent_type,jdbcType=INTEGER} ,
+	        	</if>
+	        	<if test=" hb_title!= null  and hb_title != ''">
+	        		hb_title = #{hb_title,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" hb_summary!= null  and hb_summary != ''">
+	        		hb_summary = #{hb_summary,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" hb_intro!= null  and hb_intro != ''">
+	        		hb_intro = #{hb_intro,jdbcType=LONGVARCHAR} ,
+	        	</if>
+	        	<if test=" hb_cover!= null  and hb_cover != ''">
+	        		hb_cover = #{hb_cover,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" hb_userid!= null  and hb_userid != ''">
+	        		hb_userid = #{hb_userid,jdbcType=INTEGER} ,
+	        	</if>
+	        	<if test=" hb_house_type!= null  and hb_house_type != ''">
+	        		hb_house_type = #{hb_house_type,jdbcType=INTEGER} ,
+	        	</if>
+	        	<if test=" hb_house_area!= null  and hb_house_area != ''">
+	        		hb_house_area = #{hb_house_area,jdbcType=INTEGER} ,
+	        	</if>
+	        	<if test=" hb_contacts_mobile!= null  and hb_contacts_mobile != ''">
+	        		hb_contacts_mobile = #{hb_contacts_mobile,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" hb_room_type!= null  and hb_room_type != ''">
+	        		hb_room_type = #{hb_room_type,jdbcType=INTEGER} ,
+	        	</if>
+	        	<if test=" hb_room_area!= null  and hb_room_area != ''">
+	        		hb_room_area = #{hb_room_area,jdbcType=INTEGER} ,
+	        	</if>
+	        	<if test=" hb_contacts_name!= null  and hb_contacts_name != ''">
+	        		hb_contacts_name = #{hb_contacts_name,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" hb_posttime!= null  and hb_posttime != ''">
+	        		hb_posttime = #{hb_posttime,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" hb_address!= null  and hb_address != ''">
+	        		hb_address = #{hb_address,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" hb_price!= null  and hb_price != ''">
+	        		hb_price = #{hb_price,jdbcType=DECIMAL} ,
+	        	</if>
+	        	<if test=" hb_price_range!= null  and hb_price_range != ''">
+	        		hb_price_range = #{hb_price_range,jdbcType=INTEGER} ,
+	        	</if>
+	        	<if test=" hb_lng!= null  and hb_lng != ''">
+	        		hb_lng = #{hb_lng,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" hb_lat!= null  and hb_lat != ''">
+	        		hb_lat = #{hb_lat,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" hb_isshow!= null  and hb_isshow != ''">
+	        		hb_isshow = #{hb_isshow,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" hb_tag!= null  and hb_tag != ''">
+	        		hb_tag = #{hb_tag,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" hb_checkstatus!= null  and hb_checkstatus != ''">
+	        		hb_checkstatus = #{hb_checkstatus,jdbcType=INTEGER} ,
+	        	</if>
+	        	<if test=" hb_status!= null  and hb_status != ''">
+	        		hb_status = #{hb_status,jdbcType=INTEGER} ,
+	        	</if>
+	        	<if test=" hb_dr!= null  and hb_dr != ''">
+	        		hb_dr = #{hb_dr,jdbcType=INTEGER} ,
+	        	</if>
+	        	<if test=" hb_addtime!= null  and hb_addtime != ''">
+	        		hb_addtime = #{hb_addtime,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" hb_updatetime!= null  and hb_updatetime != ''">
+	        		hb_updatetime = #{hb_updatetime,jdbcType=VARCHAR} 
+	        	</if>
+        WHERE 
+	        hb_id = #{hb_id,jdbcType=INTEGER} 
+	</update>   
+	
+	<update id="updateBatch" flushCache="true">
+	    <foreach collection="array" item="item" open="begin" separator="" close="end;">
+		        UPDATE house_base SET
+			        hb_rent_type = #{hb_rent_type} ,
+			        hb_title = #{hb_title} ,
+			        hb_summary = #{hb_summary} ,
+			        hb_intro = #{hb_intro} ,
+			        hb_cover = #{hb_cover} ,
+			        hb_userid = #{hb_userid} ,
+			        hb_house_type = #{hb_house_type} ,
+			        hb_house_area = #{hb_house_area} ,
+			        hb_contacts_mobile = #{hb_contacts_mobile} ,
+			        hb_room_type = #{hb_room_type} ,
+			        hb_room_area = #{hb_room_area} ,
+			        hb_contacts_name = #{hb_contacts_name} ,
+			        hb_posttime = #{hb_posttime} ,
+			        hb_address = #{hb_address} ,
+			        hb_price = #{hb_price} ,
+			        hb_price_range = #{hb_price_range} ,
+			        hb_lng = #{hb_lng} ,
+			        hb_lat = #{hb_lat} ,
+			        hb_isshow = #{hb_isshow} ,
+			        hb_tag = #{hb_tag} ,
+			        hb_checkstatus = #{hb_checkstatus} ,
+			        hb_status = #{hb_status} ,
+			        hb_dr = #{hb_dr} ,
+			        hb_addtime = #{hb_addtime} ,
+			        hb_updatetime = #{hb_updatetime} 
+		        WHERE 
+			        hb_id = #{hb_id} 
+		</foreach>
+	</update>
+
+	<delete id="remove" parameterType="java.util.Map">
+	    update house_base set 1=1
+	    <!-- set dr = 0  -->
+	    where hb_id= #{hb_id}
+	</delete>
+	
+	<delete id="removeBatch">
+	    update house_base where hb_id in
+	    <foreach collection="array" item="item"  open="(" separator="," close=")">
+	        #{item}
+	    </foreach>
+	</delete>
+	
+	<delete id="delete" parameterType="string">
+	    delete from house_base where hb_id=#hb_id
+	</delete>
+	
+	<delete id="deleteBatch">
+	    delete from house_base where hb_id in
+	    <foreach collection="array" item="item"  open="(" separator="," close=")">
+	        #{item}
+	    </foreach>
+	</delete>
+	
+	<select id="find" resultType="com.xianghuan.admin.house.model.HouseBase" parameterType="string">
+		select
+		<include refid="Base_query_column" />
+		from house_base where hb_id= #{hb_id}
+	</select>
+
+	<select id="queryByCondition" resultType="com.xianghuan.admin.house.model.HouseBase" parameterType="java.util.Map">
+		select <include refid="Base_query_column" /> from house_base where 1=1
+		<include refid="Base_query_where" />
+		<if test="sqlWhere != null">
+			 #{sqlWhere}
+		</if>
+	</select>
+	
+	<select id="getRecordCount" resultType="int" parameterType="java.util.Map">
+		select count(1) from house_base where 1 = 1
+		<include refid="Base_query_where" />
+		<if test="sqlWhere != null">
+			 #{sqlWhere}
+		</if>
+	</select>
+	
+	<select id="select" resultType="com.xianghuan.admin.house.model.HouseBase" parameterType="java.util.Map">
+		select <include refid="Base_query_column" /> from house_base where 1=1
+		<include refid="Base_query_where" />
+		<if test="sqlWhere != null">
+			 #{sqlWhere}
+		</if>
+		
+	</select>
+	
+	
+	<select id="selectHouseByDistance" resultType="com.xianghuan.admin.house.vo.HouseBaseVO" parameterType="java.util.Map">
+		
+		SELECT
+			*
+		FROM
+			(
+				SELECT
+					hb_id,hb_rent_type,hb_title,hb_summary,hb_intro,hb_cover,hb_userid,hb_house_type,hb_house_area,hb_contacts_mobile,hb_room_type,hb_room_area,hb_contacts_name,hb_posttime,hb_address,hb_price,hb_lng,hb_lat,
+					 ROUND(
+						6378.138 * 2 * ASIN(
+							SQRT(
+								POW(
+									SIN(
+										(
+											#{lat} * PI() / 180 - hb.hb_lat * PI() / 180
+										) / 2
+									),
+									2
+								) + COS(#{lat} * PI() / 180) * COS(hb.hb_lat * PI() / 180) * POW(
+									SIN(
+										(
+											#{lng} * PI() / 180 - hb.hb_lng * PI() / 180
+										) / 2
+									),
+									2
+								)
+							)
+		
+		) * 1000
+		) AS distance
+		FROM
+			house_base hb
+		WHERE
+			hb_dr = 1
+		<include refid="Base_query_where" />
+		
+		
+		) t
+		WHERE
+			1 = 1
+		<if test="distance_range != null and distance_range != ''">
+		AND t.distance  <![CDATA[<]]> #{distance_range}
+		</if>
+		ORDER BY
+			t.distance ASC
+		<if test="start != null">
+		LIMIT #{start},
+		 #{rows}
+		</if>
+	</select>
+</mapper>

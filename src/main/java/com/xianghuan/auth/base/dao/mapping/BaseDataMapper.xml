@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!-- 不使用namespace的话sql搜索定位会比较方便 -->
+<mapper namespace="com.xianghuan.auth.base.dao.IBaseDataDao">
+	<sql id="Base_Column_List">
+		bd_id,bd_code,bd_name,bd_order,bd_pid,bd_datatypeid,bd_org,bd_des,bd_status,bd_dr,bd_adduser,bd_adddate,bd_modifyuser,bd_modifydate,bd_deleteuser,bd_deletedate
+	</sql>
+	<sql id="Base_Column_insert">
+        	#{bd_id,jdbcType=VARCHAR},
+        	#{bd_code,jdbcType=VARCHAR},
+        	#{bd_name,jdbcType=VARCHAR},
+        	#{bd_order,jdbcType=INTEGER},
+        	#{bd_pid,jdbcType=VARCHAR},
+        	#{bd_datatypeid,jdbcType=VARCHAR},
+        	#{bd_org,jdbcType=VARCHAR},
+        	#{bd_des,jdbcType=VARCHAR},
+        	#{bd_status,jdbcType=VARCHAR},
+        	#{bd_dr,jdbcType=INTEGER},
+        	#{bd_adduser,jdbcType=VARCHAR},
+        	#{bd_adddate,jdbcType=VARCHAR},
+        	#{bd_modifyuser,jdbcType=VARCHAR},
+        	#{bd_modifydate,jdbcType=VARCHAR},
+        	#{bd_deleteuser,jdbcType=VARCHAR},
+        	#{bd_deletedate,jdbcType=VARCHAR}
+	</sql>
+
+	<insert id="insert" parameterType="com.xianghuan.auth.base.model.BaseData"   useGeneratedKeys="true" keyProperty="bd_id" >
+        INSERT INTO base_data ( <include refid="Base_Column_List" /> )  VALUES (
+            <include refid="Base_Column_insert" /> 
+        )
+	</insert>
+	
+	<insert id="insertBatch" keyProperty="bd_id">
+		insert into base_data  ( <include refid="Base_Column_List" /> )   values
+		<foreach collection="array" item="item" index="index" separator=",">
+		   <include refid="Base_Column_insert" /> 
+        </foreach>
+	</insert>
+
+	<update id="update" parameterType="com.xianghuan.auth.base.model.BaseData" flushCache="true">
+        UPDATE base_data SET
+        	<if test="bd_status != null">bd_status = #{bd_status,jdbcType=VARCHAR} ,</if>
+	        <if test="bd_code != null">bd_code = #{bd_code,jdbcType=VARCHAR} ,</if>
+	        <if test="bd_name != null">bd_name = #{bd_name,jdbcType=VARCHAR} ,</if>
+	        <if test="bd_order != null">bd_order = #{bd_order,jdbcType=INTEGER} ,</if>
+	        <if test="bd_pid != null">bd_pid = #{bd_pid,jdbcType=VARCHAR} ,</if>
+	        <if test="bd_org != null">bd_org = #{bd_org,jdbcType=VARCHAR} ,</if>
+	        <if test="bd_des != null">bd_des = #{bd_des,jdbcType=VARCHAR} ,</if>
+	        <if test="bd_dr != null">bd_dr = #{bd_dr,jdbcType=INTEGER} ,</if>
+	        <if test="bd_adduser != null">bd_adduser = #{bd_adduser,jdbcType=VARCHAR},</if>
+        	<if test="bd_adddate != null">bd_adddate = #{bd_adddate,jdbcType=VARCHAR},</if>
+        	<if test="bd_modifyuser != null">bd_modifyuser = #{bd_modifyuser,jdbcType=VARCHAR},</if>
+        	<if test="bd_modifydate != null">bd_modifydate = #{bd_modifydate,jdbcType=VARCHAR},</if>
+        	<if test="bd_deleteuser != null">bd_deleteuser = #{bd_deleteuser,jdbcType=VARCHAR},</if>
+        	<if test="bd_deleteuser != null">bd_deletedate = #{bd_deletedate,jdbcType=VARCHAR},</if>
+        	bd_id = #{bd_id,jdbcType=VARCHAR} 
+        WHERE 
+	        bd_id = #{bd_id,jdbcType=VARCHAR} 
+	</update>  
+	
+	<update id="updateBatch" flushCache="true">
+	    <foreach collection="array" item="item" open="begin" separator="" close="end;">
+		        UPDATE base_data SET
+			        bd_code = #{bd_code} ,
+			        bd_name = #{bd_name} ,
+			        bd_order = #{bd_order} ,
+			        bd_pid = #{bd_pid} ,
+			        bd_datatypeid = #{bd_datatypeid} ,
+			        bd_org = #{bd_org} ,
+			        bd_des = #{bd_des} ,
+			        bd_status = #{bd_status} ,
+			        bd_dr = #{bd_dr}
+		        WHERE 
+			        bd_id = #{bd_id} 
+		</foreach>
+	</update>
+
+	<delete id="delete" parameterType="string">
+	   update base_data set bd_dr = 0 where bd_id = #{bd_id}
+	</delete>
+	
+	<delete id="deleteBatch">
+	    delete from base_data where bd_id in
+	    <foreach collection="array" item="item"  open="(" separator="," close=")">
+	        #{item}
+	    </foreach>
+	</delete>
+	
+	<select id="find" resultType="com.xianghuan.auth.base.model.BaseData" parameterType="string">
+		select bd.bd_id,bd.bd_code,bd.bd_name,bd.bd_order,bd.bd_pid,
+		bd.bd_datatypeid,bd.bd_org,bd.bd_des,bd.bd_status,bd.bd_dr,
+		bdt.bdt_code as bdt_code,bdt.bdt_name as bdt_name
+		from base_data bd,base_datatype bdt where bd_dr=1
+		and bd.bd_datatypeid = bdt.bdt_id and bd.bd_id= #{bd_id}
+	</select>
+
+	<select id="queryByCondition" resultType="com.xianghuan.auth.base.model.BaseData" parameterType="java.util.Map">
+		select <include refid="Base_Column_List" /> from base_data where 1=1 and bd_dr = 1
+		<if test="bd_datatypeid != null">
+			 and bd_datatypeid = #{bd_datatypeid}
+		</if>
+		<if test="bd_org != null">
+			and bd_org = #{bd_org}
+		</if>
+	</select>
+	
+	<select id="getRecordCount" resultType="int" parameterType="java.util.Map">
+		select count(1) from base_data where 1=1 and bd_dr = 1
+		<if test="bd_datatypeid != null">
+			 and bd_datatypeid = #{bd_datatypeid}
+		</if>
+		<if test="bd_org != null">
+			and bd_org = #{bd_org}
+		</if>
+	</select>
+	
+	<select id="select" resultType="com.xianghuan.auth.base.model.BaseData" parameterType="java.util.Map">
+		select bd.bd_id,bd.bd_code,bd.bd_name,bd.bd_order,bd.bd_pid,
+		bd.bd_datatypeid,bd.bd_org,bd.bd_des,bd.bd_status,bd.bd_dr,
+		bdt.bdt_code as bdt_code,bdt.bdt_name as bdt_name
+		from base_data bd,base_datatype bdt where bd_dr=1
+		and bd.bd_datatypeid = bdt.bdt_id
+		<if test="bd_datatypeid != null">
+			 and bd.bd_datatypeid = #{bd_datatypeid}
+		</if>
+		<if test="bd_status != null">
+			 and bd.bd_status = #{bd_status}
+		</if>
+		<if test="bd_code != null">
+			 and bd.bd_code = #{bd_code}
+		</if>
+		<if test="bdt_code != null">
+			and bdt.bdt_code = #{bdt_code}
+		</if>
+		<if test="bd_org != null">
+			and bd.bd_org = #{bd_org}
+		</if>
+		<if test="bd_id != null">
+			and bd.bd_id = #{bd_id}
+		</if>
+		order by bd.bd_order asc
+	</select>
+	
+	<select id="getBaseData" resultType="com.xianghuan.auth.base.model.BaseData" parameterType="java.util.Map">
+		select bd.bd_id,bd.bd_code,bd.bd_name,bd.bd_order,bd.bd_pid,
+		bd.bd_datatypeid,bd.bd_org,bd.bd_des,bd.bd_status,bd.bd_dr,
+		bdt.bdt_code as bdt_code,bdt.bdt_name as bdt_name
+		from base_data bd,base_datatype bdt where bd_dr=1
+		and bd.bd_datatypeid = bdt.bdt_id and bdt.bdt_code = #{bdt_code} 
+		<if test="bd_status != null">
+			 and bd.bd_status = #{bd_status}
+		</if>
+		<if test="bd_code != null">
+			 and bd.bd_code = #{bd_code}
+		</if>
+		<if test="bdt_code != null">
+			and bdt.bdt_code = #{bdt_code}
+		</if>
+		<if test="bd_org != null">
+			and bd.bd_org = #{bd_org}
+		</if>
+		order by bd.bd_order asc
+	</select>
+</mapper>

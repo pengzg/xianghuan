@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 不使用namespace的话sql搜索定位会比较方便 -->
+<mapper namespace="com.xianghuan.admin.baseservice.dao.IBaseServiceDao">
+	<sql id="Base_Column_List">
+		bs_id,bs_categoryid,bs_categorycode,bs_name,bs_mobile,bs_contact_name,bs_address,bs_image,bs_clicknum,bs_lng,bs_lat,bs_intro,bs_star,bs_note,bs_officehour,bs_vieworder,bs_state,bs_dr,bs_addtime,bs_updatetime
+	</sql>
+	<sql id="Base_Column_insert">
+        	#{bs_id,jdbcType=INTEGER},
+        	#{bs_categoryid,jdbcType=VARCHAR},
+        	#{bs_categorycode,jdbcType=VARCHAR},
+        	#{bs_name,jdbcType=VARCHAR},
+        	#{bs_mobile,jdbcType=VARCHAR},
+        	#{bs_contact_name,jdbcType=VARCHAR},
+        	#{bs_address,jdbcType=VARCHAR},
+        	#{bs_image,jdbcType=VARCHAR},
+        	#{bs_clicknum,jdbcType=INTEGER},
+        	#{bs_lng,jdbcType=VARCHAR},
+        	#{bs_lat,jdbcType=VARCHAR},
+        	#{bs_intro,jdbcType=VARCHAR},
+        	#{bs_star,jdbcType=INTEGER},
+        	#{bs_note,jdbcType=VARCHAR},
+        	#{bs_officehour,jdbcType=VARCHAR},
+        	#{bs_vieworder,jdbcType=INTEGER},
+        	#{bs_state,jdbcType=TINYINT},
+        	#{bs_dr,jdbcType=TINYINT},
+        	#{bs_addtime,jdbcType=VARCHAR},
+        	#{bs_updatetime,jdbcType=VARCHAR}
+	</sql>
+	<sql id="Base_query_column">
+		bs_id,bs_categoryid,bs_categorycode,bs_name,bs_mobile,bs_contact_name,bs_address,bs_image,bs_clicknum,bs_lng,bs_lat,bs_intro,bs_star,bs_note,bs_officehour,bs_vieworder,bs_state,bs_dr,bs_addtime,bs_updatetime
+	</sql>
+	<sql id="Base_query_where">
+		 	<if test="bs_categoryid != null and bs_categoryid != ''">
+	          and bs_categoryid = #{bs_categoryid}
+	         </if>
+		 	<if test="bs_categorycode != null and bs_categorycode != ''">
+	          and bs_categorycode = #{bs_categorycode}
+	         </if>
+		 	<if test="bs_name != null and bs_name != ''">
+	          and bs_name = #{bs_name}
+	         </if>
+		 	<if test="bs_mobile != null and bs_mobile != ''">
+	          and bs_mobile = #{bs_mobile}
+	         </if>
+		 	<if test="bs_contact_name != null and bs_contact_name != ''">
+	          and bs_contact_name = #{bs_contact_name}
+	         </if>
+		 	<if test="bs_address != null and bs_address != ''">
+	          and bs_address = #{bs_address}
+	         </if>
+		 	<if test="bs_image != null and bs_image != ''">
+	          and bs_image = #{bs_image}
+	         </if>
+		 	<if test="bs_clicknum != null and bs_clicknum != ''">
+	          and bs_clicknum = #{bs_clicknum}
+	         </if>
+		 	<if test="bs_lng != null and bs_lng != ''">
+	          and bs_lng = #{bs_lng}
+	         </if>
+		 	<if test="bs_lat != null and bs_lat != ''">
+	          and bs_lat = #{bs_lat}
+	         </if>
+		 	<if test="bs_intro != null and bs_intro != ''">
+	          and bs_intro = #{bs_intro}
+	         </if>
+		 	<if test="bs_star != null and bs_star != ''">
+	          and bs_star = #{bs_star}
+	         </if>
+		 	<if test="bs_note != null and bs_note != ''">
+	          and bs_note = #{bs_note}
+	         </if>
+		 	<if test="bs_officehour != null and bs_officehour != ''">
+	          and bs_officehour = #{bs_officehour}
+	         </if>
+		 	<if test="bs_vieworder != null and bs_vieworder != ''">
+	          and bs_vieworder = #{bs_vieworder}
+	         </if>
+		 	<if test="bs_state != null and bs_state != ''">
+	          and bs_state = #{bs_state}
+	         </if>
+		 	<if test="bs_dr != null and bs_dr != ''">
+	          and bs_dr = #{bs_dr}
+	         </if>
+		 	<if test="bs_addtime != null and bs_addtime != ''">
+	          and bs_addtime = #{bs_addtime}
+	         </if>
+		 	<if test="bs_updatetime != null and bs_updatetime != ''">
+	          and bs_updatetime = #{bs_updatetime}
+	         </if>
+	</sql>
+	
+	<insert id="insert" parameterType="com.xianghuan.admin.baseservice.model.BaseService" keyProperty="bs_id" >
+        INSERT INTO base_service ( <include refid="Base_Column_List" /> )  VALUES (
+            <include refid="Base_Column_insert" /> 
+        )
+	</insert>
+	
+	<insert id="insertBatch" keyProperty="bs_id">
+		insert into base_service  ( <include refid="Base_Column_List" /> )   values
+		<foreach collection="array" item="item" index="index" separator=",">
+		  (
+
+        		#{item.bs_id,jdbcType=INTEGER},
+        		#{item.bs_categoryid,jdbcType=VARCHAR},
+        		#{item.bs_categorycode,jdbcType=VARCHAR},
+        		#{item.bs_name,jdbcType=VARCHAR},
+        		#{item.bs_mobile,jdbcType=VARCHAR},
+        		#{item.bs_contact_name,jdbcType=VARCHAR},
+        		#{item.bs_address,jdbcType=VARCHAR},
+        		#{item.bs_image,jdbcType=VARCHAR},
+        		#{item.bs_clicknum,jdbcType=INTEGER},
+        		#{item.bs_lng,jdbcType=VARCHAR},
+        		#{item.bs_lat,jdbcType=VARCHAR},
+        		#{item.bs_intro,jdbcType=VARCHAR},
+        		#{item.bs_star,jdbcType=INTEGER},
+        		#{item.bs_note,jdbcType=VARCHAR},
+        		#{item.bs_officehour,jdbcType=VARCHAR},
+        		#{item.bs_vieworder,jdbcType=INTEGER},
+        		#{item.bs_state,jdbcType=TINYINT},
+        		#{item.bs_dr,jdbcType=TINYINT},
+        		#{item.bs_addtime,jdbcType=VARCHAR},
+        		#{item.bs_updatetime,jdbcType=VARCHAR}
+			)
+        </foreach>
+	</insert>
+
+	<update id="update" parameterType="com.xianghuan.admin.baseservice.model.BaseService" flushCache="true">
+        UPDATE base_service SET
+	        bs_categoryid = #{bs_categoryid,jdbcType=VARCHAR} ,
+	        bs_categorycode = #{bs_categorycode,jdbcType=VARCHAR} ,
+	        bs_name = #{bs_name,jdbcType=VARCHAR} ,
+	        bs_mobile = #{bs_mobile,jdbcType=VARCHAR} ,
+	        bs_contact_name = #{bs_contact_name,jdbcType=VARCHAR} ,
+	        bs_address = #{bs_address,jdbcType=VARCHAR} ,
+	        bs_image = #{bs_image,jdbcType=VARCHAR} ,
+	        bs_clicknum = #{bs_clicknum,jdbcType=INTEGER} ,
+	        bs_lng = #{bs_lng,jdbcType=VARCHAR} ,
+	        bs_lat = #{bs_lat,jdbcType=VARCHAR} ,
+	        bs_intro = #{bs_intro,jdbcType=VARCHAR} ,
+	        bs_star = #{bs_star,jdbcType=INTEGER} ,
+	        bs_note = #{bs_note,jdbcType=VARCHAR} ,
+	        bs_officehour = #{bs_officehour,jdbcType=VARCHAR} ,
+	        bs_vieworder = #{bs_vieworder,jdbcType=INTEGER} ,
+	        bs_state = #{bs_state,jdbcType=TINYINT} ,
+	        bs_dr = #{bs_dr,jdbcType=TINYINT} ,
+	        bs_addtime = #{bs_addtime,jdbcType=VARCHAR} ,
+	        bs_updatetime = #{bs_updatetime,jdbcType=VARCHAR} 
+        WHERE 
+	        bs_id = #{bs_id,jdbcType=INTEGER} 
+	</update> 
+	
+	<update id="updateSelect" parameterType="com.xianghuan.admin.baseservice.model.BaseService" flushCache="true">
+        UPDATE base_service SET
+	        	<if test=" bs_categoryid!= null  and bs_categoryid != ''">
+	        		bs_categoryid = #{bs_categoryid,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" bs_categorycode!= null  and bs_categorycode != ''">
+	        		bs_categorycode = #{bs_categorycode,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" bs_name!= null  and bs_name != ''">
+	        		bs_name = #{bs_name,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" bs_mobile!= null  and bs_mobile != ''">
+	        		bs_mobile = #{bs_mobile,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" bs_contact_name!= null  and bs_contact_name != ''">
+	        		bs_contact_name = #{bs_contact_name,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" bs_address!= null  and bs_address != ''">
+	        		bs_address = #{bs_address,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" bs_image!= null  and bs_image != ''">
+	        		bs_image = #{bs_image,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" bs_clicknum!= null  and bs_clicknum != ''">
+	        		bs_clicknum = #{bs_clicknum,jdbcType=INTEGER} ,
+	        	</if>
+	        	<if test=" bs_lng!= null  and bs_lng != ''">
+	        		bs_lng = #{bs_lng,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" bs_lat!= null  and bs_lat != ''">
+	        		bs_lat = #{bs_lat,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" bs_intro!= null  and bs_intro != ''">
+	        		bs_intro = #{bs_intro,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" bs_star!= null  and bs_star != ''">
+	        		bs_star = #{bs_star,jdbcType=INTEGER} ,
+	        	</if>
+	        	<if test=" bs_note!= null  and bs_note != ''">
+	        		bs_note = #{bs_note,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" bs_officehour!= null  and bs_officehour != ''">
+	        		bs_officehour = #{bs_officehour,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" bs_vieworder!= null  and bs_vieworder != ''">
+	        		bs_vieworder = #{bs_vieworder,jdbcType=INTEGER} ,
+	        	</if>
+	        	<if test=" bs_state!= null  and bs_state != ''">
+	        		bs_state = #{bs_state,jdbcType=TINYINT} ,
+	        	</if>
+	        	<if test=" bs_dr!= null  and bs_dr != ''">
+	        		bs_dr = #{bs_dr,jdbcType=TINYINT} ,
+	        	</if>
+	        	<if test=" bs_addtime!= null  and bs_addtime != ''">
+	        		bs_addtime = #{bs_addtime,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" bs_updatetime!= null  and bs_updatetime != ''">
+	        		bs_updatetime = #{bs_updatetime,jdbcType=VARCHAR} 
+	        	</if>
+        WHERE 
+	        bs_id = #{bs_id,jdbcType=INTEGER} 
+	</update>   
+	
+	<update id="updateBatch" flushCache="true">
+	    <foreach collection="array" item="item" open="begin" separator="" close="end;">
+		        UPDATE base_service SET
+			        bs_categoryid = #{bs_categoryid} ,
+			        bs_categorycode = #{bs_categorycode} ,
+			        bs_name = #{bs_name} ,
+			        bs_mobile = #{bs_mobile} ,
+			        bs_contact_name = #{bs_contact_name} ,
+			        bs_address = #{bs_address} ,
+			        bs_image = #{bs_image} ,
+			        bs_clicknum = #{bs_clicknum} ,
+			        bs_lng = #{bs_lng} ,
+			        bs_lat = #{bs_lat} ,
+			        bs_intro = #{bs_intro} ,
+			        bs_star = #{bs_star} ,
+			        bs_note = #{bs_note} ,
+			        bs_officehour = #{bs_officehour} ,
+			        bs_vieworder = #{bs_vieworder} ,
+			        bs_state = #{bs_state} ,
+			        bs_dr = #{bs_dr} ,
+			        bs_addtime = #{bs_addtime} ,
+			        bs_updatetime = #{bs_updatetime} 
+		        WHERE 
+			        bs_id = #{bs_id} 
+		</foreach>
+	</update>
+
+	<delete id="remove" parameterType="java.util.Map">
+	    update base_service set 1=1
+	    <!-- set dr = 0  -->
+	    where bs_id= #{bs_id}
+	</delete>
+	
+	<delete id="removeBatch">
+	    update base_service where bs_id in
+	    <foreach collection="array" item="item"  open="(" separator="," close=")">
+	        #{item}
+	    </foreach>
+	</delete>
+	
+	<delete id="delete" parameterType="string">
+	    delete from base_service where bs_id=#bs_id
+	</delete>
+	
+	<delete id="deleteBatch">
+	    delete from base_service where bs_id in
+	    <foreach collection="array" item="item"  open="(" separator="," close=")">
+	        #{item}
+	    </foreach>
+	</delete>
+	
+	<select id="find" resultType="com.xianghuan.admin.baseservice.model.BaseService" parameterType="string">
+		select
+		<include refid="Base_query_column" />
+		from base_service where bs_id= #{bs_id}
+	</select>
+
+	<select id="queryByCondition" resultType="com.xianghuan.admin.baseservice.model.BaseService" parameterType="java.util.Map">
+		select <include refid="Base_query_column" /> from base_service where 1=1
+		<include refid="Base_query_where" />
+		<if test="sqlWhere != null">
+			 #{sqlWhere}
+		</if>
+	</select>
+	
+	<select id="queryByConditionExt" resultType="com.xianghuan.admin.baseservice.vo.BaseServiceVO" parameterType="java.util.Map">
+		select <include refid="Base_query_column" /> from base_service where 1=1
+		<include refid="Base_query_where" />
+		<if test="sqlWhere != null">
+			 #{sqlWhere}
+		</if>
+
+	</select>
+	<select id="getRecordCount" resultType="int" parameterType="java.util.Map">
+		select count(1) from base_service where 1 = 1
+		<include refid="Base_query_where" />
+		<if test="sqlWhere != null">
+			 #{sqlWhere}
+		</if>
+	</select>
+	
+	<select id="select" resultType="com.xianghuan.admin.baseservice.model.BaseService" parameterType="java.util.Map">
+		select <include refid="Base_query_column" /> from base_service where 1=1
+		<include refid="Base_query_where" />
+		<if test="sqlWhere != null">
+			 #{sqlWhere}
+		</if>
+		<if test="start != null">
+			  LIMIT #{start},#{rows}
+		</if>
+	</select>
+	
+	<select id="getListByDistance" resultType="com.xianghuan.admin.baseservice.vo.BaseServiceVO" parameterType="java.util.Map">
+		SELECT
+			bs.bs_name,
+			bs_mobile,
+			bs_contact_name,
+			bs_clicknum,
+			bs_star,
+			bs_officehour,
+			bs_address,
+			bs_image,
+			ROUND(
+				6378.138 * 2 * ASIN(
+					SQRT(
+						POW(
+							SIN(
+								(
+									#{lat} * PI() / 180 - bs.bs_lat * PI() / 180
+								) / 2
+							),
+							2
+						) + COS(#{lat} * PI() / 180) * COS(bs.bs_lat * PI() / 180) * POW(
+							SIN(
+								(
+									#{lng} * PI() / 180 - bs.bs_lng * PI() / 180
+								) / 2
+							),
+							2
+						)
+					)
+				) * 1000
+			) AS distance
+		FROM
+			base_service bs
+		WHERE
+			1 = 1
+		AND bs_dr = 1
+		AND bs_state = 1
+		<include refid="Base_query_where" />
+		ORDER BY
+			bs_vieworder DESC,
+			distance ASC
+		<if test="start != null">
+			 LIMIT #{start},#{rows}
+		</if>
+	</select>
+</mapper>

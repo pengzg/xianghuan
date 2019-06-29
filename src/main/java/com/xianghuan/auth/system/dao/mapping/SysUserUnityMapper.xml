@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 不使用namespace的话sql搜索定位会比较方便 -->
+<mapper namespace="com.xianghuan.auth.system.dao.ISysUserUnityDao">
+	<sql id="Base_Column_List">
+		suu_id,suu_ub_id,suu_ub_name,suu_ub_type,suu_status,suu_dr,suu_ts,
+		suu_version,suu_adduser,suu_adddate,suu_modifyuser,
+		suu_modifydate,suu_ub_loginname,suu_orgid,
+		suu_parentsid
+	</sql>
+	<sql id="Base_Column_insert">
+        	#{suu_id,jdbcType=VARCHAR},
+        	#{suu_ub_id,jdbcType=VARCHAR},
+        	#{suu_ub_name,jdbcType=VARCHAR},
+        	#{suu_ub_type,jdbcType=VARCHAR},
+        	#{suu_status,jdbcType=VARCHAR},
+        	#{suu_dr,jdbcType=CHAR},
+        	#{suu_ts,jdbcType=VARCHAR},
+        	#{suu_version,jdbcType=DECIMAL},
+        	#{suu_adduser,jdbcType=VARCHAR},
+        	#{suu_adddate,jdbcType=VARCHAR},
+        	#{suu_modifyuser,jdbcType=VARCHAR},
+        	#{suu_modifydate,jdbcType=VARCHAR},
+        	#{suu_ub_loginname,jdbcType=VARCHAR},
+        	#{suu_orgid,jdbcType=VARCHAR},
+        	#{suu_parentsid,jdbcType=VARCHAR}
+        	
+	</sql>
+	<sql id="Base_query_column">
+		suu_id,suu_ub_id,suu_ub_name,suu_ub_type,suu_status,suu_dr,suu_ts,suu_version,
+		suu_adduser,suu_adddate,suu_modifyuser,suu_modifydate,
+		suu_ub_loginname,
+		suu_orgid,suu_parentsid
+	</sql>
+	<sql id="Base_query_where">
+		 	<if test="suu_ub_id != null and suu_ub_id != ''">
+	          and suu_ub_id = #{suu_ub_id}
+	         </if>
+		 	<if test="suu_ub_name != null and suu_ub_name != ''">
+	          and suu_ub_name =   CONCAT('%',#{suu_ub_name},'%') 
+	         </if>
+		 	<if test="suu_ub_type != null and suu_ub_type != ''">
+	          and suu_ub_type = #{suu_ub_type}
+	         </if>
+	         <if test="suu_ub_types !=  null and suu_ub_types != '' ">
+	          and suu_ub_type in ( ${suu_ub_types} )
+	         </if>
+		 	<if test="suu_status !=  null and suu_status != ''">
+	          and suu_status = #{suu_status}
+	         </if>
+		 	<if test="suu_dr !=  null and suu_dr != ''">
+	          and suu_dr = #{suu_dr}
+	         </if>
+		 	<if test="suu_ts !=  null and suu_ts != ''">
+	          and suu_ts = #{suu_ts}
+	         </if>
+		 	<if test="suu_version !=  null and suu_version != ''">
+	          and suu_version = #{suu_version}
+	         </if>
+		 	<if test="suu_adduser !=  null and suu_adduser != ''">
+	          and suu_adduser = #{suu_adduser}
+	         </if>
+		 	<if test="suu_adddate !=  null and suu_adddate != ''">
+	          and suu_adddate = #{suu_adddate}
+	         </if>
+		 	<if test="suu_modifyuser !=  null and suu_modifyuser != ''">
+	          and suu_modifyuser = #{suu_modifyuser}
+	         </if>
+		 	<if test="suu_modifydate !=  null and suu_modifydate != ''">
+	          and suu_modifydate = #{suu_modifydate}
+	         </if>
+		 	<if test="suu_ub_loginname !=  null and suu_ub_loginname != ''">
+	          and suu_ub_loginname like CONCAT('%',#{suu_ub_loginname},'%')   
+	         </if>
+		 	<if test="suu_orgid !=  null and suu_orgid != ''">
+	          and suu_orgid = #{suu_orgid}
+	         </if>
+	         <if test="suu_parentsid != null and suu_parentsid !='' ">
+	          and suu_parentsid = #{suu_parentsid}
+	         </if>
+	         <if test="isroot != null and isroot !='' ">
+	          	and suu_parentsid is null
+	         </if>
+	         <if test="orgsList != null">
+				and suu_orgid in 
+				<foreach collection="orgsList" item="item" index="index"  open="(" close=")" separator="," >
+					${item}
+				</foreach>
+			</if>
+	</sql>
+	
+	<insert id="insert" parameterType="com.xianghuan.auth.system.model.SysUserUnity" keyProperty="suu_id" >
+        INSERT INTO sys_user_unity ( <include refid="Base_Column_List" /> )  VALUES (
+            <include refid="Base_Column_insert" /> 
+        )
+	</insert>
+	
+	<insert id="insertBatch" keyProperty="suu_id">
+		insert into sys_user_unity  ( <include refid="Base_Column_List" /> )   values
+		<foreach collection="array" item="item" index="index" separator=",">
+		   <include refid="Base_Column_insert" /> 
+        </foreach>
+	</insert>
+
+	<update id="update" parameterType="com.xianghuan.auth.system.model.SysUserUnity" flushCache="true">
+        UPDATE sys_user_unity SET
+	        suu_ub_id = #{suu_ub_id,jdbcType=VARCHAR} ,
+	        suu_ub_name = #{suu_ub_name,jdbcType=VARCHAR} ,
+	        suu_ub_type = #{suu_ub_type,jdbcType=VARCHAR} ,
+	        suu_status = #{suu_status,jdbcType=VARCHAR} ,
+	        suu_dr = #{suu_dr,jdbcType=CHAR} ,
+	        suu_ts = #{suu_ts,jdbcType=VARCHAR} ,
+	        suu_version = #{suu_version,jdbcType=DECIMAL} ,
+	        suu_adduser = #{suu_adduser,jdbcType=VARCHAR} ,
+	        suu_adddate = #{suu_adddate,jdbcType=VARCHAR} ,
+	        suu_modifyuser = #{suu_modifyuser,jdbcType=VARCHAR} ,
+	        suu_modifydate = #{suu_modifydate,jdbcType=VARCHAR} ,
+	        suu_ub_loginname = #{suu_ub_loginname,jdbcType=VARCHAR} ,
+	        suu_orgid = #{suu_orgid,jdbcType=VARCHAR} ,
+            suu_parentsid = #{suu_parentsid,jdbcType=VARCHAR}
+        WHERE 
+	        suu_id = #{suu_id,jdbcType=VARCHAR} 
+	</update> 
+	
+	<update id="updateSelect" parameterType="com.xianghuan.auth.system.model.SysUserUnity" flushCache="true">
+        UPDATE sys_user_unity SET
+	        	<if test=" suu_ub_id!= null and  suu_ub_id != ''">
+	        		suu_ub_id = #{suu_ub_id,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" suu_ub_name!= null and suu_ub_name != ''">
+	        		suu_ub_name = #{suu_ub_name,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" suu_ub_type!= null and  suu_ub_type != ''">
+	        		suu_ub_type = #{suu_ub_type,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" suu_status!= null and  suu_status != ''">
+	        		suu_status = #{suu_status,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" suu_dr!= null and  suu_dr != ''">
+	        		suu_dr = #{suu_dr,jdbcType=CHAR} ,
+	        	</if>
+	        	<if test=" suu_ts!= null and  suu_ts != ''">
+	        		suu_ts = #{suu_ts,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" suu_adduser!= null and  suu_adduser != ''">
+	        		suu_adduser = #{suu_adduser,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" suu_adddate!= null and  suu_adddate != ''">
+	        		suu_adddate = #{suu_adddate,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" suu_modifyuser!= null and  suu_modifyuser != ''">
+	        		suu_modifyuser = #{suu_modifyuser,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" suu_modifydate!= null and  suu_modifydate != ''">
+	        		suu_modifydate = #{suu_modifydate,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" suu_ub_loginname!= null and  suu_ub_loginname!= '' ">
+	        		suu_ub_loginname = #{suu_ub_loginname,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" suu_orgid != null and  suu_orgid != '' ">
+	        		suu_orgid = #{suu_orgid,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" suu_parentsid != null and  suu_parentsid != '' ">
+	        		suu_parentsid = #{suu_parentsid,jdbcType=VARCHAR} ,
+	        	</if>
+	        	suu_version = #{suu_version,jdbcType=DECIMAL} 
+        WHERE 
+	        suu_id = #{suu_id,jdbcType=VARCHAR} 
+	</update>   
+
+	<delete id="delete" parameterType="com.xianghuan.auth.system.model.SysUserUnity">
+	    update sys_user_unity  set 	    
+	    <if test=" suu_deleteuser!= null and  suu_deleteuser != ''">
+	        		suu_deleteuser = #{suu_deleteuser,jdbcType=VARCHAR} ,
+       	</if>
+       	<if test=" suu_deletedate!= null and  suu_deletedate!= ''">
+       		suu_deletedate = #{suu_deletedate,jdbcType=VARCHAR} ,
+       	</if>	        	
+	    suu_dr = 0 where suu_id=#{suu_id}
+	</delete>
+	
+	<delete id="deleteBatch">
+	    delete from sys_user_unity where suu_id in
+	    <foreach collection="array" item="item"  open="(" separator="," close=")">
+	        #{item}
+	    </foreach>
+	</delete>
+	
+	<select id="find" resultType="com.xianghuan.auth.system.model.SysUserUnity" parameterType="string">
+		select
+		<include refid="Base_query_column" />
+		from sys_user_unity where suu_id= #{suu_id}
+	</select>
+
+	<select id="queryByCondition" resultType="com.xianghuan.auth.system.model.SysUserUnity" parameterType="java.util.Map">
+		select <include refid="Base_query_column" /> from sys_user_unity where 1=1
+		<include refid="Base_query_where" />
+		<if test="sqlWhere != null">
+			 #{sqlWhere}
+		</if>
+		
+		
+	</select>
+	
+	<select id="getRecordCount" resultType="int" parameterType="java.util.Map">
+		select count(1) from sys_user_unity where 1 = 1
+		<include refid="Base_query_where" />
+		<if test="sqlWhere != null">
+			 #{sqlWhere}
+		</if>
+	</select>
+	
+	<select id="select" resultType="com.xianghuan.auth.system.model.SysUserUnity" parameterType="java.util.Map">
+		select <include refid="Base_query_column" /> from sys_user_unity where 1=1
+		<include refid="Base_query_where" />
+		<if test="sqlWhere != null">
+			 #{sqlWhere}
+		</if>
+	</select>
+	<update id="updateBatch" flushCache="true" parameterType="java.util.Map">
+	     UPDATE sys_user_unity SET
+	         suu_ub_type = #{suu_ub_type}
+	         WHERE suu_ub_id in 
+	    <foreach collection="ids" item="item" index="index" open="(" separator="," close=")">
+		        #{item,jdbcType=VARCHAR} 
+		</foreach>
+	</update>
+</mapper>

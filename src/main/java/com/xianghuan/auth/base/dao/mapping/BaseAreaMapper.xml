@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 不使用namespace的话sql搜索定位会比较方便 -->
+<mapper namespace="com.xianghuan.auth.base.dao.IBaseAreaDao">
+	<sql id="Base_Column_List">
+		ba_id,ba_name,ba_level,ba_parent_id,ba_code,ba_dr,ba_ts,ba_version,ba_adduser,ba_add_time,ba_modifyuser,ba_update_time,ba_deleteuser,ba_deletetime,ba_orgid,ba_status,ba_cn,ba_letter
+	</sql>
+	<sql id="Base_Column_insert">
+        	#{ba_id,jdbcType=INTEGER},
+        	#{ba_name,jdbcType=VARCHAR},
+        	#{ba_level,jdbcType=VARCHAR},
+        	#{ba_parent_id,jdbcType=VARCHAR},
+        	#{ba_code,jdbcType=VARCHAR},
+        	#{ba_dr,jdbcType=INTEGER},
+        	#{ba_ts,jdbcType=VARCHAR},
+        	#{ba_version,jdbcType=INTEGER},
+        	#{ba_adduser,jdbcType=VARCHAR},
+        	#{ba_add_time,jdbcType=VARCHAR},
+        	#{ba_modifyuser,jdbcType=VARCHAR},
+        	#{ba_update_time,jdbcType=VARCHAR},
+        	#{ba_deleteuser,jdbcType=VARCHAR},
+        	#{ba_deletetime,jdbcType=VARCHAR},
+        	#{ba_orgid,jdbcType=VARCHAR},
+        	#{ba_status,jdbcType=VARCHAR},
+        	#{ba_cn,jdbcType=VARCHAR},
+        	#{ba_letter,jdbcType=VARCHAR}
+	</sql>
+	<sql id="Base_query_column">
+		ba_id,ba_name,ba_level,ba_parent_id,ba_code,ba_dr,ba_ts,ba_version,ba_adduser,ba_add_time,ba_modifyuser,ba_update_time,ba_deleteuser,ba_deletetime,ba_orgid,ba_status,ba_cn,ba_letter
+	</sql>
+	<sql id="Base_query_where">
+		 	<if test="ba_name != null and ba_name != ''">
+	          and ba_name = #{ba_name}
+	         </if>
+	         <if test="ba_name_like != null and ba_name_like != ''">
+	          and ba_name LIKE CONCAT('%',#{ba_name_like},'%') 
+	         </if>
+		 	<if test="ba_level != null and ba_level != ''">
+	          and ba_level = #{ba_level}
+	         </if>
+		 	<if test="ba_parent_id != null and ba_parent_id != ''">
+	          and ba_parent_id = #{ba_parent_id}
+	         </if>
+		 	<if test="ba_code != null and ba_code != ''">
+	          and ba_code = #{ba_code}
+	         </if>
+	         <if test="ba_code_like != null and ba_code_like != ''">
+	          and ba_code LIKE  CONCAT('%',#{ba_code_like},'%')
+	         </if>
+		 	<if test="ba_dr != null and ba_dr >=0">
+	          and ba_dr = #{ba_dr}
+	         </if>
+		 	<if test="ba_ts != null and ba_ts != ''">
+	          and ba_ts = #{ba_ts}
+	         </if>
+		 	<if test="ba_version != null and ba_version != ''">
+	          and ba_version = #{ba_version}
+	         </if>
+		 	<if test="ba_adduser != null and ba_adduser != ''">
+	          and ba_adduser = #{ba_adduser}
+	         </if>
+		 	<if test="ba_add_time != null and ba_add_time != ''">
+	          and ba_add_time = #{ba_add_time}
+	         </if>
+		 	<if test="ba_modifyuser != null and ba_modifyuser != ''">
+	          and ba_modifyuser = #{ba_modifyuser}
+	         </if>
+		 	<if test="ba_update_time != null and ba_update_time != ''">
+	          and ba_update_time = #{ba_update_time}
+	         </if>
+		 	<if test="ba_deleteuser != null and ba_deleteuser != ''">
+	          and ba_deleteuser = #{ba_deleteuser}
+	         </if>
+		 	<if test="ba_deletetime != null and ba_deletetime != ''">
+	          and ba_deletetime = #{ba_deletetime}
+	         </if>
+		 	<if test="ba_orgid != null and ba_orgid != ''">
+	          and ba_orgid = #{ba_orgid}
+	         </if>
+		 	<if test="ba_status != null and ba_status != ''">
+	          and ba_status = #{ba_status}
+	         </if>
+		 	<if test="ba_cn != null and ba_cn != ''">
+	          and ba_cn = #{ba_cn}
+	         </if>
+		 	<if test="ba_letter != null and ba_letter != ''">
+	          and ba_letter = #{ba_letter}
+	         </if>
+	</sql>
+	
+	<insert id="insert" parameterType="com.xianghuan.auth.base.model.BaseArea" keyProperty="ba_id" >
+        INSERT INTO base_area ( <include refid="Base_Column_List" /> )  VALUES (
+            <include refid="Base_Column_insert" /> 
+        )
+	</insert>
+	
+	<insert id="insertBatch" keyProperty="ba_id">
+		insert into base_area  ( <include refid="Base_Column_List" /> )   values
+		<foreach collection="array" item="item" index="index" separator=",">
+		   <include refid="Base_Column_insert" /> 
+        </foreach>
+	</insert>
+
+	<update id="update" parameterType="com.xianghuan.auth.base.model.BaseArea" flushCache="true">
+        UPDATE base_area SET
+	        ba_name = #{ba_name,jdbcType=VARCHAR} ,
+	        ba_level = #{ba_level,jdbcType=VARCHAR} ,
+	        ba_parent_id = #{ba_parent_id,jdbcType=VARCHAR} ,
+	        ba_code = #{ba_code,jdbcType=VARCHAR} ,
+	        ba_dr = #{ba_dr,jdbcType=INTEGER} ,
+	        ba_ts = #{ba_ts,jdbcType=VARCHAR} ,
+	        ba_version = #{ba_version,jdbcType=INTEGER} ,
+	        ba_adduser = #{ba_adduser,jdbcType=VARCHAR} ,
+	        ba_add_time = #{ba_add_time,jdbcType=VARCHAR} ,
+	        ba_modifyuser = #{ba_modifyuser,jdbcType=VARCHAR} ,
+	        ba_update_time = #{ba_update_time,jdbcType=VARCHAR} ,
+	        ba_deleteuser = #{ba_deleteuser,jdbcType=VARCHAR} ,
+	        ba_deletetime = #{ba_deletetime,jdbcType=VARCHAR} ,
+	        ba_orgid = #{ba_orgid,jdbcType=VARCHAR} ,
+	        ba_status = #{ba_status,jdbcType=VARCHAR} ,
+	        ba_cn = #{ba_cn,jdbcType=VARCHAR} ,
+	        ba_letter = #{ba_letter,jdbcType=VARCHAR} 
+        WHERE 
+	        ba_id = #{ba_id,jdbcType=INTEGER} 
+	</update> 
+	
+	<update id="updateSelect" parameterType="com.xianghuan.auth.base.model.BaseArea" flushCache="true">
+        UPDATE base_area SET
+	        	<if test=" ba_name!= null  and ba_name != ''">
+	        		ba_name = #{ba_name,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" ba_level!= null  and ba_level != ''">
+	        		ba_level = #{ba_level,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" ba_parent_id!= null  and ba_parent_id != ''">
+	        		ba_parent_id = #{ba_parent_id,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" ba_code!= null  and ba_code != ''">
+	        		ba_code = #{ba_code,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" ba_dr!= null  and ba_dr != ''">
+	        		ba_dr = #{ba_dr,jdbcType=INTEGER} ,
+	        	</if>
+	        	<if test=" ba_ts!= null  and ba_ts != ''">
+	        		ba_ts = #{ba_ts,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" ba_version!= null  and ba_version != ''">
+	        		ba_version = #{ba_version,jdbcType=INTEGER} ,
+	        	</if>
+	        	<if test=" ba_adduser!= null  and ba_adduser != ''">
+	        		ba_adduser = #{ba_adduser,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" ba_add_time!= null  and ba_add_time != ''">
+	        		ba_add_time = #{ba_add_time,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" ba_modifyuser!= null  and ba_modifyuser != ''">
+	        		ba_modifyuser = #{ba_modifyuser,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" ba_update_time!= null  and ba_update_time != ''">
+	        		ba_update_time = #{ba_update_time,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" ba_deleteuser!= null  and ba_deleteuser != ''">
+	        		ba_deleteuser = #{ba_deleteuser,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" ba_deletetime!= null  and ba_deletetime != ''">
+	        		ba_deletetime = #{ba_deletetime,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" ba_orgid!= null  and ba_orgid != ''">
+	        		ba_orgid = #{ba_orgid,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" ba_status!= null  and ba_status != ''">
+	        		ba_status = #{ba_status,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" ba_cn!= null  and ba_cn != ''">
+	        		ba_cn = #{ba_cn,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" ba_letter!= null  and ba_letter != ''">
+	        		ba_letter = #{ba_letter,jdbcType=VARCHAR} 
+	        	</if>
+        WHERE 
+	        ba_id = #{ba_id,jdbcType=INTEGER} 
+	</update>   
+	
+	<update id="updateBatch" flushCache="true">
+	    <foreach collection="array" item="item" open="begin" separator="" close="end;">
+		        UPDATE base_area SET
+			        ba_name = #{ba_name} ,
+			        ba_level = #{ba_level} ,
+			        ba_parent_id = #{ba_parent_id} ,
+			        ba_code = #{ba_code} ,
+			        ba_dr = #{ba_dr} ,
+			        ba_ts = #{ba_ts} ,
+			        ba_version = #{ba_version} ,
+			        ba_adduser = #{ba_adduser} ,
+			        ba_add_time = #{ba_add_time} ,
+			        ba_modifyuser = #{ba_modifyuser} ,
+			        ba_update_time = #{ba_update_time} ,
+			        ba_deleteuser = #{ba_deleteuser} ,
+			        ba_deletetime = #{ba_deletetime} ,
+			        ba_orgid = #{ba_orgid} ,
+			        ba_status = #{ba_status} ,
+			        ba_cn = #{ba_cn} ,
+			        ba_letter = #{ba_letter} 
+		        WHERE 
+			        ba_id = #{ba_id} 
+		</foreach>
+	</update>
+
+	<delete id="remove" parameterType="java.util.Map">
+	    update base_area set 1=1
+	    <!-- set dr = 0  -->
+	    where ba_id= #{ba_id}
+	</delete>
+	
+	<delete id="removeBatch">
+	    update base_area where ba_id in
+	    <foreach collection="array" item="item"  open="(" separator="," close=")">
+	        #{item}
+	    </foreach>
+	</delete>
+	
+	<delete id="delete" parameterType="string">
+	    delete from base_area where ba_id=#ba_id
+	</delete>
+	
+	<delete id="deleteBatch">
+	    delete from base_area where ba_id in
+	    <foreach collection="array" item="item"  open="(" separator="," close=")">
+	        #{item}
+	    </foreach>
+	</delete>
+	
+	<select id="find" resultType="com.xianghuan.auth.base.model.BaseArea" parameterType="string">
+		select
+		<include refid="Base_query_column" />
+		from base_area where ba_id= #{ba_id}
+	</select>
+
+	<select id="queryByCondition" resultType="com.xianghuan.auth.base.model.BaseArea" parameterType="java.util.Map">
+		select <include refid="Base_query_column" />,(select ba2.ba_name from base_area ba2 where ba2.ba_id=ba.ba_parent_id) as parent_nameref from base_area ba where 1=1
+		<include refid="Base_query_where" />
+		<if test="sqlWhere != null">
+			 #{sqlWhere}
+		</if>
+	</select>
+	
+	<select id="getRecordCount" resultType="int" parameterType="java.util.Map">
+		select count(1) from base_area where 1 = 1
+		<include refid="Base_query_where" />
+		<if test="sqlWhere != null">
+			 #{sqlWhere}
+		</if>
+	</select>
+	
+	<select id="select" resultType="com.xianghuan.auth.base.model.BaseArea" parameterType="java.util.Map">
+		select <include refid="Base_query_column" /> from base_area where 1=1
+		<include refid="Base_query_where" />
+		<if test="sqlWhere != null">
+			 #{sqlWhere}
+		</if>
+	</select>
+</mapper>

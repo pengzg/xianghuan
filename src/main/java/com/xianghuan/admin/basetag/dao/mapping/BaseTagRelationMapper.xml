@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 不使用namespace的话sql搜索定位会比较方便 -->
+<mapper namespace="com.xianghuan.admin.basetag.dao.IBaseTagRelationDao">
+	<sql id="Base_Column_List">
+		btr_id,btr_type,btr_typeid,btr_btid,btr_state,btr_dr,btr_addtime,btr_updatetime
+	</sql>
+	<sql id="Base_Column_insert">
+        	#{btr_id,jdbcType=INTEGER},
+        	#{btr_type,jdbcType=TINYINT},
+        	#{btr_typeid,jdbcType=INTEGER},
+        	#{btr_btid,jdbcType=INTEGER},
+        	#{btr_state,jdbcType=TINYINT},
+        	#{btr_dr,jdbcType=TINYINT},
+        	#{btr_addtime,jdbcType=VARCHAR},
+        	#{btr_updatetime,jdbcType=VARCHAR}
+	</sql>
+	<sql id="Base_query_column">
+		btr_id,btr_type,btr_typeid,btr_btid,btr_state,btr_dr,btr_addtime,btr_updatetime
+	</sql>
+	<sql id="Base_query_where">
+		 	<if test="btr_type != null and btr_type != ''">
+	          and btr_type = #{btr_type}
+	         </if>
+		 	<if test="btr_typeid != null and btr_typeid != ''">
+	          and btr_typeid = #{btr_typeid}
+	         </if>
+		 	<if test="btr_btid != null and btr_btid != ''">
+	          and btr_btid = #{btr_btid}
+	         </if>
+		 	<if test="btr_state != null and btr_state != ''">
+	          and btr_state = #{btr_state}
+	         </if>
+		 	<if test="btr_dr != null and btr_dr != ''">
+	          and btr_dr = #{btr_dr}
+	         </if>
+		 	<if test="btr_addtime != null and btr_addtime != ''">
+	          and btr_addtime = #{btr_addtime}
+	         </if>
+		 	<if test="btr_updatetime != null and btr_updatetime != ''">
+	          and btr_updatetime = #{btr_updatetime}
+	         </if>
+	</sql>
+	
+	<insert id="insert" parameterType="com.xianghuan.admin.basetag.model.BaseTagRelation" keyProperty="btr_id" >
+        INSERT INTO base_tag_relation ( <include refid="Base_Column_List" /> )  VALUES (
+            <include refid="Base_Column_insert" /> 
+        )
+	</insert>
+	
+	<insert id="insertBatch" keyProperty="btr_id">
+		insert into base_tag_relation  ( <include refid="Base_Column_List" /> )   values
+		<foreach collection="array" item="item" index="index" separator=",">
+		  (
+
+        		#{item.btr_id,jdbcType=INTEGER},
+        		#{item.btr_type,jdbcType=TINYINT},
+        		#{item.btr_typeid,jdbcType=INTEGER},
+        		#{item.btr_btid,jdbcType=INTEGER},
+        		#{item.btr_state,jdbcType=TINYINT},
+        		#{item.btr_dr,jdbcType=TINYINT},
+        		#{item.btr_addtime,jdbcType=VARCHAR},
+        		#{item.btr_updatetime,jdbcType=VARCHAR}
+			)
+        </foreach>
+	</insert>
+
+	<update id="update" parameterType="com.xianghuan.admin.basetag.model.BaseTagRelation" flushCache="true">
+        UPDATE base_tag_relation SET
+	        btr_type = #{btr_type,jdbcType=TINYINT} ,
+	        btr_typeid = #{btr_typeid,jdbcType=INTEGER} ,
+	        btr_btid = #{btr_btid,jdbcType=INTEGER} ,
+	        btr_state = #{btr_state,jdbcType=TINYINT} ,
+	        btr_dr = #{btr_dr,jdbcType=TINYINT} ,
+	        btr_addtime = #{btr_addtime,jdbcType=VARCHAR} ,
+	        btr_updatetime = #{btr_updatetime,jdbcType=VARCHAR} 
+        WHERE 
+	        btr_id = #{btr_id,jdbcType=INTEGER} 
+	</update> 
+	
+	<update id="updateSelect" parameterType="com.xianghuan.admin.basetag.model.BaseTagRelation" flushCache="true">
+        UPDATE base_tag_relation SET
+	        	<if test=" btr_type!= null  and btr_type != ''">
+	        		btr_type = #{btr_type,jdbcType=TINYINT} ,
+	        	</if>
+	        	<if test=" btr_typeid!= null  and btr_typeid != ''">
+	        		btr_typeid = #{btr_typeid,jdbcType=INTEGER} ,
+	        	</if>
+	        	<if test=" btr_btid!= null  and btr_btid != ''">
+	        		btr_btid = #{btr_btid,jdbcType=INTEGER} ,
+	        	</if>
+	        	<if test=" btr_state!= null  and btr_state != ''">
+	        		btr_state = #{btr_state,jdbcType=TINYINT} ,
+	        	</if>
+	        	<if test=" btr_dr!= null  and btr_dr != ''">
+	        		btr_dr = #{btr_dr,jdbcType=TINYINT} ,
+	        	</if>
+	        	<if test=" btr_addtime!= null  and btr_addtime != ''">
+	        		btr_addtime = #{btr_addtime,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" btr_updatetime!= null  and btr_updatetime != ''">
+	        		btr_updatetime = #{btr_updatetime,jdbcType=VARCHAR} 
+	        	</if>
+        WHERE 
+	        btr_id = #{btr_id,jdbcType=INTEGER} 
+	</update>   
+	
+	<update id="updateBatch" flushCache="true">
+	    <foreach collection="array" item="item" open="begin" separator="" close="end;">
+		        UPDATE base_tag_relation SET
+			        btr_type = #{btr_type} ,
+			        btr_typeid = #{btr_typeid} ,
+			        btr_btid = #{btr_btid} ,
+			        btr_state = #{btr_state} ,
+			        btr_dr = #{btr_dr} ,
+			        btr_addtime = #{btr_addtime} ,
+			        btr_updatetime = #{btr_updatetime} 
+		        WHERE 
+			        btr_id = #{btr_id} 
+		</foreach>
+	</update>
+
+	<delete id="remove" parameterType="java.util.Map">
+	    update base_tag_relation set 1=1
+	    <!-- set dr = 0  -->
+	    where btr_id= #{btr_id}
+	</delete>
+	
+	<delete id="removeBatch">
+	    update base_tag_relation where btr_id in
+	    <foreach collection="array" item="item"  open="(" separator="," close=")">
+	        #{item}
+	    </foreach>
+	</delete>
+	
+	<delete id="delete" parameterType="string">
+	    delete from base_tag_relation where btr_id=#btr_id
+	</delete>
+	
+	<delete id="deleteBatch">
+	    delete from base_tag_relation where btr_id in
+	    <foreach collection="array" item="item"  open="(" separator="," close=")">
+	        #{item}
+	    </foreach>
+	</delete>
+	
+	<select id="find" resultType="com.xianghuan.admin.basetag.model.BaseTagRelation" parameterType="string">
+		select
+		<include refid="Base_query_column" />
+		from base_tag_relation where btr_id= #{btr_id}
+	</select>
+
+	<select id="queryByCondition" resultType="com.xianghuan.admin.basetag.model.BaseTagRelation" parameterType="java.util.Map">
+		select <include refid="Base_query_column" /> from base_tag_relation where 1=1
+		<include refid="Base_query_where" />
+		<if test="sqlWhere != null">
+			 #{sqlWhere}
+		</if>
+	</select>
+	
+	<select id="queryByConditionExt" resultType="com.xianghuan.admin.basetag.vo.BaseTagRelationVO" parameterType="java.util.Map">
+		select <include refid="Base_query_column" /> from base_tag_relation where 1=1
+		<include refid="Base_query_where" />
+		<if test="sqlWhere != null">
+			 #{sqlWhere}
+		</if>
+
+	</select>
+	<select id="getRecordCount" resultType="int" parameterType="java.util.Map">
+		select count(1) from base_tag_relation where 1 = 1
+		<include refid="Base_query_where" />
+		<if test="sqlWhere != null">
+			 #{sqlWhere}
+		</if>
+	</select>
+	
+	<select id="select" resultType="com.xianghuan.admin.basetag.model.BaseTagRelation" parameterType="java.util.Map">
+		select <include refid="Base_query_column" /> from base_tag_relation where 1=1
+		<include refid="Base_query_where" />
+		<if test="sqlWhere != null">
+			 #{sqlWhere}
+		</if>
+		<if test="start != null">
+			 LIMIT 
+		</if>
+	</select>
+	<select id="getTagListBySource" resultType="com.xianghuan.admin.basetag.vo.BaseTagVO" parameterType="java.util.Map">
+		SELECT
+			bt_id,
+			bt_title
+		FROM
+			base_tag
+		INNER JOIN base_tag_relation ON btr_btid = bt_id
+		AND bt_dr = 1
+		WHERE
+			btr_dr = 1
+		AND btr_type = #{btr_type}
+		AND btr_typeid = #{btr_typeid}
+	</select>
+	
+</mapper>

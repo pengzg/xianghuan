@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 不使用namespace的话sql搜索定位会比较方便 -->
+<mapper namespace="com.xianghuan.auth.system.dao.ISysFileIndexDao">
+	<sql id="Base_Column_List">
+		sfi_id,sfi_user_id,sfi_orgid,sfi_dr,sfi_ts,sfi_type,sfi_save_url,sfi_sort,sfi_status,sfi_version,sfi_adduser,sfi_adddate,sfi_modifyuser,sfi_modifydate,sfi_deleteuser,sfi_deletedate,sfi_filetype,sfi_filename
+	</sql>
+	<sql id="Base_Column_insert">
+        	#{sfi_id,jdbcType=VARCHAR},
+        	#{sfi_user_id,jdbcType=VARCHAR},
+        	#{sfi_orgid,jdbcType=VARCHAR},
+        	#{sfi_dr,jdbcType=CHAR},
+        	#{sfi_ts,jdbcType=VARCHAR},
+        	#{sfi_type,jdbcType=VARCHAR},
+        	#{sfi_save_url,jdbcType=VARCHAR},
+        	#{sfi_sort,jdbcType=DECIMAL},
+        	#{sfi_status,jdbcType=VARCHAR},
+        	#{sfi_version,jdbcType=DECIMAL},
+        	#{sfi_adduser,jdbcType=VARCHAR},
+        	#{sfi_adddate,jdbcType=VARCHAR},
+        	#{sfi_modifyuser,jdbcType=VARCHAR},
+        	#{sfi_modifydate,jdbcType=VARCHAR},
+        	#{sfi_deleteuser,jdbcType=VARCHAR},
+        	#{sfi_deletedate,jdbcType=VARCHAR},
+        	#{sfi_filetype,jdbcType=VARCHAR},
+        	#{sfi_filename,jdbcType=VARCHAR}
+	</sql>
+	<sql id="Base_query_column">
+		sfi_id,sfi_user_id,sfi_orgid,sfi_dr,sfi_ts,sfi_type,sfi_save_url,sfi_sort,sfi_status,sfi_version,sfi_adduser,sfi_adddate,sfi_modifyuser,sfi_modifydate,sfi_deleteuser,sfi_deletedate,sfi_filetype,sfi_filename
+	</sql>
+	<sql id="Base_query_where">
+		 	<if test="sfi_user_id != null and sfi_user_id != ''">
+	          and sfi_user_id like CONCAT('%',#{sfi_user_id},'%')
+	         </if>
+		 	<if test="sfi_orgid != null and sfi_orgid != ''">
+	          and sfi_orgid = #{sfi_orgid}
+	         </if>
+		 	<if test="sfi_dr != null and sfi_dr != ''">
+	          and sfi_dr = #{sfi_dr}
+	         </if>
+		 	<if test="sfi_ts != null and sfi_ts != ''">
+	          and sfi_ts = #{sfi_ts}
+	         </if>
+		 	<if test="sfi_type != null and sfi_type != ''">
+	          and sfi_type = #{sfi_type}
+	         </if>
+		 	<if test="sfi_save_url != null and sfi_save_url != ''">
+	          and sfi_save_url = #{sfi_save_url}
+	         </if>
+		 	<if test="sfi_sort != null and sfi_sort != ''">
+	          and sfi_sort = #{sfi_sort}
+	         </if>
+		 	<if test="sfi_status != null and sfi_status != ''">
+	          and sfi_status = #{sfi_status}
+	         </if>
+		 	<if test="sfi_version != null and sfi_version != ''">
+	          and sfi_version = #{sfi_version}
+	         </if>
+		 	<if test="sfi_adduser != null and sfi_adduser != ''">
+	          and sfi_adduser = #{sfi_adduser}
+	         </if>
+		 	<if test="sfi_adddate != null and sfi_adddate != ''">
+	          and sfi_adddate = #{sfi_adddate}
+	         </if>
+		 	<if test="sfi_modifyuser != null and sfi_modifyuser != ''">
+	          and sfi_modifyuser = #{sfi_modifyuser}
+	         </if>
+		 	<if test="sfi_modifydate != null and sfi_modifydate != ''">
+	          and sfi_modifydate = #{sfi_modifydate}
+	         </if>
+		 	<if test="sfi_deleteuser != null and sfi_deleteuser != ''">
+	          and sfi_deleteuser = #{sfi_deleteuser}
+	         </if>
+		 	<if test="sfi_deletedate != null and sfi_deletedate != ''">
+	          and sfi_deletedate = #{sfi_deletedate}
+	         </if>
+		 	<if test="sfi_filetype != null and sfi_filetype != ''">
+	          and sfi_filetype = #{sfi_filetype}
+	         </if>
+		 	<if test="sfi_filename != null and sfi_filename != ''">
+	          and sfi_filename = #{sfi_filename}
+	         </if>
+	</sql>
+	
+	<insert id="insert" parameterType="com.xianghuan.auth.system.model.SysFileIndex" keyProperty="sfi_id" >
+        INSERT INTO sys_file_index ( <include refid="Base_Column_List" /> )  VALUES (
+            <include refid="Base_Column_insert" /> 
+        )
+	</insert>
+	
+	<insert id="insertBatch" keyProperty="sfi_id">
+		insert into sys_file_index  ( <include refid="Base_Column_List" /> )   values
+		<foreach collection="array" item="item" index="index" separator=",">
+		   <include refid="Base_Column_insert" /> 
+        </foreach>
+	</insert>
+
+	<update id="update" parameterType="com.xianghuan.auth.system.model.SysFileIndex" flushCache="true">
+        UPDATE sys_file_index SET
+	        sfi_user_id = #{sfi_user_id,jdbcType=VARCHAR} ,
+	        sfi_orgid = #{sfi_orgid,jdbcType=VARCHAR} ,
+	        sfi_dr = #{sfi_dr,jdbcType=CHAR} ,
+	        sfi_ts = #{sfi_ts,jdbcType=VARCHAR} ,
+	        sfi_type = #{sfi_type,jdbcType=VARCHAR} ,
+	        sfi_save_url = #{sfi_save_url,jdbcType=VARCHAR} ,
+	        sfi_sort = #{sfi_sort,jdbcType=DECIMAL} ,
+	        sfi_status = #{sfi_status,jdbcType=VARCHAR} ,
+	        sfi_version = #{sfi_version,jdbcType=DECIMAL} ,
+	        sfi_adduser = #{sfi_adduser,jdbcType=VARCHAR} ,
+	        sfi_adddate = #{sfi_adddate,jdbcType=VARCHAR} ,
+	        sfi_modifyuser = #{sfi_modifyuser,jdbcType=VARCHAR} ,
+	        sfi_modifydate = #{sfi_modifydate,jdbcType=VARCHAR} ,
+	        sfi_deleteuser = #{sfi_deleteuser,jdbcType=VARCHAR} ,
+	        sfi_deletedate = #{sfi_deletedate,jdbcType=VARCHAR} ,
+	        sfi_filetype = #{sfi_filetype,jdbcType=VARCHAR} ,
+	        sfi_filename = #{sfi_filename,jdbcType=VARCHAR} 
+        WHERE 
+	        sfi_id = #{sfi_id,jdbcType=VARCHAR} 
+	</update> 
+	
+	<update id="updateSelect" parameterType="com.xianghuan.auth.system.model.SysFileIndex" flushCache="true">
+        UPDATE sys_file_index SET
+	        	<if test=" sfi_user_id!= null  and sfi_user_id != ''">
+	        		sfi_user_id = #{sfi_user_id,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" sfi_orgid!= null  and sfi_orgid != ''">
+	        		sfi_orgid = #{sfi_orgid,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" sfi_dr!= null  and sfi_dr != ''">
+	        		sfi_dr = #{sfi_dr,jdbcType=CHAR} ,
+	        	</if>
+	        	<if test=" sfi_ts!= null  and sfi_ts != ''">
+	        		sfi_ts = #{sfi_ts,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" sfi_type!= null  and sfi_type != ''">
+	        		sfi_type = #{sfi_type,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" sfi_save_url!= null  and sfi_save_url != ''">
+	        		sfi_save_url = #{sfi_save_url,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" sfi_sort!= null  and sfi_sort != ''">
+	        		sfi_sort = #{sfi_sort,jdbcType=DECIMAL} ,
+	        	</if>
+	        	<if test=" sfi_status!= null  and sfi_status != ''">
+	        		sfi_status = #{sfi_status,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" sfi_version!= null  and sfi_version != ''">
+	        		sfi_version = #{sfi_version,jdbcType=DECIMAL} ,
+	        	</if>
+	        	<if test=" sfi_adduser!= null  and sfi_adduser != ''">
+	        		sfi_adduser = #{sfi_adduser,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" sfi_adddate!= null  and sfi_adddate != ''">
+	        		sfi_adddate = #{sfi_adddate,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" sfi_modifyuser!= null  and sfi_modifyuser != ''">
+	        		sfi_modifyuser = #{sfi_modifyuser,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" sfi_modifydate!= null  and sfi_modifydate != ''">
+	        		sfi_modifydate = #{sfi_modifydate,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" sfi_deleteuser!= null  and sfi_deleteuser != ''">
+	        		sfi_deleteuser = #{sfi_deleteuser,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" sfi_deletedate!= null  and sfi_deletedate != ''">
+	        		sfi_deletedate = #{sfi_deletedate,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" sfi_filetype!= null  and sfi_filetype != ''">
+	        		sfi_filetype = #{sfi_filetype,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" sfi_filename!= null  and sfi_filename != ''">
+	        		sfi_filename = #{sfi_filename,jdbcType=VARCHAR} 
+	        	</if>
+        WHERE 
+	        sfi_id = #{sfi_id,jdbcType=VARCHAR} 
+	</update>   
+	
+	<update id="updateBatch" flushCache="true">
+	    <foreach collection="array" item="item" open="begin" separator="" close="end;">
+		        UPDATE sys_file_index SET
+			        sfi_user_id = #{sfi_user_id} ,
+			        sfi_orgid = #{sfi_orgid} ,
+			        sfi_dr = #{sfi_dr} ,
+			        sfi_ts = #{sfi_ts} ,
+			        sfi_type = #{sfi_type} ,
+			        sfi_save_url = #{sfi_save_url} ,
+			        sfi_sort = #{sfi_sort} ,
+			        sfi_status = #{sfi_status} ,
+			        sfi_version = #{sfi_version} ,
+			        sfi_adduser = #{sfi_adduser} ,
+			        sfi_adddate = #{sfi_adddate} ,
+			        sfi_modifyuser = #{sfi_modifyuser} ,
+			        sfi_modifydate = #{sfi_modifydate} ,
+			        sfi_deleteuser = #{sfi_deleteuser} ,
+			        sfi_deletedate = #{sfi_deletedate} ,
+			        sfi_filetype = #{sfi_filetype} ,
+			        sfi_filename = #{sfi_filename} 
+		        WHERE 
+			        sfi_id = #{sfi_id} 
+		</foreach>
+	</update>
+
+	<delete id="delete" parameterType="string">
+	    delete from sys_file_index where sfi_id=#sfi_id
+	</delete>
+	
+	<delete id="deleteBatch">
+	    delete from sys_file_index where sfi_id in
+	    <foreach collection="array" item="item"  open="(" separator="," close=")">
+	        #{item}
+	    </foreach>
+	</delete>
+	
+	<select id="find" resultType="com.xianghuan.auth.system.model.SysFileIndex" parameterType="string">
+		select
+		<include refid="Base_query_column" />
+		from sys_file_index where sfi_id= #{sfi_id} and sfi_dr = 1
+	</select>
+
+	<select id="queryByCondition" resultType="com.xianghuan.auth.system.model.SysFileIndex" parameterType="java.util.Map">
+		select <include refid="Base_query_column" /> from sys_file_index where sfi_dr = 1
+		<include refid="Base_query_where" />
+		<if test="sqlWhere != null">
+			 #{sqlWhere}
+		</if>
+		
+		
+	</select>
+	
+	<select id="getRecordCount" resultType="int" parameterType="java.util.Map">
+		select count(1) from sys_file_index where sfi_dr = 1
+		<include refid="Base_query_where" />
+		<if test="sqlWhere != null">
+			 #{sqlWhere}
+		</if>
+	</select>
+	
+	<select id="select" resultType="com.xianghuan.auth.system.model.SysFileIndex" parameterType="java.util.Map">
+		select <include refid="Base_query_column" /> from sys_file_index where sfi_dr = 1
+		<include refid="Base_query_where" />
+		<if test="sqlWhere != null">
+			 #{sqlWhere}
+		</if>
+	</select>
+</mapper>

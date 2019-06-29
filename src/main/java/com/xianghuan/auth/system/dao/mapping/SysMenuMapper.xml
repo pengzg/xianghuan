@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 不使用namespace的话sql搜索定位会比较方便 -->
+<mapper namespace="com.xianghuan.auth.system.dao.ISysMenuDao">
+	<sql id="Base_Column_List">
+		sm_id,sm_name,sm_url,sm_pid,sm_iconcls,sm_description,sm_typeid,sm_seq,sm_target,sm_systemid,sm_status,sm_ts,sm_dr,sm_version,sm_adduser,sm_adddate,sm_modifyuser,sm_modifydate,sm_deleteuser,sm_deletedate,sm_level
+	</sql>
+	<sql id="Base_Column_insert">
+        	#{sm_id,jdbcType=VARCHAR},
+        	#{sm_name,jdbcType=VARCHAR},
+        	#{sm_url,jdbcType=VARCHAR},
+        	#{sm_pid,jdbcType=VARCHAR},
+        	#{sm_iconcls,jdbcType=VARCHAR},
+        	#{sm_description,jdbcType=VARCHAR},
+        	#{sm_typeid,jdbcType=VARCHAR},
+        	#{sm_seq,jdbcType=INTEGER},
+        	#{sm_target,jdbcType=VARCHAR},
+        	#{sm_systemid,jdbcType=VARCHAR},
+        	#{sm_status,jdbcType=VARCHAR},
+        	#{sm_ts,jdbcType=VARCHAR},
+        	#{sm_dr,jdbcType=INTEGER},
+        	#{sm_version,jdbcType=INTEGER},
+        	#{sm_adduser,jdbcType=VARCHAR},
+        	#{sm_adddate,jdbcType=VARCHAR},
+        	#{sm_modifyuser,jdbcType=VARCHAR},
+        	#{sm_modifydate,jdbcType=VARCHAR},
+        	#{sm_deleteuser,jdbcType=VARCHAR},
+        	#{sm_deletedate,jdbcType=VARCHAR},
+        	#{sm_level,jdbcType=VARCHAR}
+	</sql>
+
+	<insert id="insert" parameterType="com.xianghuan.auth.system.model.SysMenu" keyProperty="sm_id" >
+        INSERT INTO sys_menu ( <include refid="Base_Column_List" /> )  VALUES (
+            <include refid="Base_Column_insert" /> 
+        )
+	</insert>
+	
+	<insert id="insertBatch" keyProperty="sm_id">
+		insert into sys_menu  ( <include refid="Base_Column_List" /> )   values
+		<foreach collection="array" item="item" index="index" separator=",">
+		   <include refid="Base_Column_insert" /> 
+        </foreach>
+	</insert>
+
+	<update id="update" parameterType="com.xianghuan.auth.system.model.SysMenu" flushCache="true">
+        UPDATE sys_menu SET
+	        sm_name = #{sm_name,jdbcType=VARCHAR} ,
+	        sm_url = #{sm_url,jdbcType=VARCHAR} ,
+	        sm_pid = #{sm_pid,jdbcType=VARCHAR} ,
+	        sm_iconcls = #{sm_iconcls,jdbcType=VARCHAR} ,
+	        sm_description = #{sm_description,jdbcType=VARCHAR} ,
+	        sm_typeid = #{sm_typeid,jdbcType=VARCHAR} ,
+	        sm_seq = #{sm_seq,jdbcType=INTEGER} ,
+	        sm_target = #{sm_target,jdbcType=VARCHAR} ,
+	        sm_systemid = #{sm_systemid,jdbcType=VARCHAR} ,
+	        sm_status = #{sm_status,jdbcType=VARCHAR} ,
+	        sm_ts = #{sm_ts,jdbcType=VARCHAR} ,
+	        sm_dr = #{sm_dr,jdbcType=INTEGER} ,
+	        sm_version = #{sm_version,jdbcType=INTEGER} ,
+	        sm_adduser = #{sm_adduser,jdbcType=VARCHAR} ,
+	        sm_adddate = #{sm_adddate,jdbcType=VARCHAR} ,
+	        sm_modifyuser = #{sm_modifyuser,jdbcType=VARCHAR} ,
+	        sm_modifydate = #{sm_modifydate,jdbcType=VARCHAR} ,
+	        sm_deleteuser = #{sm_deleteuser,jdbcType=VARCHAR} ,
+	        sm_deletedate = #{sm_deletedate,jdbcType=VARCHAR} ,
+	        sm_level = #{sm_level,jdbcType=VARCHAR}
+        WHERE 
+	        sm_id = #{sm_id,jdbcType=VARCHAR} 
+	</update>  
+	
+	<update id="updateBatch" flushCache="true">
+	    <foreach collection="array" item="item" open="begin" separator="" close="end;">
+		        UPDATE sys_menu SET
+			        sm_name = #{sm_name} ,
+			        sm_url = #{sm_url} ,
+			        sm_pid = #{sm_pid} ,
+			        sm_iconcls = #{sm_iconcls} ,
+			        sm_description = #{sm_description} ,
+			        sm_typeid = #{sm_typeid} ,
+			        sm_seq = #{sm_seq} ,
+			        sm_target = #{sm_target} ,
+			        sm_systemid = #{sm_systemid} ,
+			        sm_status = #{sm_status} ,
+			        sm_ts = #{sm_ts} ,
+			        sm_dr = #{sm_dr} ,
+			        sm_version = #{sm_version} ,
+			        sm_adduser = #{sm_adduser} ,
+			        sm_adddate = #{sm_adddate} ,
+			        sm_modifyuser = #{sm_modifyuser} ,
+			        sm_modifydate = #{sm_modifydate} ,
+			        sm_deleteuser = #{sm_deleteuser} ,
+			        sm_deletedate = #{sm_deletedate} ,
+			        sm_level = #{sm_level}
+		        WHERE 
+			        sm_id = #{sm_id} 
+		</foreach>
+	</update>
+
+	<delete id="delete" parameterType="string">
+	    UPDATE 
+			sys_menu SET sm_dr = 0
+        WHERE 
+	        sm_id = #{sm_id}
+	</delete>
+	
+	<delete id="deleteBatch">
+	    delete from sys_menu where sm_id in
+	    <foreach collection="array" item="item"  open="(" separator="," close=")">
+	        #{item}
+	    </foreach>
+	</delete>
+	
+	<select id="find" resultType="com.xianghuan.auth.system.model.SysMenu" parameterType="string">
+		select
+			t.sm_id as sm_id,
+			t.sm_url as sm_url,
+			t.sm_pid as sm_pid,
+			t.sm_name as sm_name,
+			t.sm_iconcls as sm_iconcls,
+			t.sm_typeid as sm_typeid,
+			t.sm_target as sm_target,
+			t.sm_status as sm_status,
+			t.sm_version as sm_version,
+			t.sm_adduser as sm_adduser,
+			t.sm_adddate as sm_adddate,
+			t.sm_systemid as sm_systemid,
+			t.sm_modifyuser as sm_modifyuser,
+			t.sm_modifydate as sm_modifydate,
+			t.sm_deleteuser as sm_deleteuser,
+			t.sm_deletedate as sm_deletedate,
+			t.sm_description as sm_description,
+			t.sm_ts as sm_ts,
+			t.sm_dr as sm_dr,
+			t.sm_seq as sm_seq,
+			t.sm_level as sm_level,
+			p.sm_name as name, 
+			ss.ss_name as ss_name
+	     from 
+	       sys_menu t 
+	     left join 
+	          sys_menu p on t.sm_pid = p.sm_id
+	     left join 
+	          sys_system ss on ss.ss_id = t.sm_systemid
+	     where t.sm_dr = 1 and t.sm_status = 1 and t.sm_id=#{sm_id} order by t.sm_seq
+	</select>
+
+	<select id="queryByCondition" resultType="com.xianghuan.auth.system.model.SysMenu" parameterType="java.util.Map">
+		select
+			t.sm_id as sm_id,
+			t.sm_url as sm_url,
+			t.sm_pid as sm_pid,
+			t.sm_name as sm_name,
+			t.sm_iconcls as sm_iconcls,
+			t.sm_typeid as sm_typeid,
+			t.sm_target as sm_target,
+			t.sm_status as sm_status,
+			t.sm_version as sm_version,
+			t.sm_adduser as sm_adduser,
+			t.sm_adddate as sm_adddate,
+			t.sm_systemid as sm_systemid,
+			t.sm_modifyuser as sm_modifyuser,
+			t.sm_modifydate as sm_modifydate,
+			t.sm_deleteuser as sm_deleteuser,
+			t.sm_deletedate as sm_deletedate,
+			t.sm_description as sm_description,
+			t.sm_ts as sm_ts,
+			t.sm_dr as sm_dr,
+			t.sm_seq as sm_seq,
+			t.sm_level as sm_level,
+			p.sm_name as name, 
+			ss.ss_name as ss_name
+	     from 
+	       sys_menu t 
+	     left join 
+	          sys_menu p on t.sm_pid = p.sm_id
+	     left join 
+	          sys_system ss on ss.ss_id = t.sm_systemid
+	     where 1 = 1 and t.sm_dr = 1
+ 		<if test="sm_name != null and sm_name != ''">
+			and t.sm_name like CONCAT('%',#{sm_name},'%')
+		</if>
+		<if test="sm_typeid != null and sm_typeid != ''">
+			and t.sm_typeid = #{sm_typeid}
+		</if>
+		<if test="sm_status != null and sm_status != ''">
+			and t.sm_status = #{sm_status}
+		</if>
+		<if test="sqlWhere != null">
+			 #{sqlWhere}
+		</if> order by t.sm_seq
+	</select>
+	
+	<select id="getRecordCount" resultType="int" parameterType="java.util.Map">
+		select count(1) from sys_menu where 1 = 1 and sm_dr = 1
+		<if test="sm_name != null and sm_name != ''">
+			 and t.sm_name like CONCAT('%',#{sm_name},'%')
+		</if> order by t.sm_seq
+	</select>
+	
+	<select id="select" resultType="com.xianghuan.auth.system.model.SysMenu" parameterType="java.util.Map">
+		select
+	      t.sm_id as sm_id,
+	      t.sm_url as sm_url,
+	      t.sm_pid as sm_pid,
+	      t.sm_name as sm_name,
+	      t.sm_iconcls as sm_iconcls,
+	      t.sm_typeid as sm_typeid,
+	      t.sm_target as sm_target,
+	      t.sm_status as sm_status,
+	      t.sm_version as sm_version,
+	      t.sm_adduser as sm_adduser,
+	      t.sm_adddate as sm_adddate,
+	      t.sm_systemid as sm_systemid,
+	      t.sm_modifyuser as sm_modifyuser,
+	      t.sm_modifydate as sm_modifydate,
+	      t.sm_deleteuser as sm_deleteuser,
+	      t.sm_deletedate as sm_deletedate,
+	      t.sm_description as sm_description,
+	      t.sm_ts as sm_ts,
+	      t.sm_dr as sm_dr,
+	      t.sm_seq as sm_seq,
+	      t.sm_level as sm_level,
+	      p.sm_name as name, 
+	      ss.ss_name as ss_name
+	     from 
+	       sys_menu t 
+	     left join 
+	          sys_menu p on t.sm_pid = p.sm_id
+	     left join 
+	          sys_system ss on ss.ss_id = t.sm_systemid
+	     where 1 = 1 and t.sm_dr = 1 
+		<if test="sm_name != null and sm_name != ''">
+			and t.sm_name like CONCAT('%',#{sm_name},'%')
+		</if>
+		<if test="sm_typeid != null and sm_typeid != ''">
+			and t.sm_typeid = #{sm_typeid}
+		</if>
+		<if test="sm_systemid != null and sm_systemid != ''">
+			and t.sm_systemid = #{sm_systemid}
+		</if>
+		<if test="sm_pid != null and sm_pid != ''">
+			and t.sm_pid = #{sm_pid}
+		</if>
+		<if test="isroot != null and isroot != ''">
+			and t.sm_pid= '0'
+		</if>
+		<if test="sm_status != null and sm_status != ''">
+			and t.sm_status = #{sm_status}
+		</if>
+		<if test="sm_level != null and sm_level != ''">
+			and t.sm_level = #{sm_level}
+		</if>
+		<if test="sm_level != null and sm_level != ''">
+			and t.sm_level = #{sm_level}
+		</if>
+		<if test="sqlWhere != null">
+			 #{sqlWhere}
+		</if>
+		<if test="ss_code != null and ss_code!='' ">
+			and exists ( select 1 from sys_system ss1 where t.sm_systemid=ss1.ss_id and ss1.ss_code=#{ss_code} )
+		</if>
+		<if test="sur_userid != null">
+			 and exists (
+					select 1 from 
+					sys_role_menu srm,sys_user_role sur  
+					where srm.srm_roleid = sur.sur_roleid and t.sm_id=srm.srm_menuId
+					and sur.sur_userid =  #{sur_userid}
+				)
+		</if> order by t.sm_seq
+	</select>
+</mapper>

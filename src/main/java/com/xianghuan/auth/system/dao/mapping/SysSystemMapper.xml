@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 不使用namespace的话sql搜索定位会比较方便 -->
+<mapper namespace="com.xianghuan.auth.system.dao.ISysSystemDao">
+	<sql id="Base_Column_List">
+		ss_id,ss_code,ss_name,ss_url,ss_dr,ss_ts,ss_desc,ss_version,ss_adduser,ss_adddate,ss_modifyuser,ss_modifydate,ss_deleteuser,ss_deletedate
+	</sql>
+	<sql id="Base_Column_insert">
+        	#{ss_id,jdbcType=VARCHAR},
+        	#{ss_code,jdbcType=VARCHAR},
+        	#{ss_name,jdbcType=VARCHAR},
+        	#{ss_url,jdbcType=VARCHAR},
+        	#{ss_dr,jdbcType=INTEGER},
+        	#{ss_ts,jdbcType=VARCHAR},
+        	#{ss_desc,jdbcType=VARCHAR},
+        	#{ss_version,jdbcType=INTEGER},
+        	#{ss_adduser,jdbcType=VARCHAR},
+        	#{ss_adddate,jdbcType=VARCHAR},
+        	#{ss_modifyuser,jdbcType=VARCHAR},
+        	#{ss_modifydate,jdbcType=VARCHAR},
+        	#{ss_deleteuser,jdbcType=VARCHAR},
+        	#{ss_deletedate,jdbcType=VARCHAR}
+	</sql>
+	
+	<insert id="insert" parameterType="com.xianghuan.auth.system.model.SysSystem" keyProperty="ss_id" >
+        INSERT INTO sys_system ( <include refid="Base_Column_List" /> )  VALUES (
+            <include refid="Base_Column_insert" /> 
+        )
+	</insert>
+	
+	<insert id="insertBatch"  parameterType="java.util.List">
+		insert into sys_system  ( <include refid="Base_Column_List" /> )   
+		<foreach collection="array" item="item" index="index" separator="union all" >
+		 	select #{item.ss_id,jdbcType=VARCHAR},#{item.ss_code,jdbcType=VARCHAR},
+		 	#{item.ss_name,jdbcType=VARCHAR},#{item.ss_url,jdbcType=VARCHAR},
+		 	#{item.ss_dr,jdbcType=INTEGER},#{item.ss_ts,jdbcType=VARCHAR},#{item.ss_desc,jdbcType=VARCHAR},
+		 	#{item.ss_version,jdbcType=INTEGER},#{item.ss_adduser,jdbcType=VARCHAR},#{item.ss_adddate,jdbcType=VARCHAR},
+		 	#{item.ss_modifyuser,jdbcType=VARCHAR},#{item.ss_modifydate,jdbcType=VARCHAR},#{item.ss_deleteuser,jdbcType=VARCHAR},
+		 	#{item.ss_deletedate,jdbcType=VARCHAR}
+		 	from dual		 	
+        </foreach>
+	</insert>
+	
+	
+	<insert id="insertBatch_list"  parameterType="java.util.List">
+		insert into sys_system  ( <include refid="Base_Column_List" /> )   
+		<foreach collection="list" item="item" index="index" separator="union all" >
+		 	select #{item.ss_id,jdbcType=VARCHAR},#{item.ss_code,jdbcType=VARCHAR},
+		 	#{item.ss_name,jdbcType=VARCHAR},#{item.ss_url,jdbcType=VARCHAR},
+		 	#{item.ss_dr,jdbcType=INTEGER},#{item.ss_ts,jdbcType=VARCHAR},#{item.ss_desc,jdbcType=VARCHAR},
+		 	#{item.ss_version,jdbcType=INTEGER},#{item.ss_adduser,jdbcType=VARCHAR},#{item.ss_adddate,jdbcType=VARCHAR},
+		 	#{item.ss_modifyuser,jdbcType=VARCHAR},#{item.ss_modifydate,jdbcType=VARCHAR},#{item.ss_deleteuser,jdbcType=VARCHAR},
+		 	#{item.ss_deletedate,jdbcType=VARCHAR}
+		 	from dual		 	
+        </foreach>
+	</insert>
+	
+	
+
+	<update id="update" parameterType="com.xianghuan.auth.system.model.SysSystem" flushCache="true">
+        UPDATE sys_system SET
+	        <if test="ss_code != null">ss_code = #{ss_code,jdbcType=VARCHAR} ,</if>
+	        <if test="ss_name != null">ss_name = #{ss_name,jdbcType=VARCHAR} ,</if>
+	        <if test="ss_url != null">ss_url = #{ss_url,jdbcType=VARCHAR} ,</if>
+	        <if test="ss_dr != null">ss_dr = #{ss_dr,jdbcType=INTEGER} ,</if>
+	        <if test="ss_ts != null">ss_ts = #{ss_ts,jdbcType=VARCHAR} ,</if>
+	        <if test="ss_desc != null">ss_desc = #{ss_desc,jdbcType=VARCHAR} ,</if>
+	        <if test="ss_adduser != null">ss_adduser = #{ss_adduser,jdbcType=VARCHAR} ,</if>
+	        <if test="ss_adddate != null">ss_adddate = #{ss_adddate,jdbcType=VARCHAR} ,</if>
+	        <if test="ss_modifyuser != null">ss_modifyuser = #{ss_modifyuser,jdbcType=VARCHAR} ,</if>
+	        <if test="ss_modifydate != null">ss_modifydate = #{ss_modifydate,jdbcType=VARCHAR} ,</if>
+	        <if test="ss_deleteuser != null">ss_deleteuser = #{ss_deleteuser,jdbcType=VARCHAR} ,</if>
+	        <if test="ss_deletedate != null">ss_deletedate = #{ss_deletedate,jdbcType=VARCHAR} ,</if>
+	         ss_version = #{ss_version,jdbcType=INTEGER} 
+        WHERE 
+	        ss_id = #{ss_id,jdbcType=VARCHAR} 
+	</update>  
+	
+	<update id="updateBatch" flushCache="true">
+	    <foreach collection="array" item="item" open="begin" separator="" close="end;">
+		        UPDATE sys_system SET
+			        ss_code = #{ss_code} ,
+			        ss_name = #{ss_name} ,
+			        ss_url = #{ss_url} ,
+			        ss_dr = #{ss_dr} ,
+			        ss_ts = #{ss_ts} ,
+			        ss_desc = #{ss_desc} ,
+			        ss_adduser = #{ss_adduser} ,
+			        ss_adddate = #{ss_adddate} ,
+			        ss_modifyuser = #{ss_modifyuser} ,
+			        ss_modifydate = #{ss_modifydate} ,
+			        ss_deleteuser = #{ss_deleteuser} ,
+			        ss_deletedate = #{ss_deletedate} ,
+			        ss_version = #{ss_version}
+		        WHERE 
+			        ss_id = #{ss_id} 
+		</foreach>
+	</update>
+
+	<delete id="delete" parameterType="string">
+	    delete from sys_system where ss_id=#ss_id
+	</delete>
+	
+	<delete id="deleteBatch">
+	    delete from sys_system where ss_id in
+	    <foreach collection="array" item="item"  open="(" separator="," close=")">
+	        #{item}
+	    </foreach>
+	</delete>
+	
+	<select id="find" resultType="com.xianghuan.auth.system.model.SysSystem" parameterType="string">
+		select
+		<include refid="Base_Column_List" />
+		from sys_system where ss_id= #{ss_id}
+	</select>
+
+	<select id="queryByCondition" resultType="com.xianghuan.auth.system.model.SysSystem" parameterType="java.util.Map">
+		select <include refid="Base_Column_List" /> from sys_system where 1=1 and ss_dr = 1
+		<if test="ss_code != null">
+		    and	ss_code like CONCAT('%',#{ss_code},'%')
+		</if>
+		<if test="ss_name != null">
+		    and	ss_name like CONCAT('%',#{ss_name},'%')
+		</if>
+	</select>
+	
+	<select id="getRecordCount" resultType="int" parameterType="java.util.Map">
+		select count(1) from sys_system where 1 = 1 and ss_dr = 1
+		<if test="ss_code != null">
+		    and	ss_code like CONCAT('%',#{ss_code},'%')
+		</if>
+		<if test="ss_name != null">
+		    and	ss_name like CONCAT('%',#{ss_name},'%')
+		</if>
+	</select>
+	
+	<select id="select" resultType="com.xianghuan.auth.system.model.SysSystem" parameterType="java.util.Map">
+		select <include refid="Base_Column_List" /> from sys_system where 1=1 and ss_dr = 1
+		<if test="ss_code != null">
+		    and	ss_code like CONCAT('%',#{ss_code},'%')
+		</if>
+		<if test="ss_name != null">
+		    and	ss_name like CONCAT('%',#{ss_name},'%')
+		</if>
+	</select>
+</mapper>

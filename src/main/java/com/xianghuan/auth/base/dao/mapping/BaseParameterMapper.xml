@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 不使用namespace的话sql搜索定位会比较方便 -->
+<mapper namespace="com.xianghuan.auth.base.dao.IBaseParameterDao">
+	<sql id="Base_Column_List">
+		bp_id,bp_key,bp_value,bp_remark,bp_dr,bp_version,bp_level,bp_adduser,bp_updateuser,status,add_time,update_time
+	</sql>
+	<sql id="Base_Column_insert">
+        	#{bp_id,jdbcType=INTEGER},
+        	#{bp_key,jdbcType=VARCHAR},
+        	#{bp_value,jdbcType=VARCHAR},
+        	#{bp_remark,jdbcType=VARCHAR},
+        	#{bp_dr,jdbcType=VARCHAR},
+        	#{bp_version,jdbcType=INTEGER},
+        	#{bp_adduser,jdbcType=VARCHAR},
+        	#{bp_updateuser,jdbcType=VARCHAR},
+        	#{status,jdbcType=TINYINT},
+        	#{bp_level,jdbcType=TINYINT},
+        	#{add_time,jdbcType=TIMESTAMP},
+        	#{update_time,jdbcType=TIMESTAMP}
+	</sql>
+	<sql id="Base_query_column">
+		bp_id,bp_key,bp_value,bp_level,bp_remark,bp_dr,bp_version,bp_adduser,bp_updateuser,status,add_time,update_time
+	</sql>
+	<sql id="Base_query_where">
+		 	<if test="bp_key != null and bp_key != ''">
+	          and bp_key = #{bp_key}
+	         </if>
+	         <if test="bp_key_like != null and bp_key_like != ''">
+	          and bp_key like CONCAT('%',#{bp_key_like}, '%') 
+	         </if>
+		 	<if test="bp_value != null and bp_value != ''">
+	          and bp_value = #{bp_value}
+	         </if>
+		 	<if test="bp_remark != null and bp_remark != ''">
+	          and bp_remark = #{bp_remark}
+	         </if>
+		 	<if test="bp_dr != null and bp_dr != ''">
+	          and bp_dr = #{bp_dr}
+	         </if>
+		 	<if test="bp_version != null and bp_version != ''">
+	          and bp_version = #{bp_version}
+	         </if>
+		 	<if test="bp_adduser != null and bp_adduser != ''">
+	          and bp_adduser = #{bp_adduser}
+	         </if>
+		 	<if test="bp_updateuser != null and bp_updateuser != ''">
+	          and bp_updateuser = #{bp_updateuser}
+	         </if>
+		 	<if test="status != null and status != ''">
+	          and status = #{status}
+	         </if>
+	         <if test="bp_level != null and bp_level != ''">
+	          and bp_level = #{bp_level}
+	         </if>
+		 	<if test="add_time != null and add_time != ''">
+	          and add_time = #{add_time}
+	         </if>
+		 	<if test="update_time != null and update_time != ''">
+	          and update_time = #{update_time}
+	         </if>
+	</sql>
+	
+	<insert id="insert" parameterType="com.xianghuan.auth.base.model.BaseParameter" keyProperty="bp_id" >
+        INSERT INTO base_parameter ( <include refid="Base_Column_List" /> )  VALUES (
+            <include refid="Base_Column_insert" /> 
+        )
+	</insert>
+	
+	<insert id="insertBatch" keyProperty="bp_id">
+		insert into base_parameter  ( <include refid="Base_Column_List" /> )   values
+		<foreach collection="array" item="item" index="index" separator=",">
+		   <include refid="Base_Column_insert" /> 
+        </foreach>
+	</insert>
+
+	<update id="update" parameterType="com.xianghuan.auth.base.model.BaseParameter" flushCache="true">
+        UPDATE base_parameter SET
+	        bp_key = #{bp_key,jdbcType=VARCHAR} ,
+	        bp_value = #{bp_value,jdbcType=VARCHAR} ,
+	        bp_remark = #{bp_remark,jdbcType=VARCHAR} ,
+	        bp_dr = #{bp_dr,jdbcType=VARCHAR} ,
+	        bp_version = #{bp_version,jdbcType=INTEGER} ,
+	        bp_adduser = #{bp_adduser,jdbcType=VARCHAR} ,
+	        bp_updateuser = #{bp_updateuser,jdbcType=VARCHAR} ,
+	        status = #{status,jdbcType=TINYINT} ,
+	        bp_level = #{bp_level,jdbcType=TINYINT} ,
+	        add_time = #{add_time,jdbcType=TIMESTAMP} ,
+	        update_time = #{update_time,jdbcType=TIMESTAMP} 
+        WHERE 
+	        bp_id = #{bp_id,jdbcType=INTEGER} 
+	</update> 
+	
+	<update id="updateSelect" parameterType="com.xianghuan.auth.base.model.BaseParameter" flushCache="true">
+        UPDATE base_parameter SET
+	        	<if test=" bp_key!= null  and bp_key != ''">
+	        		bp_key = #{bp_key,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" bp_value!= null  and bp_value != ''">
+	        		bp_value = #{bp_value,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" bp_remark!= null  and bp_remark != ''">
+	        		bp_remark = #{bp_remark,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" bp_dr!= null  and bp_dr != ''">
+	        		bp_dr = #{bp_dr,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" bp_version!= null  and bp_version != ''">
+	        		bp_version = #{bp_version,jdbcType=INTEGER} ,
+	        	</if>
+	        	<if test=" bp_adduser!= null  and bp_adduser != ''">
+	        		bp_adduser = #{bp_adduser,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" bp_updateuser!= null  and bp_updateuser != ''">
+	        		bp_updateuser = #{bp_updateuser,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" status!= null  and status != ''">
+	        		status = #{status,jdbcType=TINYINT} ,
+	        	</if>
+	        	<if test=" bp_level != null  and bp_level != ''">
+	        		bp_level = #{bp_level,jdbcType=TINYINT} ,
+	        	</if>
+	        	<if test=" add_time!= null  and add_time != ''">
+	        		add_time = #{add_time,jdbcType=TIMESTAMP} ,
+	        	</if>
+	        	<if test=" update_time!= null  and update_time != ''">
+	        		update_time = #{update_time,jdbcType=TIMESTAMP} 
+	        	</if>
+        WHERE 
+	        bp_id = #{bp_id,jdbcType=INTEGER} 
+	</update>   
+	
+	<update id="updateBatch" flushCache="true">
+	    <foreach collection="array" item="item" open="begin" separator="" close="end;">
+		        UPDATE base_parameter SET
+			        bp_key = #{bp_key} ,
+			        bp_value = #{bp_value} ,
+			        bp_remark = #{bp_remark} ,
+			        bp_dr = #{bp_dr} ,
+			        bp_version = #{bp_version} ,
+			        bp_adduser = #{bp_adduser} ,
+			        bp_updateuser = #{bp_updateuser} ,
+			        status = #{status} ,
+			        add_time = #{add_time} ,
+			        update_time = #{update_time} 
+		        WHERE 
+			        bp_id = #{bp_id} 
+		</foreach>
+	</update>
+
+	<delete id="remove" parameterType="java.util.Map">
+	    UPDATE base_parameter SET
+	        bp_key = #{bp_key,jdbcType=VARCHAR} ,
+	        bp_value = #{bp_value,jdbcType=VARCHAR} ,
+	        bp_remark = #{bp_remark,jdbcType=VARCHAR} ,
+	        bp_dr = #{bp_dr,jdbcType=VARCHAR} ,
+	        bp_version = #{bp_version,jdbcType=INTEGER} ,
+	        bp_adduser = #{bp_adduser,jdbcType=VARCHAR} ,
+	        bp_updateuser = #{bp_updateuser,jdbcType=VARCHAR} ,
+	        status = #{status,jdbcType=TINYINT} ,
+	        bp_level = #{bp_level,jdbcType=TINYINT} ,
+	        add_time = #{add_time,jdbcType=TIMESTAMP} ,
+	        update_time = #{update_time,jdbcType=TIMESTAMP} 	    
+	    where bp_id= #{bp_id}
+	</delete>
+	
+	<delete id="removeBatch">
+	    update base_parameter where bp_id in
+	    <foreach collection="array" item="item"  open="(" separator="," close=")">
+	        #{item}
+	    </foreach>
+	</delete>
+	
+	<delete id="delete" parameterType="string">
+	    delete from base_parameter where bp_id=#bp_id
+	</delete>
+	
+	<delete id="deleteBatch">
+	    delete from base_parameter where bp_id in
+	    <foreach collection="array" item="item"  open="(" separator="," close=")">
+	        #{item}
+	    </foreach>
+	</delete>
+	
+	<select id="find" resultType="com.xianghuan.auth.base.model.BaseParameter" parameterType="string">
+		select
+		<include refid="Base_query_column" />
+		from base_parameter where bp_id= #{bp_id}
+	</select>
+
+	<select id="queryByCondition" resultType="com.xianghuan.auth.base.model.BaseParameter" parameterType="java.util.Map">
+		select <include refid="Base_query_column" /> from base_parameter where 1=1
+		<include refid="Base_query_where" />
+		<if test="sqlWhere != null">
+			 #{sqlWhere}
+		</if>
+	</select>
+	
+	<select id="getRecordCount" resultType="int" parameterType="java.util.Map">
+		select count(1) from base_parameter where 1 = 1
+		<include refid="Base_query_where" />
+		<if test="sqlWhere != null">
+			 #{sqlWhere}
+		</if>
+	</select>
+	
+	<select id="select" resultType="com.xianghuan.auth.base.model.BaseParameter" parameterType="java.util.Map">
+		select <include refid="Base_query_column" /> from base_parameter where 1=1
+		<include refid="Base_query_where" />
+		<if test="sqlWhere != null">
+			 #{sqlWhere}
+		</if>
+	</select>
+	<select id="findByKeyCode" resultType="com.xianghuan.auth.base.model.BaseParameter" parameterType="string">
+		select <include refid="Base_query_column" /> from base_parameter where 1=1
+		and bp_key = #{key} and bp_dr = 1 and status = 1
+	</select>
+</mapper>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!-- 不使用namespace的话sql搜索定位会比较方便 -->
+<mapper namespace="com.xianghuan.auth.base.dao.IBaseDatatypeDao">
+	<sql id="Base_Column_List">
+		bdt_id,bdt_code,bdt_name,bdt_order,bdt_type,bdt_org,bdt_des,bdt_status,bdt_dr,bdt_adduser,bdt_adddate,bdt_modifyuser,bdt_modifydate,bdt_deleteuser,bdt_deletedate,bdt_isgroup
+	</sql>
+	<sql id="Base_Column_insert">
+        	#{bdt_id,jdbcType=VARCHAR},
+        	#{bdt_code,jdbcType=VARCHAR},
+        	#{bdt_name,jdbcType=VARCHAR},
+        	#{bdt_order,jdbcType=INTEGER},
+        	#{bdt_type,jdbcType=VARCHAR},
+        	#{bdt_org,jdbcType=VARCHAR},
+        	#{bdt_des,jdbcType=VARCHAR},
+        	#{bdt_status,jdbcType=VARCHAR},
+        	#{bdt_dr,jdbcType=INTEGER},
+        	#{bdt_adduser,jdbcType=VARCHAR},
+        	#{bdt_adddate,jdbcType=VARCHAR},
+        	#{bdt_modifyuser,jdbcType=VARCHAR},
+        	#{bdt_modifydate,jdbcType=VARCHAR},
+        	#{bdt_deleteuser,jdbcType=VARCHAR},
+        	#{bdt_deletedate,jdbcType=VARCHAR},
+        	#{bdt_isgroup,jdbcType=VARCHAR}
+	</sql>
+
+	<insert id="insert" parameterType="com.xianghuan.auth.base.model.BaseDatatype"  useGeneratedKeys="true"  keyProperty="bdt_id" >
+        INSERT INTO base_datatype ( <include refid="Base_Column_List" /> )  VALUES (
+            <include refid="Base_Column_insert" /> 
+        )
+	</insert>
+	
+	<insert id="insertBatch" keyProperty="bdt_id">
+		insert into base_datatype  ( <include refid="Base_Column_List" /> )   values
+		<foreach collection="array" item="item" index="index" separator=",">
+		   <include refid="Base_Column_insert" /> 
+        </foreach>
+	</insert>
+
+	<update id="update" parameterType="com.xianghuan.auth.base.model.BaseDatatype" flushCache="true">
+        UPDATE base_datatype SET
+	        <if test="bdt_code != null">bdt_code = #{bdt_code,jdbcType=VARCHAR},</if>
+	        <if test="bdt_name != null">bdt_name = #{bdt_name,jdbcType=VARCHAR} ,</if>
+	        <if test="bdt_order != null">bdt_order = #{bdt_order,jdbcType=INTEGER} ,</if>
+	        <if test="bdt_type != null">bdt_type = #{bdt_type,jdbcType=VARCHAR} ,</if>
+	        <if test="bdt_org != null">bdt_org = #{bdt_org,jdbcType=VARCHAR} ,</if>
+	        <if test="bdt_des != null">bdt_des = #{bdt_des,jdbcType=VARCHAR} ,</if>
+	        <if test="bdt_status != null">bdt_status = #{bdt_status,jdbcType=VARCHAR} ,</if>
+	        <if test="bdt_dr != null">bdt_dr = #{bdt_dr,jdbcType=INTEGER} ,</if>
+	        <if test="bdt_adduser != null">bdt_adduser = #{bdt_adduser,jdbcType=VARCHAR},</if>
+        	<if test="bdt_adddate != null">bdt_adddate = #{bdt_adddate,jdbcType=VARCHAR},</if>
+        	<if test="bdt_modifyuser != null">bdt_modifyuser = #{bdt_modifyuser,jdbcType=VARCHAR},</if>
+        	<if test="bdt_modifydate != null">bdt_modifydate = #{bdt_modifydate,jdbcType=VARCHAR},</if>
+        	<if test="bdt_deleteuser != null">bdt_deleteuser = #{bdt_deleteuser,jdbcType=VARCHAR},</if>
+        	<if test="bdt_deletedate != null">bdt_deletedate = #{bdt_deletedate,jdbcType=VARCHAR},</if>
+        	<if test="bdt_isgroup != null">bdt_isgroup = #{bdt_isgroup,jdbcType=VARCHAR}</if>
+        		bdt_isgroup=1
+        WHERE 
+	        bdt_id = #{bdt_id,jdbcType=VARCHAR} 
+	</update>  
+	
+	<update id="updateBatch" flushCache="true">
+	    <foreach collection="array" item="item" open="begin" separator="" close="end;">
+		        UPDATE base_datatype SET
+			        bdt_code = #{bdt_code} ,
+			        bdt_name = #{bdt_name} ,
+			        bdt_order = #{bdt_order} ,
+			        bdt_type = #{bdt_type} ,
+			        bdt_org = #{bdt_org} ,
+			        bdt_des = #{bdt_des} ,
+			        bdt_status = #{bdt_status} ,
+			        bdt_dr = #{bdt_dr} ,
+			        bdt_isgroup = #{bdt_isgroup} 
+		        WHERE 
+			        bdt_id = #{bdt_id} 
+		</foreach>
+	</update>
+
+	<delete id="delete" parameterType="string">
+	    delete from base_datatype where bdt_id=#bdt_id
+	</delete>
+	
+	<delete id="deleteBatch">
+	    delete from base_datatype where bdt_id in
+	    <foreach collection="array" item="item"  open="(" separator="," close=")">
+	        #{item}
+	    </foreach>
+	</delete>
+	
+	<select id="find" resultType="com.xianghuan.auth.base.model.BaseDatatype" parameterType="string">
+		select
+		<include refid="Base_Column_List" />
+		from base_datatype where bdt_id= #{bdt_id}
+	</select>
+
+	<sql id="Base_query_where">
+        <if test="bdt_name != null and bpa_user_id != '' ">
+			and bdt_name like   CONCAT('%',#{bdt_name},'%')   
+		</if>
+		<if test="bdt_name_like != null and bdt_name_like != '' ">
+			and bdt_name like   CONCAT('%',#{bdt_name_like},'%')   
+		</if>
+		<if test="bdt_code != null and bdt_code != '' " >
+			 and bdt_code= #{bdt_code}
+		</if>
+		<if test="bdt_type != null and bdt_type != '' " >
+			 and bdt_type= #{bdt_type}
+		</if>
+		<if test="bdt_status != null and bdt_status != '' " >
+			 and bdt_status= #{bdt_status}
+		</if>		
+	</sql>
+	<select id="queryByCondition" resultType="com.xianghuan.auth.base.model.BaseDatatype">
+		select <include refid="Base_Column_List" /> from base_datatype where 1=1 and bdt_dr=1
+		<include refid="Base_query_where" />
+	</select>
+	
+	<select id="getRecordCount" resultType="int">
+		select count(1) from base_datatype where 1 = 1 and bdt_dr=1
+		<include refid="Base_query_where" />
+	</select>
+	
+	<select id="select" resultType="com.xianghuan.auth.base.model.BaseDatatype" parameterType="java.util.Map">
+		select <include refid="Base_Column_List" /> from base_datatype where 1=1  and bdt_dr=1
+		<include refid="Base_query_where" />
+	</select>
+</mapper>

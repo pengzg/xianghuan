@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 不使用namespace的话sql搜索定位会比较方便 -->
+<mapper namespace="com.xianghuan.auth.base.dao.IBasePicAttachmentDao">
+	<sql id="Base_Column_List">
+		bpa_id,bpa_orgid,bpa_tittle,bpa_path,bpa_type,bpa_size,bpa_file_name,bpa_description,bpa_status,bpa_add_time,bpa_adduserid,bpa_dr
+	</sql>
+	<sql id="Base_Column_insert">
+        	#{bpa_id,jdbcType=VARCHAR},
+        	#{bpa_orgid,jdbcType=BIGINT},
+        	#{bpa_tittle,jdbcType=VARCHAR},
+        	#{bpa_path,jdbcType=VARCHAR},
+        	#{bpa_type,jdbcType=BIT},
+        	#{bpa_size,jdbcType=INTEGER},
+        	#{bpa_file_name,jdbcType=VARCHAR},
+        	#{bpa_description,jdbcType=VARCHAR},
+        	#{bpa_status,jdbcType=BIT},
+        	#{bpa_add_time,jdbcType=VARCHAR},
+        	#{bpa_adduserid,jdbcType=VARCHAR},
+        	#{bpa_dr,jdbcType=BIT}
+	</sql>
+	<sql id="Base_query_column">
+		bpa_id,bpa_orgid,bpa_tittle,bpa_path,bpa_type,bpa_size,bpa_file_name,bpa_description,bpa_status,bpa_add_time,bpa_adduserid,bpa_dr
+	</sql>
+	<sql id="Base_query_where">
+		 	<if test="bpa_orgid != null and bpa_orgid != ''">
+	          and bpa_orgid = #{bpa_orgid}
+	         </if>
+		 	<if test="bpa_tittle != null and bpa_tittle != ''">
+	          and bpa_tittle = #{bpa_tittle}
+	         </if>
+		 	<if test="bpa_path != null and bpa_path != ''">
+	          and bpa_path = #{bpa_path}
+	         </if>
+		 	<if test="bpa_type != null and bpa_type != ''">
+	          and bpa_type = #{bpa_type}
+	         </if>
+		 	<if test="bpa_size != null and bpa_size != ''">
+	          and bpa_size = #{bpa_size}
+	         </if>
+		 	<if test="bpa_file_name != null and bpa_file_name != ''">
+	          and bpa_file_name = #{bpa_file_name}
+	         </if>
+		 	<if test="bpa_description != null and bpa_description != ''">
+	          and bpa_description = #{bpa_description}
+	         </if>
+		 	<if test="bpa_status != null and bpa_status != ''">
+	          and bpa_status = #{bpa_status}
+	         </if>
+		 	<if test="bpa_add_time != null and bpa_add_time != ''">
+	          and bpa_add_time = #{bpa_add_time}
+	         </if>
+		 	<if test="bpa_adduserid != null and bpa_adduserid != ''">
+	          and bpa_adduserid = #{bpa_adduserid}
+	         </if>
+		 	<if test="bpa_dr != null and bpa_dr != ''">
+	          and bpa_dr = #{bpa_dr}
+	         </if>
+	</sql>
+	
+	<insert id="insert" parameterType="com.xianghuan.auth.base.model.BasePicAttachment" keyProperty="bpa_id" >
+        INSERT INTO base_pic_attachment ( <include refid="Base_Column_List" /> )  VALUES (
+            <include refid="Base_Column_insert" /> 
+        )
+	</insert>
+	
+	<insert id="insertBatch" keyProperty="bpa_id">
+		insert into base_pic_attachment  ( <include refid="Base_Column_List" /> )   values
+		<foreach collection="array" item="item" index="index" separator=",">
+		   (
+		   #{item.bpa_id,jdbcType=VARCHAR},
+        	#{item.bpa_orgid,jdbcType=BIGINT},
+        	#{item.bpa_tittle,jdbcType=VARCHAR},
+        	#{item.bpa_path,jdbcType=VARCHAR},
+        	#{item.bpa_type,jdbcType=INTEGER},
+        	#{item.bpa_size,jdbcType=INTEGER},
+        	#{item.bpa_file_name,jdbcType=VARCHAR},
+        	#{item.bpa_description,jdbcType=VARCHAR},
+        	#{item.bpa_status,jdbcType=INTEGER},
+        	#{item.bpa_add_time,jdbcType=VARCHAR},
+        	#{item.bpa_adduserid,jdbcType=VARCHAR},
+        	#{item.bpa_dr,jdbcType=INTEGER}
+		   
+		   
+		   )
+        </foreach>
+	</insert>
+
+	<update id="update" parameterType="com.xianghuan.auth.base.model.BasePicAttachment" flushCache="true">
+        UPDATE base_pic_attachment SET
+	        bpa_orgid = #{bpa_orgid,jdbcType=BIGINT} ,
+	        bpa_tittle = #{bpa_tittle,jdbcType=VARCHAR} ,
+	        bpa_path = #{bpa_path,jdbcType=VARCHAR} ,
+	        bpa_type = #{bpa_type,jdbcType=BIT} ,
+	        bpa_size = #{bpa_size,jdbcType=INTEGER} ,
+	        bpa_file_name = #{bpa_file_name,jdbcType=VARCHAR} ,
+	        bpa_description = #{bpa_description,jdbcType=VARCHAR} ,
+	        bpa_status = #{bpa_status,jdbcType=BIT} ,
+	        bpa_add_time = #{bpa_add_time,jdbcType=VARCHAR} ,
+	        bpa_adduserid = #{bpa_adduserid,jdbcType=VARCHAR} ,
+	        bpa_dr = #{bpa_dr,jdbcType=BIT} 
+        WHERE 
+	        bpa_id = #{bpa_id,jdbcType=VARCHAR} 
+	</update> 
+	
+	<update id="updateSelect" parameterType="com.xianghuan.auth.base.model.BasePicAttachment" flushCache="true">
+        UPDATE base_pic_attachment SET
+	        	<if test=" bpa_orgid!= null  and bpa_orgid != ''">
+	        		bpa_orgid = #{bpa_orgid,jdbcType=BIGINT} ,
+	        	</if>
+	        	<if test=" bpa_tittle!= null  and bpa_tittle != ''">
+	        		bpa_tittle = #{bpa_tittle,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" bpa_path!= null  and bpa_path != ''">
+	        		bpa_path = #{bpa_path,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" bpa_type!= null  and bpa_type != ''">
+	        		bpa_type = #{bpa_type,jdbcType=BIT} ,
+	        	</if>
+	        	<if test=" bpa_size!= null  and bpa_size != ''">
+	        		bpa_size = #{bpa_size,jdbcType=INTEGER} ,
+	        	</if>
+	        	<if test=" bpa_file_name!= null  and bpa_file_name != ''">
+	        		bpa_file_name = #{bpa_file_name,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" bpa_description!= null  and bpa_description != ''">
+	        		bpa_description = #{bpa_description,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" bpa_status!= null  and bpa_status != ''">
+	        		bpa_status = #{bpa_status,jdbcType=BIT} ,
+	        	</if>
+	        	<if test=" bpa_add_time!= null  and bpa_add_time != ''">
+	        		bpa_add_time = #{bpa_add_time,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" bpa_adduserid!= null  and bpa_adduserid != ''">
+	        		bpa_adduserid = #{bpa_adduserid,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" bpa_dr!= null  and bpa_dr != ''">
+	        		bpa_dr = #{bpa_dr,jdbcType=BIT} 
+	        	</if>
+        WHERE 
+	        bpa_id = #{bpa_id,jdbcType=VARCHAR} 
+	</update>   
+	
+	<update id="updateBatch" flushCache="true">
+	    <foreach collection="array" item="item" open="begin" separator="" close="end;">
+		        UPDATE base_pic_attachment SET
+			        bpa_orgid = #{bpa_orgid} ,
+			        bpa_tittle = #{bpa_tittle} ,
+			        bpa_path = #{bpa_path} ,
+			        bpa_type = #{bpa_type} ,
+			        bpa_size = #{bpa_size} ,
+			        bpa_file_name = #{bpa_file_name} ,
+			        bpa_description = #{bpa_description} ,
+			        bpa_status = #{bpa_status} ,
+			        bpa_add_time = #{bpa_add_time} ,
+			        bpa_adduserid = #{bpa_adduserid} ,
+			        bpa_dr = #{bpa_dr} 
+		        WHERE 
+			        bpa_id = #{bpa_id} 
+		</foreach>
+	</update>
+
+	<delete id="remove" parameterType="java.util.Map">
+	    update base_pic_attachment set 1=1
+	    <!-- set dr = 0  -->
+	    where bpa_id= #{bpa_id}
+	</delete>
+	
+	<delete id="removeBatch">
+	    update base_pic_attachment where bpa_id in
+	    <foreach collection="array" item="item"  open="(" separator="," close=")">
+	        #{item}
+	    </foreach>
+	</delete>
+	
+	<delete id="delete" parameterType="string">
+	    delete from base_pic_attachment where bpa_id=#bpa_id
+	</delete>
+	
+	<delete id="deleteBatch">
+	    delete from base_pic_attachment where bpa_id in
+	    <foreach collection="array" item="item"  open="(" separator="," close=")">
+	        #{item}
+	    </foreach>
+	</delete>
+	
+	<select id="find" resultType="com.xianghuan.auth.base.model.BasePicAttachment" parameterType="string">
+		select
+		<include refid="Base_query_column" />
+		from base_pic_attachment where bpa_id= #{bpa_id}
+	</select>
+
+	<select id="queryByCondition" resultType="com.xianghuan.auth.base.model.BasePicAttachment" parameterType="java.util.Map">
+		select <include refid="Base_query_column" /> from base_pic_attachment where 1=1
+		<include refid="Base_query_where" />
+		<if test="sqlWhere != null">
+			 #{sqlWhere}
+		</if>
+	</select>
+	
+	<select id="getRecordCount" resultType="int" parameterType="java.util.Map">
+		select count(1) from base_pic_attachment where 1 = 1
+		<include refid="Base_query_where" />
+		<if test="sqlWhere != null">
+			 #{sqlWhere}
+		</if>
+	</select>
+	
+	<select id="select" resultType="com.xianghuan.auth.base.model.BasePicAttachment" parameterType="java.util.Map">
+		select <include refid="Base_query_column" /> from base_pic_attachment where 1=1
+		<include refid="Base_query_where" />
+		<if test="sqlWhere != null">
+			 #{sqlWhere}
+		</if>
+	</select>
+</mapper>

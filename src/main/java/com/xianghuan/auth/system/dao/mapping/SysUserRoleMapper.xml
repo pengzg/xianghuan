@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 不使用namespace的话sql搜索定位会比较方便 -->
+<mapper namespace="com.xianghuan.auth.system.dao.ISysUserRoleDao">
+	<sql id="Base_Column_List">
+		sur_id,sur_roleid,sur_userid
+	</sql>
+	<sql id="Base_Column_insert">
+        	#{sur_id,jdbcType=VARCHAR},
+        	#{sur_roleid,jdbcType=VARCHAR},
+        	#{sur_userid,jdbcType=VARCHAR}
+	</sql>
+
+	<insert id="insert" parameterType="com.xianghuan.auth.system.model.SysUserRole" keyProperty="sur_id" >
+        INSERT INTO sys_user_role ( <include refid="Base_Column_List" /> )  VALUES (
+            <include refid="Base_Column_insert" /> 
+        )
+	</insert>
+	
+	<insert id="insertBatch" parameterType="java.util.List">
+		insert into sys_user_role  ( <include refid="Base_Column_List" /> )  
+		<foreach collection="list" item="item" index="index" separator="union all" >
+        	select #{item.sur_id,jdbcType=VARCHAR},
+        	#{item.sur_roleid,jdbcType=VARCHAR},
+        	#{item.sur_userid,jdbcType=VARCHAR} 
+        	from dual
+        </foreach>
+	</insert>
+	
+	<insert id="insertBatch_list"  parameterType="java.util.List">
+		insert into sys_system  ( <include refid="Base_Column_List" /> )   
+		<foreach collection="list" item="item" index="index" separator="union all" >
+		 	select #{item.ss_id,jdbcType=VARCHAR},#{item.ss_code,jdbcType=VARCHAR},
+		 	#{item.ss_name,jdbcType=VARCHAR},#{item.ss_url,jdbcType=VARCHAR},
+		 	#{item.ss_dr,jdbcType=INTEGER},#{item.ss_ts,jdbcType=VARCHAR},#{item.ss_desc,jdbcType=VARCHAR},
+		 	#{item.ss_version,jdbcType=INTEGER},#{item.ss_adduser,jdbcType=VARCHAR},#{item.ss_adddate,jdbcType=VARCHAR},
+		 	#{item.ss_modifyuser,jdbcType=VARCHAR},#{item.ss_modifydate,jdbcType=VARCHAR},#{item.ss_deleteuser,jdbcType=VARCHAR},
+		 	#{item.ss_deletedate,jdbcType=VARCHAR}
+		 	from dual		 	
+        </foreach>
+	</insert>
+
+	<update id="update" parameterType="com.xianghuan.auth.system.model.SysUserRole" flushCache="true">
+        UPDATE sys_user_role SET
+	        sur_roleid = #{sur_roleid,jdbcType=VARCHAR} ,
+	        sur_userid = #{sur_userid,jdbcType=VARCHAR} 
+        WHERE 
+	        sur_id = #{sur_id,jdbcType=VARCHAR} 
+	</update>  
+	
+	<update id="updateBatch" flushCache="true">
+	    <foreach collection="array" item="item" open="begin" separator="" close="end;">
+		        UPDATE sys_user_role SET
+			        sur_roleid = #{sur_roleid} ,
+			        sur_userid = #{sur_userid} 
+		        WHERE 
+			        sur_id = #{sur_id} 
+		</foreach>
+	</update>
+
+	<delete id="delete" parameterType="string">
+	    delete from sys_user_role where sur_userid= #{sur_userid}
+	</delete>
+	
+	<delete id="deleteBatch" parameterType="java.lang.String">
+	    delete from sys_user_role where sur_userid in 
+	    <foreach collection="ids" item="item" index="index" open="(" separator="," close=")">
+	    	#{item} 
+	    </foreach>
+	</delete>
+	
+	<select id="find" resultType="com.xianghuan.auth.system.model.SysUserRole" parameterType="string">
+		select
+		<include refid="Base_Column_List" />
+		from sys_user_role where sur_id=#{sur_id}
+	</select>
+
+	<select id="queryByCondition" resultType="com.xianghuan.auth.system.model.SysUserRole">
+		select 
+			<include refid="Base_Column_List" /> 
+		from 
+			sys_user_role where 1=1
+		<if test="sur_userid != null"> 
+			and sur_userid = #{sur_userid}
+		</if>
+	</select>
+	
+	<select id="seletctBatch" resultType="com.xianghuan.auth.system.model.SysUserRole">
+		select 
+			<include refid="Base_Column_List" /> 
+		from 
+			sys_user_role where 1=1
+		<if test="sur_userid != null"> 
+			and sur_userid = #{sur_userid}
+		</if>
+	</select>
+	
+	<select id="getRecordCount" resultType="int">
+		select count(1) from sys_user_role where 1 = 1
+		<if test="sqlWhere != null">
+			#sqlWhere#
+		</if>
+	</select>
+	
+	<sql id="Base_Column_List_role">
+		sr_id,sr_name,sr_order,sr_desc,sr_pid,sr_status,sr_version,sr_dr,sr_ts
+	</sql>
+	
+	<select id="select" resultType="com.xianghuan.auth.system.model.SysRole" parameterType="java.util.Map">
+		select 
+			<include refid="Base_Column_List_role" /> 
+		 from sys_role sr where sr_dr=1 and sr.sr_status=1 
+		<if test="sur_userid != null and sur_userid != ''"> 
+			 and  exists( select 1 from sys_user_role sur
+			  where sur.sur_roleid =sr.sr_id
+					and sur.sur_userid = #{sur_userid}
+			   )
+		</if>
+	</select>
+	
+	
+	<sql id="Base_Column_List_user">
+	su_id,su_loginname,su_name,su_pwd,su_sex,su_email,su_orgid,
+	su_startdate,su_enddate,su_usertype,su_createdatetime,su_modifydatetime,
+	su_version,su_errornum,su_lastlogindata,su_dr,su_ts,su_status,
+	su_phone,su_role,su_userid,su_pay_pwd,su_procice,su_city,su_district,
+	su_wx,su_qq,su_wb,su_wxid,su_token,su_address	
+	</sql>
+	<select id="selectUsers" resultType="com.xianghuan.auth.system.model.SysUser" parameterType="java.util.Map">
+		select 
+			<include refid="Base_Column_List_user" /> 
+		 from sys_user su where su.su_dr=1 
+		<if test="sur_roleid != null and sur_roleid != ''"> 
+			 and  exists( select 1 from sys_user_role sur
+			  where sur.sur_userid = su.su_id
+					and sur.sur_roleid = #{sur_roleid}
+			   )
+		</if>
+	</select>
+</mapper>

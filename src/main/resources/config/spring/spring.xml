@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context" 
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+						http://www.springframework.org/schema/context
+						http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+	<!-- 引入属性文件 -->
+	<!-- 引入jdbc配置文件 -->
+
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:config/jdbc/jdbc.properties</value> 
+				<value>classpath:config/spring/redis.properties</value>
+			</list>
+		</property>
+		<!-- <property name="ignoreUnresolvablePlaceholders" value="true" /> -->
+	</bean>
+	  
+	<!-- 自动扫描(自动注入) -->
+	<context:component-scan base-package="com.xianghuan">
+	    <context:include-filter type="regex" expression=".service.*"/>
+	    <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/> 
+	</context:component-scan>
+
+	<!-- 通用常量类 -->
+	<bean id="appConstants" class="com.xianghuan.util.AppConstants" init-method="init"></bean>
+	
+</beans>

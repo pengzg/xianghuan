@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 不使用namespace的话sql搜索定位会比较方便 -->
+<mapper namespace="com.xianghuan.auth.system.dao.ISysUserOrgDao">
+	<sql id="Base_Column_List">
+		suo_id,suo_userid,suo_orgid,suo_adduser,suo_adddate,suo_modifyuser,suo_modifydate,suo_deleteuser,suo_deletedate,suo_ts,suo_dr,suo_version
+	</sql>
+	<sql id="Base_Column_insert">
+        	#{suo_id,jdbcType=VARCHAR},
+        	#{suo_userid,jdbcType=VARCHAR},
+        	#{suo_orgid,jdbcType=VARCHAR},
+        	#{suo_adduser,jdbcType=VARCHAR},
+        	#{suo_adddate,jdbcType=VARCHAR},
+        	#{suo_modifyuser,jdbcType=VARCHAR},
+        	#{suo_modifydate,jdbcType=VARCHAR},
+        	#{suo_deleteuser,jdbcType=VARCHAR},
+        	#{suo_deletedate,jdbcType=VARCHAR},
+        	#{suo_ts,jdbcType=VARCHAR},
+        	#{suo_dr,jdbcType=INTEGER},
+        	#{suo_version,jdbcType=INTEGER}
+	</sql>
+	
+	<insert id="insert" parameterType="com.xianghuan.auth.system.model.SysUserOrg" keyProperty="suo_id" >
+        INSERT INTO sys_user_org ( <include refid="Base_Column_List" /> )  VALUES (
+            <include refid="Base_Column_insert" /> 
+        )
+	</insert>
+	
+	<insert id="insertBatch" parameterType="java.util.List">
+		INSERT INTO sys_user_org  ( <include refid="Base_Column_List" /> ) 
+		<foreach collection="list" item="item" index="index" separator="union all" >
+        	select 
+	        	#{item.suo_id,jdbcType=VARCHAR} ,
+	        	#{item.suo_userid,jdbcType=VARCHAR} ,
+	        	#{item.suo_orgid,jdbcType=VARCHAR} ,
+	        	#{item.suo_adduser,jdbcType=VARCHAR} ,
+	        	#{item.suo_adddate,jdbcType=VARCHAR} ,
+		        #{item.suo_modifyuser,jdbcType=VARCHAR} ,
+		        #{item.suo_modifydate,jdbcType=VARCHAR} ,
+		        #{item.suo_deleteuser,jdbcType=VARCHAR} ,
+		        #{item.suo_deletedate,jdbcType=VARCHAR} ,
+		        #{item.suo_ts,jdbcType=VARCHAR} ,
+		        #{item.suo_dr,jdbcType=INTEGER} ,
+		        #{item.suo_version,jdbcType=INTEGER} 
+        	from dual
+        </foreach>
+	</insert>
+
+	<update id="update" parameterType="com.xianghuan.auth.system.model.SysUserOrg" flushCache="true">
+        UPDATE sys_user_org SET
+	        suo_userid = #{suo_userid,jdbcType=VARCHAR} ,
+	        suo_orgid = #{suo_orgid,jdbcType=VARCHAR} ,
+	        suo_adduser = #{suo_adduser,jdbcType=VARCHAR} ,
+	        suo_adddate = #{suo_adddate,jdbcType=VARCHAR} ,
+	        suo_modifyuser = #{suo_modifyuser,jdbcType=VARCHAR} ,
+	        suo_modifydate = #{suo_modifydate,jdbcType=VARCHAR} ,
+	        suo_deleteuser = #{suo_deleteuser,jdbcType=VARCHAR} ,
+	        suo_deletedate = #{suo_deletedate,jdbcType=VARCHAR} ,
+	        suo_ts = #{suo_ts,jdbcType=VARCHAR} ,
+	        suo_dr = #{suo_dr,jdbcType=INTEGER} ,
+	        suo_version = #{suo_version,jdbcType=INTEGER} 
+        WHERE 
+	        suo_id = #{suo_id,jdbcType=VARCHAR} 
+	</update>  
+	
+	<update id="updateBatch" flushCache="true">
+	    <foreach collection="array" item="item" open="begin" separator="" close="end;">
+		        UPDATE sys_user_org SET
+			        suo_userid = #{suo_userid} ,
+			        suo_orgid = #{suo_orgid} ,
+			        suo_adduser = #{suo_adduser} ,
+			        suo_adddate = #{suo_adddate} ,
+			        suo_modifyuser = #{suo_modifyuser} ,
+			        suo_modifydate = #{suo_modifydate} ,
+			        suo_deleteuser = #{suo_deleteuser} ,
+			        suo_deletedate = #{suo_deletedate} ,
+			        suo_ts = #{suo_ts} ,
+			        suo_dr = #{suo_dr} ,
+			        suo_version = #{suo_version} 
+		        WHERE 
+			        suo_id = #{suo_id} 
+		</foreach>
+	</update>
+
+	<delete id="delete" parameterType="string">
+	   <!--  UPDATE 
+			sys_user_org SET suo_dr = 0
+        WHERE 
+	        suo_userid = #{suo_userid} -->
+		delete from sys_user_org where suo_userid = #{suo_userid}
+	</delete>
+	
+	<delete id="deleteBatch">
+	    delete from sys_user_org where suo_id in
+	    <foreach collection="array" item="item"  open="(" separator="," close=")">
+	        #{item}
+	    </foreach>
+	</delete>
+	
+	<select id="find" resultType="com.xianghuan.auth.system.model.SysUserOrg" parameterType="string">
+		select
+		<include refid="Base_Column_List" />
+		from sys_user_org where suo_id= #{suo_id}
+	</select>
+
+	<select id="queryByCondition" resultType="com.xianghuan.auth.system.model.SysUserOrg" parameterType="java.util.Map">
+		select 
+			<include refid="Base_Column_List" /> 
+		from 
+			sys_user_org where 1=1
+		<if test="suo_userid != null"> 
+			and suo_userid = #{suo_userid}
+		</if>
+	</select>
+	
+	<select id="getRecordCount" resultType="int" parameterType="java.util.Map">
+		select count(1) from sys_user_org where 1 = 1
+		<if test="sqlWhere != null">
+			 #{sqlWhere}
+		</if>
+	</select>
+	
+	<sql id="Base_Column_List_org">
+		so_orgid,so_orgcode,so_orgname,so_contactname,so_contactphone,so_fax,so_orgadds,so_orgparid,so_orgpic,so_status,so_version,so_ts,so_dr
+	</sql>
+	
+	<select id="select" resultType="com.xianghuan.auth.system.model.SysOrg" parameterType="java.util.Map">
+		select 
+			<include refid="Base_Column_List_org" /> 
+		 from 
+		 	sys_org so where so_dr = 1  
+		 and 
+		 	exists( select 1 from sys_user_org suo where suo.suo_orgid = so.so_orgid
+			<if test="suo_userid != null and suo_userid != ''"> 
+				and suo.suo_userid = #{suo_userid}
+			</if>
+		   )
+	</select>
+	
+</mapper>

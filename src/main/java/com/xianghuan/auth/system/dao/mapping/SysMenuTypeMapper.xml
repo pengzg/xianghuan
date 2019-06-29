@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 不使用namespace的话sql搜索定位会比较方便 -->
+<mapper namespace="com.xianghuan.auth.system.dao.ISysMenuTypeDao">
+	<sql id="Base_Column_List">
+		smt_id,smt_name,smt_dr,smt_ts
+	</sql>
+	<sql id="Base_Column_insert">
+        	#{smt_id,jdbcType=VARCHAR},
+        	#{smt_name,jdbcType=VARCHAR},
+        	#{smt_dr,jdbcType=INTEGER},
+        	#{smt_ts,jdbcType=VARCHAR}
+	</sql>
+
+	<insert id="insert" parameterType="com.xianghuan.auth.system.model.SysMenuType" keyProperty="smt_id" >
+        INSERT INTO sys_menu_type ( <include refid="Base_Column_List" /> )  VALUES (
+            <include refid="Base_Column_insert" /> 
+        )
+	</insert>
+	
+	<insert id="insertBatch" keyProperty="smt_id">
+		insert into sys_menu_type  ( <include refid="Base_Column_List" /> )   values
+		<foreach collection="array" item="item" index="index" separator=",">
+		   <include refid="Base_Column_insert" /> 
+        </foreach>
+	</insert>
+
+	<update id="update" parameterType="com.xianghuan.auth.system.model.SysMenuType" flushCache="true">
+        UPDATE sys_menu_type SET
+	        smt_name = #{smt_name,jdbcType=VARCHAR} ,
+	        smt_dr = #{smt_dr,jdbcType=INTEGER} ,
+	        smt_ts = #{smt_ts,jdbcType=VARCHAR} 
+        WHERE 
+	        smt_id = #{smt_id,jdbcType=VARCHAR} 
+	</update>  
+	
+	<update id="updateBatch" flushCache="true">
+	    <foreach collection="array" item="item" open="begin" separator="" close="end;">
+		        UPDATE sys_menu_type SET
+			        smt_name = #{smt_name} ,
+			        smt_dr = #{smt_dr} ,
+			        smt_ts = #{smt_ts} 
+		        WHERE 
+			        smt_id = #{smt_id} 
+		</foreach>
+	</update>
+
+	<delete id="delete" parameterType="string">
+	    delete from sys_menu_type where smt_id= #{smt_id}
+	</delete>
+	
+	<delete id="deleteBatch">
+	    delete from sys_menu_type where smt_id in
+	    <foreach collection="array" item="item"  open="(" separator="," close=")">
+	       #item#
+	    </foreach>
+	</delete>
+	
+	<select id="find" resultType="com.xianghuan.auth.system.model.SysMenuType" parameterType="string">
+		select
+		<include refid="Base_Column_List" />
+		from sys_menu_type where smt_id=#{smt_id}
+	</select>
+
+	<select id="queryByCondition" resultType="com.xianghuan.auth.system.model.SysMenuType">
+		select <include refid="Base_Column_List" /> from sys_menu_type where 1=1
+		<if test="sqlWhere != null">
+			#sqlWhere#
+		</if>
+	</select>
+	
+	<select id="getRecordCount" resultType="int">
+		select count(1) from sys_menu_type where 1 = 1
+		<if test="sqlWhere != null">
+			#sqlWhere#
+		</if>
+	</select>
+</mapper>

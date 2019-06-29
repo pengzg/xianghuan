@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 不使用namespace的话sql搜索定位会比较方便 -->
+<mapper namespace="com.xianghuan.admin.basetag.dao.IBaseTagDao">
+	<sql id="Base_Column_List">
+		bt_id,bt_title,bt_code,bt_type,bt_icon,bt_is_show,bt_order,bt_adduserid,bt_status,bt_dr,bt_addtime,bt_updatetime
+	</sql>
+	<sql id="Base_Column_insert">
+        	#{bt_id,jdbcType=INTEGER},
+        	#{bt_title,jdbcType=VARCHAR},
+        	#{bt_code,jdbcType=VARCHAR},
+        	#{bt_type,jdbcType=VARCHAR},
+        	#{bt_icon,jdbcType=VARCHAR},
+        	#{bt_is_show,jdbcType=INTEGER},
+        	#{bt_order,jdbcType=INTEGER},
+        	#{bt_adduserid,jdbcType=INTEGER},
+        	#{bt_status,jdbcType=VARCHAR},
+        	#{bt_dr,jdbcType=INTEGER},
+        	#{bt_addtime,jdbcType=VARCHAR},
+        	#{bt_updatetime,jdbcType=VARCHAR}
+	</sql>
+	<sql id="Base_query_column">
+		bt_id,bt_title,bt_code,bt_type,bt_icon,bt_is_show,bt_order,bt_adduserid,bt_status,bt_dr,bt_addtime,bt_updatetime
+	</sql>
+	<sql id="Base_query_where">
+		 	<if test="bt_title != null and bt_title != ''">
+	          and bt_title = #{bt_title}
+	         </if>
+		 	<if test="bt_code != null and bt_code != ''">
+	          and bt_code = #{bt_code}
+	         </if>
+		 	<if test="bt_type != null and bt_type != ''">
+	          and bt_type = #{bt_type}
+	         </if>
+		 	<if test="bt_icon != null and bt_icon != ''">
+	          and bt_icon = #{bt_icon}
+	         </if>
+		 	<if test="bt_is_show != null and bt_is_show != ''">
+	          and bt_is_show = #{bt_is_show}
+	         </if>
+		 	<if test="bt_order != null and bt_order != ''">
+	          and bt_order = #{bt_order}
+	         </if>
+		 	<if test="bt_adduserid != null and bt_adduserid != ''">
+	          and bt_adduserid = #{bt_adduserid}
+	         </if>
+		 	<if test="bt_status != null and bt_status != ''">
+	          and bt_status = #{bt_status}
+	         </if>
+		 	<if test="bt_dr != null and bt_dr != ''">
+	          and bt_dr = #{bt_dr}
+	         </if>
+		 	<if test="bt_addtime != null and bt_addtime != ''">
+	          and bt_addtime = #{bt_addtime}
+	         </if>
+		 	<if test="bt_updatetime != null and bt_updatetime != ''">
+	          and bt_updatetime = #{bt_updatetime}
+	         </if>
+	</sql>
+	
+	<insert id="insert" parameterType="com.xianghuan.admin.basetag.model.BaseTag" keyProperty="bt_id" >
+        INSERT INTO base_tag ( <include refid="Base_Column_List" /> )  VALUES (
+            <include refid="Base_Column_insert" /> 
+        )
+	</insert>
+	
+	<insert id="insertBatch" keyProperty="bt_id">
+		insert into base_tag  ( <include refid="Base_Column_List" /> )   values
+		<foreach collection="array" item="item" index="index" separator=",">
+		  (
+
+        		#{item.bt_id,jdbcType=INTEGER},
+        		#{item.bt_title,jdbcType=VARCHAR},
+        		#{item.bt_code,jdbcType=VARCHAR},
+        		#{item.bt_type,jdbcType=VARCHAR},
+        		#{item.bt_icon,jdbcType=VARCHAR},
+        		#{item.bt_is_show,jdbcType=INTEGER},
+        		#{item.bt_order,jdbcType=INTEGER},
+        		#{item.bt_adduserid,jdbcType=INTEGER},
+        		#{item.bt_status,jdbcType=VARCHAR},
+        		#{item.bt_dr,jdbcType=INTEGER},
+        		#{item.bt_addtime,jdbcType=VARCHAR},
+        		#{item.bt_updatetime,jdbcType=VARCHAR}
+			)
+        </foreach>
+	</insert>
+
+	<update id="update" parameterType="com.xianghuan.admin.basetag.model.BaseTag" flushCache="true">
+        UPDATE base_tag SET
+	        bt_title = #{bt_title,jdbcType=VARCHAR} ,
+	        bt_code = #{bt_code,jdbcType=VARCHAR} ,
+	        bt_type = #{bt_type,jdbcType=VARCHAR} ,
+	        bt_icon = #{bt_icon,jdbcType=VARCHAR} ,
+	        bt_is_show = #{bt_is_show,jdbcType=INTEGER} ,
+	        bt_order = #{bt_order,jdbcType=INTEGER} ,
+	        bt_adduserid = #{bt_adduserid,jdbcType=INTEGER} ,
+	        bt_status = #{bt_status,jdbcType=VARCHAR} ,
+	        bt_dr = #{bt_dr,jdbcType=INTEGER} ,
+	        bt_addtime = #{bt_addtime,jdbcType=VARCHAR} ,
+	        bt_updatetime = #{bt_updatetime,jdbcType=VARCHAR} 
+        WHERE 
+	        bt_id = #{bt_id,jdbcType=INTEGER} 
+	</update> 
+	
+	<update id="updateSelect" parameterType="com.xianghuan.admin.basetag.model.BaseTag" flushCache="true">
+        UPDATE base_tag SET
+	        	<if test=" bt_title!= null  and bt_title != ''">
+	        		bt_title = #{bt_title,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" bt_code!= null  and bt_code != ''">
+	        		bt_code = #{bt_code,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" bt_type!= null  and bt_type != ''">
+	        		bt_type = #{bt_type,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" bt_icon!= null  and bt_icon != ''">
+	        		bt_icon = #{bt_icon,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" bt_is_show!= null  and bt_is_show != ''">
+	        		bt_is_show = #{bt_is_show,jdbcType=INTEGER} ,
+	        	</if>
+	        	<if test=" bt_order!= null  and bt_order != ''">
+	        		bt_order = #{bt_order,jdbcType=INTEGER} ,
+	        	</if>
+	        	<if test=" bt_adduserid!= null  and bt_adduserid != ''">
+	        		bt_adduserid = #{bt_adduserid,jdbcType=INTEGER} ,
+	        	</if>
+	        	<if test=" bt_status!= null  and bt_status != ''">
+	        		bt_status = #{bt_status,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" bt_dr!= null  and bt_dr != ''">
+	        		bt_dr = #{bt_dr,jdbcType=INTEGER} ,
+	        	</if>
+	        	<if test=" bt_addtime!= null  and bt_addtime != ''">
+	        		bt_addtime = #{bt_addtime,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" bt_updatetime!= null  and bt_updatetime != ''">
+	        		bt_updatetime = #{bt_updatetime,jdbcType=VARCHAR} 
+	        	</if>
+        WHERE 
+	        bt_id = #{bt_id,jdbcType=INTEGER} 
+	</update>   
+	
+	<update id="updateBatch" flushCache="true">
+	    <foreach collection="array" item="item" open="begin" separator="" close="end;">
+		        UPDATE base_tag SET
+			        bt_title = #{bt_title} ,
+			        bt_code = #{bt_code} ,
+			        bt_type = #{bt_type} ,
+			        bt_icon = #{bt_icon} ,
+			        bt_is_show = #{bt_is_show} ,
+			        bt_order = #{bt_order} ,
+			        bt_adduserid = #{bt_adduserid} ,
+			        bt_status = #{bt_status} ,
+			        bt_dr = #{bt_dr} ,
+			        bt_addtime = #{bt_addtime} ,
+			        bt_updatetime = #{bt_updatetime} 
+		        WHERE 
+			        bt_id = #{bt_id} 
+		</foreach>
+	</update>
+
+	<delete id="remove" parameterType="java.util.Map">
+	    update base_tag set 1=1
+	    <!-- set dr = 0  -->
+	    where bt_id= #{bt_id}
+	</delete>
+	
+	<delete id="removeBatch">
+	    update base_tag where bt_id in
+	    <foreach collection="array" item="item"  open="(" separator="," close=")">
+	        #{item}
+	    </foreach>
+	</delete>
+	
+	<delete id="delete" parameterType="string">
+	    delete from base_tag where bt_id=#bt_id
+	</delete>
+	
+	<delete id="deleteBatch">
+	    delete from base_tag where bt_id in
+	    <foreach collection="array" item="item"  open="(" separator="," close=")">
+	        #{item}
+	    </foreach>
+	</delete>
+	
+	<select id="find" resultType="com.xianghuan.admin.basetag.model.BaseTag" parameterType="string">
+		select
+		<include refid="Base_query_column" />
+		from base_tag where bt_id= #{bt_id}
+	</select>
+
+	<select id="queryByCondition" resultType="com.xianghuan.admin.basetag.model.BaseTag" parameterType="java.util.Map">
+		select <include refid="Base_query_column" /> from base_tag where 1=1
+		<include refid="Base_query_where" />
+		<if test="sqlWhere != null">
+			 #{sqlWhere}
+		</if>
+	</select>
+	
+	<select id="queryByConditionExt" resultType="com.xianghuan.admin.basetag.vo.BaseTagVO" parameterType="java.util.Map">
+		select <include refid="Base_query_column" /> from base_tag where 1=1
+		<include refid="Base_query_where" />
+		<if test="sqlWhere != null">
+			 #{sqlWhere}
+		</if>
+
+	</select>
+	<select id="getRecordCount" resultType="int" parameterType="java.util.Map">
+		select count(1) from base_tag where 1 = 1
+		<include refid="Base_query_where" />
+		<if test="sqlWhere != null">
+			 #{sqlWhere}
+		</if>
+	</select>
+	
+	<select id="select" resultType="com.xianghuan.admin.basetag.model.BaseTag" parameterType="java.util.Map">
+		select <include refid="Base_query_column" /> from base_tag where 1=1
+		<include refid="Base_query_where" />
+		<if test="sqlWhere != null">
+			 #{sqlWhere}
+		</if>
+		<if test="start != null">
+			 LIMIT 
+		</if>
+	</select>
+</mapper>

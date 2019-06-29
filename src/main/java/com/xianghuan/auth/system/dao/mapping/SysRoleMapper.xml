@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 不使用namespace的话sql搜索定位会比较方便 -->
+<mapper namespace="com.xianghuan.auth.system.dao.ISysRoleDao">
+	<sql id="Base_Column_List_query">
+		t.sr_id,t.sr_name,t.sr_order,t.sr_desc,t.sr_pid,t.sr_status,t.sr_version,
+		t.sr_dr,t.sr_ts,t.sr_so_orgid,t.sr_code,t.sr_userid,t.sr_roletype
+	</sql>
+	<sql id="Base_Column_List_insert">
+		sr_id,sr_name,sr_order,sr_desc,sr_pid,sr_status,sr_version,sr_dr,sr_ts,sr_so_orgid,
+		sr_code,sr_userid,sr_roletype
+	</sql>
+	<sql id="Base_Column_insert">
+        	#{sr_id,jdbcType=VARCHAR},
+        	#{sr_name,jdbcType=VARCHAR},
+        	#{sr_order,jdbcType=DECIMAL},
+        	#{sr_desc,jdbcType=VARCHAR},
+        	#{sr_pid,jdbcType=VARCHAR},
+        	#{sr_status,jdbcType=VARCHAR},
+        	#{sr_version,jdbcType=DECIMAL},
+        	#{sr_dr,jdbcType=CHAR},
+        	#{sr_ts,jdbcType=VARCHAR},
+        	#{sr_so_orgid,jdbcType=VARCHAR},
+        	#{sr_code,jdbcType=VARCHAR},
+        	#{sr_userid,jdbcType=VARCHAR},
+        	#{sr_roletype,jdbcType=VARCHAR}
+	</sql>
+
+	<insert id="insert" parameterType="com.xianghuan.auth.system.model.SysRole" keyProperty="sr_id" >
+        INSERT INTO sys_role ( <include refid="Base_Column_List_insert" /> )  VALUES (
+            <include refid="Base_Column_insert" /> 
+        )
+	</insert>
+	
+	<insert id="insertBatch" keyProperty="sr_id">
+		insert into sys_role  ( <include refid="Base_Column_insert" /> )   values
+		<foreach collection="array" item="item" index="index" separator=",">
+		   <include refid="Base_Column_insert" /> 
+        </foreach>
+	</insert>
+
+	<update id="update" parameterType="com.xianghuan.auth.system.model.SysRole" flushCache="true">
+        UPDATE sys_role SET
+	        sr_name = #{sr_name,jdbcType=VARCHAR} ,
+	        sr_order = #{sr_order,jdbcType=DECIMAL} ,
+	        sr_desc = #{sr_desc,jdbcType=VARCHAR} ,
+	        sr_pid = #{sr_pid,jdbcType=VARCHAR} ,
+	        sr_status = #{sr_status,jdbcType=VARCHAR} ,
+	        sr_version = #{sr_version,jdbcType=DECIMAL} ,
+	        sr_dr = #{sr_dr,jdbcType=CHAR} ,
+	        sr_ts = #{sr_ts,jdbcType=VARCHAR} ,
+	        sr_so_orgid = #{sr_so_orgid,jdbcType=VARCHAR},
+	        sr_code = #{sr_code,jdbcType=VARCHAR},
+	        sr_userid = #{sr_userid,jdbcType=VARCHAR},
+	        sr_roletype = #{sr_roletype,jdbcType=VARCHAR}
+        WHERE 
+	        sr_id = #{sr_id,jdbcType=VARCHAR} 
+	</update>  
+	
+	<update id="updateBatch" flushCache="true">
+	    <foreach collection="array" item="item" open="begin" separator="" close="end;">
+		        UPDATE sys_role SET
+			        sr_name = #{sr_name} ,
+			        sr_order = #{sr_order} ,
+			        sr_desc = #{sr_desc} ,
+			        sr_pid = #{sr_pid} ,
+			        sr_status = #{sr_status} ,
+			        sr_version = #{sr_version} ,
+			        sr_dr = #{sr_dr} ,
+			        sr_ts = #{sr_ts} ,
+			        sr_so_orgid = #{sr_so_orgid} 
+		        WHERE 
+			        sr_id = #{sr_id} 
+		</foreach>
+	</update>
+
+	<delete id="delete" parameterType="string">
+		UPDATE 
+			sys_role SET sr_dr = 0
+        WHERE 
+	        sr_id = #{sr_id}
+	</delete>
+	
+	<delete id="deleteBatch">
+		UPDATE 
+			sys_role SET sr_dr = 0
+		WHERE 
+			sr_id in 
+	    <foreach collection="ids" item="item" index="index" open="(" separator="," close=")">
+		        #{item} 
+		</foreach>
+	    <!-- delete from sys_role where sr_id in
+	    <foreach collection="array" item="item"  open="(" separator="," close=")">
+	       #item#
+	    </foreach> -->
+	</delete>
+	
+	<select id="find" resultType="com.xianghuan.auth.system.model.SysRole" parameterType="string">
+		select
+	      <include refid="Base_Column_List_query" />
+    	from 
+    		sys_role t 
+	    where t.sr_dr = 1 and t.sr_id=#{sr_id}
+	</select>
+	
+	<sql id="Base_query_where">
+		 <if test="sr_name != null and sr_name != ''">
+			and t.sr_name like CONCAT('%',#{sr_name},'%')
+		 </if>
+		 <if test="sr_code != null and sr_code != ''">
+			and t.sr_code like CONCAT('%',#{sr_code},'%')
+		 </if>
+		 <if test="orgsList != null and orgsList != ''">
+			and t.sr_so_orgid in 
+			<foreach collection="orgsList" index="index" item="item"  open="(" separator="," close=")">  
+	       		${item}  
+	    	</foreach> 
+	    </if>
+	    <if test="sr_status != null and sr_status != ''">
+			and t.sr_status = #{sr_status}
+		</if>
+		 <if test="check_code != null and check_code != ''">
+			and t.sr_code = #{check_code}
+		</if>
+		<if test="check_id != null and check_id != ''">
+			<![CDATA[ and t.sr_id != #{check_id}   ]]>
+		</if>
+		
+	</sql>
+
+	<select id="queryByCondition" resultType="com.xianghuan.auth.system.model.SysRole" parameterType="java.util.Map">
+		select
+        	<!-- t.sr_id as sr_id, t.sr_name as sr_name, t.sr_order as sr_order, t.sr_desc as sr_desc, t.sr_pid as sr_pid, t.sr_status as sr_status,
+	        t.sr_version as sr_version, t.sr_dr as sr_dr, t.sr_ts as sr_ts, t.sr_so_orgid as sr_so_orgid -->
+	        <include refid="Base_Column_List_query" />
+      	from 
+        	sys_role t 
+      	where 
+      		t.sr_dr = 1 
+     	<include refid="Base_query_where" />
+	</select>
+	
+	<select id="getRecordCount" resultType="int" parameterType="java.util.Map">
+		select 
+			count(1) 
+		from 
+			sys_role t 
+	    where 
+	      	t.sr_dr = 1  
+	    <include refid="Base_query_where" />
+	</select>
+	
+	<select id="select" resultType="com.xianghuan.auth.system.model.SysRole" parameterType="java.util.Map">
+		select
+			 <include refid="Base_Column_List_query" />
+        	<!-- t.sr_id as sr_id, t.sr_name as sr_name, t.sr_order as sr_order, t.sr_desc as sr_desc, t.sr_pid as sr_pid, t.sr_status as sr_status,
+	        t.sr_version as sr_version, t.sr_dr as sr_dr, t.sr_ts as sr_ts, t.sr_so_orgid as sr_so_orgid	        -->
+      	from 
+        	sys_role t 
+      	where  
+      		t.sr_dr = 1 and t.sr_status = 1 
+		<if test="sur_userid != null and sur_userid != ''">
+			and exists (
+			  select 1 from sys_user_role sur where sur.sur_roleid=t.sr_id
+			  and sur.sur_userid= #{sur_userid}
+			 )
+		</if>
+		<include refid="Base_query_where" />
+		order by t.sr_order
+	</select>
+</mapper>

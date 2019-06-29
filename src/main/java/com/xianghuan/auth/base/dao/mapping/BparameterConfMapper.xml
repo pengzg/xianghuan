@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 不使用namespace的话sql搜索定位会比较方便 -->
+<mapper namespace="com.xianghuan.auth.base.dao.IBparameterConfDao">
+	<sql id="Base_Column_List">
+		bpc_id,bpc_key_code,bpc_value,bpc_remark,bpc_orgid,bpc_status,bpc_dr,bpc_version,
+		bpc_adduser,bpc_adddate,bpc_modifyuser,bpc_modifydate,
+		bpc_deleteuser,bpc_deletedate
+	</sql>
+	<sql id="Base_Column_insert">
+        	#{bpc_id,jdbcType=VARCHAR},
+        	#{bpc_key_code,jdbcType=VARCHAR},
+        	#{bpc_value,jdbcType=VARCHAR},
+        	#{bpc_remark,jdbcType=VARCHAR},
+        	#{bpc_orgid,jdbcType=VARCHAR},
+        	#{bpc_status,jdbcType=VARCHAR},
+        	#{bpc_dr,jdbcType=VARCHAR},
+        	#{bpc_version,jdbcType=VARCHAR},
+        	#{bpc_adduser,jdbcType=VARCHAR},
+        	#{bpc_adddate,jdbcType=VARCHAR},
+        	#{bpc_modifyuser,jdbcType=VARCHAR},
+        	#{bpc_modifydate,jdbcType=VARCHAR},
+        	#{bpc_deleteuser,jdbcType=VARCHAR},
+        	#{bpc_deletedate,jdbcType=VARCHAR}
+	</sql>
+	<sql id="Base_query_column">
+		bpc_id,bpc_key_code,bpc_value,bpc_remark,bpc_orgid,bpc_status,bpc_dr,
+		bpc_version,bpc_adduser,bpc_adddate,bpc_modifyuser,bpc_modifydate,
+		bpc_deleteuser,bpc_deletedate
+	</sql>
+	<sql id="Base_query_where">
+			and bpc_dr = 1 
+		 	<if test="bpc_key_code != null and bpc_key_code != ''">
+	          and bpc_key_code = #{bpc_key_code}
+	         </if>
+		 	<if test="bpc_value != null and bpc_value != ''">
+	          and bpc_value = #{bpc_value}
+	         </if>
+		 	<if test="bpc_remark != null and bpc_remark != ''">
+	          and bpc_remark = #{bpc_remark}
+	         </if>
+		 	<if test="bpc_orgid != null and bpc_orgid != ''">
+	          and bpc_orgid = #{bpc_orgid}
+	         </if>
+		 	<if test="bpc_status != null and bpc_status != ''">
+	          and bpc_status = #{bpc_status}
+	         </if>
+		 	<if test="bpc_dr != null and bpc_dr != ''">
+	          and bpc_dr = #{bpc_dr}
+	         </if>
+		 	<if test="bpc_version != null and bpc_version != ''">
+	          and bpc_version = #{bpc_version}
+	         </if>
+		 	<if test="bpc_adduser != null and bpc_adduser != ''">
+	          and bpc_adduser = #{bpc_adduser}
+	         </if>
+		 	<if test="bpc_adddate != null and bpc_adddate != ''">
+	          and bpc_adddate = #{bpc_adddate}
+	         </if>
+		 	<if test="bpc_modifyuser != null and bpc_modifyuser != ''">
+	          and bpc_modifyuser = #{bpc_modifyuser}
+	         </if>
+		 	<if test="bpc_modifydate != null and bpc_modifydate != ''">
+	          and bpc_modifydate = #{bpc_modifydate}
+	         </if>
+		 	<if test="bpc_deleteuser != null and bpc_deleteuser != ''">
+	          and bpc_deleteuser = #{bpc_deleteuser}
+	         </if>
+		 	<if test="bpc_deletedate != null and bpc_deletedate != ''">
+	          and bpc_deletedate = #{bpc_deletedate}
+	         </if>
+		 	<if test="bpc_id_check != null and bpc_id_check != ''">
+	          and bpc_id != #{bpc_id_check}
+	         </if>
+	         
+	</sql>
+	
+	<insert id="insert" parameterType="com.xianghuan.auth.base.model.BparameterConf" keyProperty="bpc_id" >
+        INSERT INTO base_parameter_conf ( <include refid="Base_Column_List" /> )  VALUES (
+            <include refid="Base_Column_insert" /> 
+        )
+	</insert>
+	
+	<insert id="insertBatch" keyProperty="bpc_id">
+		insert into base_parameter_conf  ( <include refid="Base_Column_List" /> )   values
+		<foreach collection="array" item="item" index="index" separator=",">
+		   <include refid="Base_Column_insert" /> 
+        </foreach>
+	</insert>
+
+	<update id="update" parameterType="com.xianghuan.auth.base.model.BparameterConf" flushCache="true">
+        UPDATE base_parameter_conf SET
+	        bpc_key_code = #{bpc_key_code,jdbcType=VARCHAR} ,
+	        bpc_value = #{bpc_value,jdbcType=VARCHAR} ,
+	        bpc_remark = #{bpc_remark,jdbcType=VARCHAR} ,
+	        bpc_orgid = #{bpc_orgid,jdbcType=VARCHAR} ,
+	        bpc_status = #{bpc_status,jdbcType=VARCHAR} ,
+	        bpc_dr = #{bpc_dr,jdbcType=VARCHAR} ,
+	        bpc_version = #{bpc_version,jdbcType=VARCHAR} ,
+	        bpc_adduser = #{bpc_adduser,jdbcType=VARCHAR} ,
+	        bpc_adddate = #{bpc_adddate,jdbcType=VARCHAR} ,
+	        bpc_modifyuser = #{bpc_modifyuser,jdbcType=VARCHAR} ,
+	        bpc_modifydate = #{bpc_modifydate,jdbcType=VARCHAR} ,
+	        bpc_deleteuser = #{bpc_deleteuser,jdbcType=VARCHAR} ,
+	        bpc_deletedate = #{bpc_deletedate,jdbcType=VARCHAR} 
+        WHERE 
+	        bpc_id = #{bpc_id,jdbcType=VARCHAR} 
+	</update> 
+	
+	<update id="updateSelect" parameterType="com.xianghuan.auth.base.model.BparameterConf" flushCache="true">
+        UPDATE base_parameter_conf SET
+	        	<if test=" bpc_key_code!= null  and bpc_key_code != ''">
+	        		bpc_key_code = #{bpc_key_code,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" bpc_value!= null  and bpc_value != ''">
+	        		bpc_value = #{bpc_value,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" bpc_remark!= null  and bpc_remark != ''">
+	        		bpc_remark = #{bpc_remark,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" bpc_orgid!= null  and bpc_orgid != ''">
+	        		bpc_orgid = #{bpc_orgid,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" bpc_status!= null  and bpc_status != ''">
+	        		bpc_status = #{bpc_status,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" bpc_dr!= null  and bpc_dr != ''">
+	        		bpc_dr = #{bpc_dr,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" bpc_version!= null  and bpc_version != ''">
+	        		bpc_version = #{bpc_version,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" bpc_adduser!= null  and bpc_adduser != ''">
+	        		bpc_adduser = #{bpc_adduser,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" bpc_adddate!= null  and bpc_adddate != ''">
+	        		bpc_adddate = #{bpc_adddate,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" bpc_modifyuser!= null  and bpc_modifyuser != ''">
+	        		bpc_modifyuser = #{bpc_modifyuser,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" bpc_modifydate!= null  and bpc_modifydate != ''">
+	        		bpc_modifydate = #{bpc_modifydate,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" bpc_deleteuser!= null  and bpc_deleteuser != ''">
+	        		bpc_deleteuser = #{bpc_deleteuser,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" bpc_deletedate!= null  and bpc_deletedate != ''">
+	        		bpc_deletedate = #{bpc_deletedate,jdbcType=VARCHAR} 
+	        	</if>
+        WHERE 
+	        bpc_id = #{bpc_id,jdbcType=VARCHAR} 
+	</update>   
+	
+	<update id="updateBatch" flushCache="true">
+	    <foreach collection="array" item="item" open="begin" separator="" close="end;">
+		        UPDATE base_parameter_conf SET
+			        bpc_key_code = #{bpc_key_code} ,
+			        bpc_value = #{bpc_value} ,
+			        bpc_remark = #{bpc_remark} ,
+			        bpc_orgid = #{bpc_orgid} ,
+			        bpc_status = #{bpc_status} ,
+			        bpc_dr = #{bpc_dr} ,
+			        bpc_version = #{bpc_version} ,
+			        bpc_adduser = #{bpc_adduser} ,
+			        bpc_adddate = #{bpc_adddate} ,
+			        bpc_modifyuser = #{bpc_modifyuser} ,
+			        bpc_modifydate = #{bpc_modifydate} ,
+			        bpc_deleteuser = #{bpc_deleteuser} ,
+			        bpc_deletedate = #{bpc_deletedate} 
+		        WHERE 
+			        bpc_id = #{bpc_id} 
+		</foreach>
+	</update>
+
+	<delete id="remove" parameterType="java.util.Map">
+	    UPDATE base_parameter_conf SET	       
+	        bpc_dr =#{bpc_dr,jdbcType=VARCHAR}  	         
+        WHERE 
+	        bpc_id = #{bpc_id,jdbcType=VARCHAR} 
+	</delete>
+
+	<delete id="removeBatch" parameterType="java.util.Map">
+	update base_parameter_conf set
+		       bpc_dr =#{bpc_dr,jdbcType=VARCHAR}  	
+	where 1 = 1 and bpc_id in
+		<foreach collection="ids" item="item" open="(" separator="," close=")">		
+		#{item,jdbcType=VARCHAR}
+		</foreach>
+	</delete>
+	
+	<delete id="delete" parameterType="string">
+	    delete from base_parameter_conf where bpc_id=#bpc_id
+	</delete>
+	
+	<delete id="deleteBatch">
+	    delete from base_parameter_conf where bpc_id in
+	    <foreach collection="array" item="item"  open="(" separator="," close=")">
+	        #{item}
+	    </foreach>
+	</delete>
+	
+	<select id="find" resultType="com.xianghuan.auth.base.model.BparameterConf" parameterType="string">
+		select
+		<include refid="Base_query_column" />
+		from base_parameter_conf where bpc_id= #{id}
+		and bpc_dr='1'
+	</select>
+	<select id="findByKeyCode" resultType="com.xianghuan.auth.base.model.BparameterConf" parameterType="string">
+		select
+		<include refid="Base_query_column" />
+		from base_parameter_conf where bpc_key_code= #{bpc_key_code}
+		and bpc_dr='1'
+	</select>
+
+	<select id="queryByCondition" resultType="com.xianghuan.auth.base.model.BparameterConf" parameterType="java.util.Map">
+		select <include refid="Base_query_column" /> from base_parameter_conf where 1=1
+		<include refid="Base_query_where" />
+		<if test="sqlWhere != null">
+			 #{sqlWhere}
+		</if>
+	</select>
+	
+	<select id="getRecordCount" resultType="int" parameterType="java.util.Map">
+		select count(1) from base_parameter_conf where 1 = 1
+		<include refid="Base_query_where" />
+		<if test="sqlWhere != null">
+			 #{sqlWhere}
+		</if>
+	</select>
+	
+	<select id="select" resultType="com.xianghuan.auth.base.model.BparameterConf" parameterType="java.util.Map">
+		select <include refid="Base_query_column" /> from base_parameter_conf where 1=1
+		<include refid="Base_query_where" />
+		<if test="sqlWhere != null">
+			 #{sqlWhere}
+		</if>
+	</select>
+</mapper>

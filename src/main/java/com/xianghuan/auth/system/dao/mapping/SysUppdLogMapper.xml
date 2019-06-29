@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 不使用namespace的话sql搜索定位会比较方便 -->
+<mapper namespace="com.xianghuan.auth.system.dao.ISysUppdLogDao">
+	<sql id="Base_Column_List">
+		sul_id,sul_creatid,sul_uptime,sul_oldpd,sul_newpd,sul_inserttime,sul_sp_id,sul_desc
+	</sql>
+	<sql id="Base_Column_insert">
+        	#{sul_id,jdbcType=VARCHAR},
+        	#{sul_creatid,jdbcType=VARCHAR},
+        	#{sul_uptime,jdbcType=VARCHAR},
+        	#{sul_oldpd,jdbcType=VARCHAR},
+        	#{sul_newpd,jdbcType=VARCHAR},
+        	#{sul_inserttime,jdbcType=VARCHAR},
+        	#{sul_sp_id,jdbcType=VARCHAR},
+        	#{sul_desc,jdbcType=VARCHAR}
+	</sql>
+
+	<insert id="insert" parameterType="com.xianghuan.auth.system.model.SysUppdLog" keyProperty="sul_id" >
+        INSERT INTO sys_uppd_log ( <include refid="Base_Column_List" /> )  VALUES (
+            <include refid="Base_Column_insert" /> 
+        )
+	</insert>
+	
+	<insert id="insertBatch" keyProperty="sul_id">
+		insert into sys_uppd_log  ( <include refid="Base_Column_List" /> )   values
+		<foreach collection="array" item="item" index="index" separator=",">
+		   <include refid="Base_Column_insert" /> 
+        </foreach>
+	</insert>
+
+	<update id="update" parameterType="com.xianghuan.auth.system.model.SysUppdLog" flushCache="true">
+        UPDATE sys_uppd_log SET
+	        sul_creatid = #{sul_creatid,jdbcType=VARCHAR} ,
+	        sul_uptime = #{sul_uptime,jdbcType=VARCHAR} ,
+	        sul_oldpd = #{sul_oldpd,jdbcType=VARCHAR} ,
+	        sul_newpd = #{sul_newpd,jdbcType=VARCHAR} ,
+	        sul_inserttime = #{sul_inserttime,jdbcType=VARCHAR} ,
+	        sul_sp_id = #{sul_sp_id,jdbcType=VARCHAR} ,
+	        sul_desc = #{sul_desc,jdbcType=VARCHAR} 
+        WHERE 
+	        sul_id = #{sul_id,jdbcType=VARCHAR} 
+	</update>  
+	
+	<update id="updateBatch" flushCache="true">
+	    <foreach collection="array" item="item" open="begin" separator="" close="end;">
+		        UPDATE sys_uppd_log SET
+			        sul_creatid = #{sul_creatid} ,
+			        sul_uptime = #{sul_uptime} ,
+			        sul_oldpd = #{sul_oldpd} ,
+			        sul_newpd = #{sul_newpd} ,
+			        sul_inserttime = #{sul_inserttime} ,
+			        sul_sp_id = #{sul_sp_id} ,
+			        sul_desc = #{sul_desc} 
+		        WHERE 
+			        sul_id = #{sul_id} 
+		</foreach>
+	</update>
+
+	<delete id="delete" parameterType="string">
+	    delete from sys_uppd_log where sul_id= #{sul_id}
+	</delete>
+	
+	<delete id="deleteBatch">
+	    delete from sys_uppd_log where sul_id in
+	    <foreach collection="array" item="item"  open="(" separator="," close=")">
+	       #item#
+	    </foreach>
+	</delete>
+	
+	<select id="find" resultType="com.xianghuan.auth.system.model.SysUppdLog" parameterType="string">
+		select
+		<include refid="Base_Column_List" />
+		from sys_uppd_log where sul_id=#{sul_id}
+	</select>
+
+	<select id="queryByCondition" resultType="com.xianghuan.auth.system.model.SysUppdLog">
+		select <include refid="Base_Column_List" /> from sys_uppd_log where 1=1
+		<if test="sqlWhere != null">
+			#sqlWhere#
+		</if>
+	</select>
+	
+	<select id="getRecordCount" resultType="int">
+		select count(1) from sys_uppd_log where 1 = 1
+		<if test="sqlWhere != null">
+			#sqlWhere#
+		</if>
+	</select>
+</mapper>

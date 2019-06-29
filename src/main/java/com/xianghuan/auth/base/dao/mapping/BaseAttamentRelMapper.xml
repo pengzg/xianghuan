@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 不使用namespace的话sql搜索定位会比较方便 -->
+<mapper namespace="com.xianghuan.auth.base.dao.IBaseAttamentRelDao">
+	<sql id="Base_Column_List">
+		bar_id,bar_source,bar_source_id,bar_attament_id,bar_status,bar_dr,bar_add_time,bar_add_userid,bar_order
+	</sql>
+	<sql id="Base_Column_insert">
+        	#{bar_id,jdbcType=VARCHAR},
+        	#{bar_source,jdbcType=INTEGER},
+        	#{bar_source_id,jdbcType=VARCHAR},
+        	#{bar_attament_id,jdbcType=VARCHAR},
+        	#{bar_status,jdbcType=INTEGER},
+        	#{bar_dr,jdbcType=INTEGER},
+        	#{bar_add_time,jdbcType=VARCHAR},
+        	#{bar_add_userid,jdbcType=BIGINT},
+        	#{bar_order,jdbcType=INTEGER}
+	</sql>
+	<sql id="Base_query_column">
+		bar_id,bar_source,bar_source_id,bar_attament_id,bar_status,bar_dr,bar_add_time,bar_add_userid,bar_order
+	</sql>
+	<sql id="Base_query_where">
+		 	<if test="bar_source != null and bar_source != ''">
+	          and bar_source = #{bar_source}
+	         </if>
+		 	<if test="bar_source_id != null and bar_source_id != ''">
+	          and bar_source_id = #{bar_source_id}
+	         </if>
+		 	<if test="bar_attament_id != null and bar_attament_id != ''">
+	          and bar_attament_id = #{bar_attament_id}
+	         </if>
+		 	<if test="bar_status != null and bar_status != ''">
+	          and bar_status = #{bar_status}
+	         </if>
+		 	<if test="bar_dr != null and bar_dr != ''">
+	          and bar_dr = #{bar_dr}
+	         </if>
+		 	<if test="bar_add_time != null and bar_add_time != ''">
+	          and bar_add_time = #{bar_add_time}
+	         </if>
+		 	<if test="bar_add_userid != null and bar_add_userid != ''">
+	          and bar_add_userid = #{bar_add_userid}
+	         </if>
+		 	<if test="bar_order != null and bar_order != ''">
+	          and bar_order = #{bar_order}
+	         </if>
+	</sql>
+	
+	<insert id="insert" parameterType="com.xianghuan.auth.base.model.BaseAttamentRel" keyProperty="bar_id" >
+        INSERT INTO base_attament_rel ( <include refid="Base_Column_List" /> )  VALUES (
+            <include refid="Base_Column_insert" /> 
+        )
+	</insert>
+	
+	<insert id="insertBatch" keyProperty="bar_id">
+		insert into base_attament_rel  ( <include refid="Base_Column_List" /> )   values
+		<foreach collection="array" item="item" index="index" separator=",">
+		  (
+		  #{item.bar_id,jdbcType=VARCHAR},
+        	#{item.bar_source,jdbcType=INTEGER},
+        	#{item.bar_source_id,jdbcType=VARCHAR},
+        	#{item.bar_attament_id,jdbcType=VARCHAR},
+        	#{item.bar_status,jdbcType=INTEGER},
+        	#{item.bar_dr,jdbcType=INTEGER},
+        	#{item.bar_add_time,jdbcType=VARCHAR},
+        	#{item.bar_add_userid,jdbcType=BIGINT},
+        	#{item.bar_order,jdbcType=INTEGER}
+		  )
+		  
+        </foreach>
+	</insert>
+
+	<update id="update" parameterType="com.xianghuan.auth.base.model.BaseAttamentRel" flushCache="true">
+        UPDATE base_attament_rel SET
+	        bar_source = #{bar_source,jdbcType=INTEGER} ,
+	        bar_source_id = #{bar_source_id,jdbcType=VARCHAR} ,
+	        bar_attament_id = #{bar_attament_id,jdbcType=VARCHAR} ,
+	        bar_status = #{bar_status,jdbcType=INTEGER} ,
+	        bar_dr = #{bar_dr,jdbcType=INTEGER} ,
+	        bar_add_time = #{bar_add_time,jdbcType=VARCHAR} ,
+	        bar_add_userid = #{bar_add_userid,jdbcType=BIGINT} ,
+	        bar_order = #{bar_order,jdbcType=INTEGER} 
+        WHERE 
+	        bar_id = #{bar_id,jdbcType=VARCHAR} 
+	</update> 
+	
+	<update id="updateSelect" parameterType="com.xianghuan.auth.base.model.BaseAttamentRel" flushCache="true">
+        UPDATE base_attament_rel SET
+	        	<if test=" bar_source!= null  and bar_source != ''">
+	        		bar_source = #{bar_source,jdbcType=INTEGER} ,
+	        	</if>
+	        	<if test=" bar_source_id!= null  and bar_source_id != ''">
+	        		bar_source_id = #{bar_source_id,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" bar_attament_id!= null  and bar_attament_id != ''">
+	        		bar_attament_id = #{bar_attament_id,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" bar_status!= null  and bar_status != ''">
+	        		bar_status = #{bar_status,jdbcType=INTEGER} ,
+	        	</if>
+	        	<if test=" bar_dr!= null  and bar_dr != ''">
+	        		bar_dr = #{bar_dr,jdbcType=INTEGER} ,
+	        	</if>
+	        	<if test=" bar_add_time!= null  and bar_add_time != ''">
+	        		bar_add_time = #{bar_add_time,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" bar_add_userid!= null  and bar_add_userid != ''">
+	        		bar_add_userid = #{bar_add_userid,jdbcType=BIGINT} ,
+	        	</if>
+	        	<if test=" bar_order!= null  and bar_order != ''">
+	        		bar_order = #{bar_order,jdbcType=INTEGER} 
+	        	</if>
+        WHERE 
+	        bar_id = #{bar_id,jdbcType=VARCHAR} 
+	</update>   
+	
+	<update id="updateBatch" flushCache="true">
+	    <foreach collection="array" item="item" open="begin" separator="" close="end;">
+		        UPDATE base_attament_rel SET
+			        bar_source = #{bar_source} ,
+			        bar_source_id = #{bar_source_id} ,
+			        bar_attament_id = #{bar_attament_id} ,
+			        bar_status = #{bar_status} ,
+			        bar_dr = #{bar_dr} ,
+			        bar_add_time = #{bar_add_time} ,
+			        bar_add_userid = #{bar_add_userid} ,
+			        bar_order = #{bar_order} 
+		        WHERE 
+			        bar_id = #{bar_id} 
+		</foreach>
+	</update>
+
+	<delete id="remove" parameterType="java.util.Map">
+	    update base_attament_rel set 1=1
+	    <!-- set dr = 0  -->
+	    where bar_id= #{bar_id}
+	</delete>
+	
+	<delete id="removeBatch">
+	    update base_attament_rel  where  bar_id in
+	    <foreach collection="array" item="item"  open="(" separator="," close=")">
+	        #{item}
+	    </foreach>
+	</delete>
+	
+	<delete id="delete" parameterType="string">
+	    delete from base_attament_rel where bar_id=#bar_id
+	</delete>
+	
+	<delete id="deleteBatch">
+	    delete from base_attament_rel where bar_id in
+	    <foreach collection="array" item="item"  open="(" separator="," close=")">
+	        #{item}
+	    </foreach>
+	</delete>
+	
+	<select id="find" resultType="com.xianghuan.auth.base.model.BaseAttamentRel" parameterType="string">
+		select
+		<include refid="Base_query_column" />
+		from base_attament_rel where bar_id= #{bar_id}
+	</select>
+
+	<select id="queryByCondition" resultType="com.xianghuan.auth.base.model.BaseAttamentRel" parameterType="java.util.Map">
+		select <include refid="Base_query_column" /> from base_attament_rel where 1=1
+		<include refid="Base_query_where" />
+		<if test="sqlWhere != null">
+			 #{sqlWhere}
+		</if>
+	</select>
+	
+	<select id="getRecordCount" resultType="int" parameterType="java.util.Map">
+		select count(1) from base_attament_rel where 1 = 1
+		<include refid="Base_query_where" />
+		<if test="sqlWhere != null">
+			 #{sqlWhere}
+		</if>
+	</select>
+	
+	<select id="select" resultType="com.xianghuan.auth.base.model.BaseAttamentRel" parameterType="java.util.Map">
+		select <include refid="Base_query_column" /> from base_attament_rel where 1=1
+		<include refid="Base_query_where" />
+		<if test="sqlWhere != null">
+			 #{sqlWhere}
+		</if>
+	</select>
+	<select id="getAttachmentList" resultType="com.xianghuan.auth.base.vo.BaseAttachmentVO" parameterType="java.util.Map">
+		SELECT
+			bpa_path AS path
+		FROM
+			base_pic_attachment
+		INNER JOIN base_attament_rel ON bpa_id = bar_attament_id
+		AND bpa_dr = 1
+		
+		where 1=1
+		<include refid="Base_query_where" />
+		and bar_dr = 1
+		<if test="sqlWhere != null">
+			 #{sqlWhere}
+		</if>
+	</select>
+	
+	<update id="removeBySource" parameterType="java.util.Map">
+	    update base_attament_rel set bar_dr=2 
+	     where   
+	     bar_source = #{bar_source} 
+	     and bar_source_id = #{bar_source_id} 
+	</update>
+</mapper>

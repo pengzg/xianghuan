@@ -1,0 +1,94 @@
+.table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+.table th,.table td {
+	border: 0px solid #8CACBB;
+	padding: 0.3em 0.7em;
+	text-align: left;
+}
+
+.table tr {
+	background: #F8F8F8;
+	text-align: center;
+	height: 35px;
+}
+
+.table th {
+	background: #F8F8F8;
+	text-align: center;
+}
+
+.table thead th {
+	text-align: center;
+}
+
+.table tbody th {
+	text-align: right;
+}
+
+.table tr:hover {
+	background-color: #f6fafd;
+}
+
+.table td:hover {
+	background-color: #f9feff;
+}
+
+.form th {
+	text-align: right;
+}
+
+.form th,.form td {
+	padding: 0.1em 0.3em;
+	border: 1px solid #D1D7DC;
+}
+
+.form input,.form select,.form easyui-combobox,.form textarea {
+	width: 150px;
+	height: 24px;
+	font: 18px/1.5 "Consolas", "Monaco", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace;
+	color: #000;
+	overflow: auto;
+	resize: none;
+}
+
+.form input[type='checkbox'],.form input[type='radio'] {
+	width: 20px;
+}
+
+fieldset {
+	border: 1px dotted #D1D7DC;
+}
+
+legend {
+	border: 1px dotted #D1D7DC;
+	font-size: small;
+}
+
+.black_overlay{ 
+    display: none; 
+    position: absolute; 
+    width: 100%; 
+    height: 100%; 
+    background-color: black; 
+    z-index:1001; 
+    -moz-opacity: 0.8; 
+    opacity:.80; 
+    filter: alpha(opacity=88); 
+} 
+.white_content { 
+    display: none; 
+    position: absolute; 
+    width: 50%; 
+    height: 80%; 
+    padding: 4px; 
+    border: 5px solid orange; 
+    background-color: white; 
+    z-index:1002; 
+    overflow: auto; 
+} 
+
+.new_center { width:100%; text-align:center;}
+.new_right { width: 100%; float:right; background-color: #F5F5F5; }

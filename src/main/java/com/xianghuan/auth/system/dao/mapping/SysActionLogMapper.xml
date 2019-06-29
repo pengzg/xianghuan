@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 不使用namespace的话sql搜索定位会比较方便 -->
+<mapper namespace="com.xianghuan.auth.system.dao.ISysActionLogDao">
+	<sql id="Base_Column_List">
+		sal_id,sal_creatid,sal_createname,sal_actionname,sal_actiontype,sal_actiontime,sal_ownerid,sal_ip,sal_plattype,sal_desc,sal_ts,sal_dr,sal_type
+	</sql>
+	<sql id="Base_Column_insert">
+        	#{sal_id,jdbcType=VARCHAR},
+        	#{sal_creatid,jdbcType=VARCHAR},
+        	#{sal_createname,jdbcType=VARCHAR},
+        	#{sal_actionname,jdbcType=VARCHAR},
+        	#{sal_actiontype,jdbcType=VARCHAR},
+        	#{sal_actiontime,jdbcType=VARCHAR},
+        	#{sal_ownerid,jdbcType=VARCHAR},
+        	#{sal_ip,jdbcType=VARCHAR},
+        	#{sal_plattype,jdbcType=VARCHAR},
+        	#{sal_desc,jdbcType=VARCHAR},
+        	#{sal_ts,jdbcType=VARCHAR},
+        	#{sal_dr,jdbcType=INTEGER},
+        	#{sal_type,jdbcType=INTEGER}
+	</sql>
+
+	<insert id="insert" parameterType="com.xianghuan.auth.system.model.SysActionLog" keyProperty="sal_id" >
+        INSERT INTO sys_action_log ( <include refid="Base_Column_List" /> )  VALUES (
+            <include refid="Base_Column_insert" /> 
+        )
+	</insert>
+	
+	<insert id="insertBatch" keyProperty="sal_id">
+		insert into sys_action_log  ( <include refid="Base_Column_List" /> )   values
+		<foreach collection="array" item="item" index="index" separator=",">
+		   <include refid="Base_Column_insert" /> 
+        </foreach>
+	</insert>
+
+	<update id="update" parameterType="com.xianghuan.auth.system.model.SysActionLog" flushCache="true">
+        UPDATE sys_action_log SET
+	        sal_creatid = #{sal_creatid,jdbcType=VARCHAR} ,
+	        sal_createname = #{sal_createname,jdbcType=VARCHAR} ,
+	        sal_actionname = #{sal_actionname,jdbcType=VARCHAR} ,
+	        sal_actiontype = #{sal_actiontype,jdbcType=VARCHAR} ,
+	        sal_actiontime = #{sal_actiontime,jdbcType=VARCHAR} ,
+	        sal_ownerid = #{sal_ownerid,jdbcType=VARCHAR} ,
+	        sal_ip = #{sal_ip,jdbcType=VARCHAR} ,
+	        sal_plattype = #{sal_plattype,jdbcType=VARCHAR} ,
+	        sal_desc = #{sal_desc,jdbcType=VARCHAR} ,
+	        sal_ts = #{sal_ts,jdbcType=VARCHAR} ,
+	        sal_dr = #{sal_dr,jdbcType=INTEGER} 
+	        sal_type = #{sal_dr,jdbcType=INTEGER} 
+        WHERE 
+	        sal_id = #{sal_id,jdbcType=VARCHAR} 
+	</update>  
+	<!-- 
+	<update id="updateBatch" flushCache="true">
+	    <foreach collection="array" item="item" open="begin" separator="" close="end;">
+		        UPDATE sys_action_log SET
+			        <if test="item.sal_creatid != null">sal_creatid = #{item.sal_creatid} ,</if>
+			        <if test="item.sal_createname != null">sal_createname = #{item.sal_createname} ,</if>
+			        <if test="item.sal_actionname != null">sal_actionname = #{item.sal_actionname} ,</if>
+			        <if test="item.sal_actiontype != null">sal_actiontype = #{item.sal_actiontype} ,</if>
+			        <if test="item.sal_actiontime != null">sal_actiontime = #{item.sal_actiontime} ,</if>
+			        <if test="item.sal_ownerid != null">sal_ownerid = #{item.sal_ownerid} ,</if>
+			        <if test="item.sal_ip != null">sal_ip = #{item.sal_ip} ,</if>
+			        <if test="item.sal_plattype != null">sal_plattype = #{item.sal_plattype} ,</if>
+			        <if test="item.sal_desc != null">sal_desc = #{item.sal_desc} ,</if>
+			        <if test="item.sal_ts != null">sal_ts = #{item.sal_ts} ,</if>
+			        <if test="item.sal_type != null">sal_type = #{item.sal_type}, </if>
+			         item.sal_dr = #{item.sal_dr} 
+		        WHERE 
+			        item.sal_id = #{item.sal_id} 
+		</foreach>
+	</update> -->
+	
+	<update id="updateBatch" flushCache="true">
+	        UPDATE sys_action_log SET
+		        sal_dr = 0
+		         WHERE sal_id in 
+	    <foreach collection="ids" item="item" index="index" open="(" separator="," close=")">
+		        #{item} 
+		</foreach>
+	</update>
+
+	<delete id="delete" parameterType="string">
+	     UPDATE sys_action_log SET sal_dr = 0 WHERE sal_id= #{sal_id}
+	</delete>
+	
+	<delete id="deleteBatch">
+	    delete from sys_action_log where sal_id in
+	    <foreach collection="array" item="item"  open="(" separator="," close=")">
+	       #item#
+	    </foreach>
+	</delete>
+	
+	<select id="find" resultType="com.xianghuan.auth.system.model.SysActionLog" parameterType="string">
+		select
+		<include refid="Base_Column_List" />
+		from sys_action_log where sal_id=#{sal_id}
+	</select>
+
+	<select id="queryByCondition" resultType="com.xianghuan.auth.system.model.SysActionLog" parameterType="java.util.Map">
+		select <include refid="Base_Column_List" /> from sys_action_log where 1=1 and sal_dr = 1
+		<if test="sal_createname != null">
+			and sal_createname  like  CONCAT('%',#{sal_createname},'%')
+		</if>
+		<if test="sal_type != null">
+			and sal_type = #{sal_type}
+		</if>
+		<if test="sal_plattype != null">
+			and sal_plattype = #{sal_plattype}
+		</if>
+		<if test="sal_desc != null">
+			and sal_desc  like CONCAT('%',#{sal_desc},'%')
+		</if>
+	</select>
+	
+	<select id="getRecordCount"  resultType="int" parameterType="java.util.Map">
+		select count(1) from sys_action_log where 1 = 1  and sal_dr = 1
+		<if test="sal_createname != null">
+			and sal_createname like CONCAT('%',#{sal_createname},'%')
+		</if>
+		<if test="sal_type != null">
+			and sal_type = #{sal_type}
+		</if>
+		<if test="sal_plattype != null">
+			and sal_plattype = #{sal_plattype}
+		</if>
+		<if test="sal_desc != null">
+			and sal_desc like CONCAT('%',#{sal_desc},'%')
+		</if>
+	</select>
+	
+	<select id="select" resultType="com.xianghuan.auth.system.model.SysActionLog" >
+		select <include refid="Base_Column_List" /> from sys_action_log where 1 = 1  and sal_dr = 1
+		<if test="ids != null">
+			and sal_id in 
+			<foreach item="item" index="index" collection="ids"
+		      open="(" separator="," close=")">
+		        #{item}
+	  		</foreach>
+		</if>
+	</select>
+</mapper>

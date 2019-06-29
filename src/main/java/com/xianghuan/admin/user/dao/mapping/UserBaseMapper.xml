@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 不使用namespace的话sql搜索定位会比较方便 -->
+<mapper namespace="com.xianghuan.admin.user.dao.IUserBaseDao">
+	<sql id="Base_Column_List">
+		ub_id,ub_realname,ub_usertype,ub_username,ub_image,ub_mobile,ub_lng,ub_lat,ub_openid,ub_unionid,ub_email,ub_sex,ub_last_logintime,ub_regtime,ub_source,ub_birthday,ub_pinyin,ub_status,ub_dr,ub_addtime,ub_updatetime,ub_spreadcode,ub_spread
+	</sql>
+	<sql id="Base_Column_insert">
+        	#{ub_id,jdbcType=INTEGER},
+        	#{ub_realname,jdbcType=VARCHAR},
+        	#{ub_usertype,jdbcType=INTEGER},
+        	#{ub_username,jdbcType=VARCHAR},
+        	#{ub_image,jdbcType=VARCHAR},
+        	#{ub_mobile,jdbcType=VARCHAR},
+        	#{ub_lng,jdbcType=VARCHAR},
+        	#{ub_lat,jdbcType=VARCHAR},
+        	#{ub_openid,jdbcType=VARCHAR},
+        	#{ub_unionid,jdbcType=VARCHAR},
+        	#{ub_email,jdbcType=VARCHAR},
+        	#{ub_sex,jdbcType=VARCHAR},
+        	#{ub_last_logintime,jdbcType=VARCHAR},
+        	#{ub_regtime,jdbcType=VARCHAR},
+        	#{ub_source,jdbcType=INTEGER},
+        	#{ub_birthday,jdbcType=VARCHAR},
+        	#{ub_pinyin,jdbcType=VARCHAR},
+        	#{ub_status,jdbcType=INTEGER},
+        	#{ub_dr,jdbcType=INTEGER},
+        	#{ub_addtime,jdbcType=VARCHAR},
+        	#{ub_updatetime,jdbcType=VARCHAR},
+        	#{ub_spreadcode,jdbcType=VARCHAR},
+        	#{ub_spread,jdbcType=INTEGER}
+	</sql>
+	<sql id="Base_query_column">
+		ub_id,ub_realname,ub_usertype,ub_username,ub_image,ub_mobile,ub_lng,ub_lat,ub_openid,ub_unionid,ub_email,ub_sex,ub_last_logintime,ub_regtime,ub_source,ub_birthday,ub_pinyin,ub_status,ub_dr,ub_addtime,ub_updatetime,ub_spreadcode,ub_spread
+	</sql>
+	<sql id="Base_query_where">
+		 	<if test="ub_realname != null and ub_realname != ''">
+	          and ub_realname = #{ub_realname}
+	         </if>
+		 	<if test="ub_usertype != null and ub_usertype != ''">
+	          and ub_usertype = #{ub_usertype}
+	         </if>
+		 	<if test="ub_username != null and ub_username != ''">
+	          and ub_username = #{ub_username}
+	         </if>
+		 	<if test="ub_image != null and ub_image != ''">
+	          and ub_image = #{ub_image}
+	         </if>
+		 	<if test="ub_mobile != null and ub_mobile != ''">
+	          and ub_mobile = #{ub_mobile}
+	         </if>
+		 	<if test="ub_lng != null and ub_lng != ''">
+	          and ub_lng = #{ub_lng}
+	         </if>
+		 	<if test="ub_lat != null and ub_lat != ''">
+	          and ub_lat = #{ub_lat}
+	         </if>
+		 	<if test="ub_openid != null and ub_openid != ''">
+	          and ub_openid = #{ub_openid}
+	         </if>
+		 	<if test="ub_unionid != null and ub_unionid != ''">
+	          and ub_unionid = #{ub_unionid}
+	         </if>
+		 	<if test="ub_email != null and ub_email != ''">
+	          and ub_email = #{ub_email}
+	         </if>
+		 	<if test="ub_sex != null and ub_sex != ''">
+	          and ub_sex = #{ub_sex}
+	         </if>
+		 	<if test="ub_last_logintime != null and ub_last_logintime != ''">
+	          and ub_last_logintime = #{ub_last_logintime}
+	         </if>
+		 	<if test="ub_regtime != null and ub_regtime != ''">
+	          and ub_regtime = #{ub_regtime}
+	         </if>
+		 	<if test="ub_source != null and ub_source != ''">
+	          and ub_source = #{ub_source}
+	         </if>
+		 	<if test="ub_pinyin != null and ub_pinyin != ''">
+	          and ub_pinyin = #{ub_pinyin}
+	         </if>
+		 	<if test="ub_status != null and ub_status != ''">
+	          and ub_status = #{ub_status}
+	         </if>
+		 	<if test="ub_dr != null and ub_dr != ''">
+	          and ub_dr = #{ub_dr}
+	         </if>
+		 	<if test="ub_addtime != null and ub_addtime != ''">
+	          and ub_addtime = #{ub_addtime}
+	         </if>
+		 	<if test="ub_updatetime != null and ub_updatetime != ''">
+	          and ub_updatetime = #{ub_updatetime}
+	         </if>
+	         <if test="ub_spreadcode != null and ub_spreadcode != ''">
+	          and ub_spreadcode = #{ub_spreadcode}
+	         </if>
+	         <if test="ub_spread != null and ub_spread != ''">
+	          and ub_spread = #{ub_spread}
+	         </if>
+	</sql>
+	
+	<insert id="insert" parameterType="com.xianghuan.admin.user.model.UserBase" keyProperty="ub_id" useGeneratedKeys="true" >
+        INSERT INTO user_base ( <include refid="Base_Column_List" /> )  VALUES (
+            <include refid="Base_Column_insert" /> 
+        )
+	</insert>
+	
+	<insert id="insertBatch" keyProperty="ub_id">
+		insert into user_base  ( <include refid="Base_Column_List" /> )   values
+		<foreach collection="array" item="item" index="index" separator=",">
+		   <include refid="Base_Column_insert" /> 
+        </foreach>
+	</insert>
+
+	<update id="update" parameterType="com.xianghuan.admin.user.model.UserBase" flushCache="true">
+        UPDATE user_base SET
+	        ub_realname = #{ub_realname,jdbcType=VARCHAR} ,
+	        ub_usertype = #{ub_usertype,jdbcType=INTEGER} ,
+	        ub_username = #{ub_username,jdbcType=VARCHAR} ,
+	        ub_image = #{ub_image,jdbcType=VARCHAR} ,
+	        ub_mobile = #{ub_mobile,jdbcType=VARCHAR} ,
+	        ub_lng = #{ub_lng,jdbcType=VARCHAR} ,
+	        ub_lat = #{ub_lat,jdbcType=VARCHAR} ,
+	        ub_openid = #{ub_openid,jdbcType=VARCHAR} ,
+	        ub_unionid = #{ub_unionid,jdbcType=VARCHAR} ,
+	        ub_email = #{ub_email,jdbcType=VARCHAR} ,
+	        ub_sex = #{ub_sex,jdbcType=VARCHAR} ,
+	        ub_last_logintime = #{ub_last_logintime,jdbcType=VARCHAR} ,
+	        ub_regtime = #{ub_regtime,jdbcType=VARCHAR} ,
+	        ub_source = #{ub_source,jdbcType=INTEGER} ,
+	        ub_birthday = #{ub_birthday,jdbcType=VARCHAR} ,
+	        ub_pinyin = #{ub_pinyin,jdbcType=VARCHAR} ,
+	        ub_status = #{ub_status,jdbcType=INTEGER} ,
+	        ub_dr = #{ub_dr,jdbcType=INTEGER} ,
+	        ub_addtime = #{ub_addtime,jdbcType=VARCHAR} ,
+	        ub_updatetime = #{ub_updatetime,jdbcType=VARCHAR} ,
+	        ub_spreadcode = #{ub_spreadcode,jdbcType=VARCHAR} ,
+	        ub_spread = #{ub_spread,jdbcType=INTEGER}  
+        WHERE 
+	        ub_id = #{ub_id,jdbcType=INTEGER} 
+	</update> 
+	
+	<update id="updateSelect" parameterType="com.xianghuan.admin.user.model.UserBase" flushCache="true">
+        UPDATE user_base SET
+	        	<if test=" ub_realname!= null  and ub_realname != ''">
+	        		ub_realname = #{ub_realname,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" ub_usertype!= null  and ub_usertype != ''">
+	        		ub_usertype = #{ub_usertype,jdbcType=INTEGER} ,
+	        	</if>
+	        	<if test=" ub_username!= null  and ub_username != ''">
+	        		ub_username = #{ub_username,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" ub_image!= null  and ub_image != ''">
+	        		ub_image = #{ub_image,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" ub_mobile!= null  and ub_mobile != ''">
+	        		ub_mobile = #{ub_mobile,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" ub_lng!= null  and ub_lng != ''">
+	        		ub_lng = #{ub_lng,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" ub_lat!= null  and ub_lat != ''">
+	        		ub_lat = #{ub_lat,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" ub_openid!= null  and ub_openid != ''">
+	        		ub_openid = #{ub_openid,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" ub_unionid!= null  and ub_unionid != ''">
+	        		ub_unionid = #{ub_unionid,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" ub_email!= null  and ub_email != ''">
+	        		ub_email = #{ub_email,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" ub_sex!= null  and ub_sex != ''">
+	        		ub_sex = #{ub_sex,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" ub_last_logintime!= null  and ub_last_logintime != ''">
+	        		ub_last_logintime = #{ub_last_logintime,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" ub_regtime!= null  and ub_regtime != ''">
+	        		ub_regtime = #{ub_regtime,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" ub_source!= null  and ub_source != ''">
+	        		ub_source = #{ub_source,jdbcType=INTEGER} ,
+	        	</if>
+	        	<if test=" ub_pinyin!= null  and ub_pinyin != ''">
+	        		ub_pinyin = #{ub_pinyin,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" ub_status!= null  and ub_status != ''">
+	        		ub_status = #{ub_status,jdbcType=INTEGER} ,
+	        	</if>
+	        	<if test=" ub_dr!= null  and ub_dr != ''">
+	        		ub_dr = #{ub_dr,jdbcType=INTEGER} ,
+	        	</if>
+	        	<if test=" ub_addtime!= null  and ub_addtime != ''">
+	        		ub_addtime = #{ub_addtime,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" ub_updatetime!= null  and ub_updatetime != ''">
+	        		ub_updatetime = #{ub_updatetime,jdbcType=VARCHAR} 
+	        	</if>
+        WHERE 
+	        ub_id = #{ub_id,jdbcType=INTEGER} 
+	</update>   
+	
+	<update id="updateBatch" flushCache="true">
+	    <foreach collection="array" item="item" open="begin" separator="" close="end;">
+		        UPDATE user_base SET
+			        ub_realname = #{ub_realname} ,
+			        ub_usertype = #{ub_usertype} ,
+			        ub_username = #{ub_username} ,
+			        ub_image = #{ub_image} ,
+			        ub_mobile = #{ub_mobile} ,
+			        ub_lng = #{ub_lng} ,
+			        ub_lat = #{ub_lat} ,
+			        ub_openid = #{ub_openid} ,
+			        ub_unionid = #{ub_unionid} ,
+			        ub_email = #{ub_email} ,
+			        ub_sex = #{ub_sex} ,
+			        ub_last_logintime = #{ub_last_logintime} ,
+			        ub_regtime = #{ub_regtime} ,
+			        ub_source = #{ub_source} ,
+			        ub_pinyin = #{ub_pinyin} ,
+			        ub_status = #{ub_status} ,
+			        ub_dr = #{ub_dr} ,
+			        ub_addtime = #{ub_addtime} ,
+			        ub_updatetime = #{ub_updatetime} 
+		        WHERE 
+			        ub_id = #{ub_id} 
+		</foreach>
+	</update>
+
+	<delete id="remove" parameterType="java.util.Map">
+	    update user_base set 1=1
+	    <!-- set dr = 0  -->
+	    where ub_id= #{ub_id}
+	</delete>
+	
+	<delete id="removeBatch">
+	    update user_base where ub_id in
+	    <foreach collection="array" item="item"  open="(" separator="," close=")">
+	        #{item}
+	    </foreach>
+	</delete>
+	
+	<delete id="delete" parameterType="string">
+	    delete from user_base where ub_id=#ub_id
+	</delete>
+	
+	<delete id="deleteBatch">
+	    delete from user_base where ub_id in
+	    <foreach collection="array" item="item"  open="(" separator="," close=")">
+	        #{item}
+	    </foreach>
+	</delete>
+	
+	<select id="find" resultType="com.xianghuan.admin.user.model.UserBase" parameterType="string">
+		select
+		<include refid="Base_query_column" />
+		from user_base where ub_id= #{ub_id}
+	</select>
+
+	<select id="queryByCondition" resultType="com.xianghuan.admin.user.model.UserBase" parameterType="java.util.Map">
+		select <include refid="Base_query_column" /> from user_base where 1=1
+		<include refid="Base_query_where" />
+		<if test="sqlWhere != null">
+			 #{sqlWhere}
+		</if>
+	</select>
+	
+	<select id="getRecordCount" resultType="int" parameterType="java.util.Map">
+		select count(1) from user_base where 1 = 1
+		<include refid="Base_query_where" />
+		<if test="sqlWhere != null">
+			 #{sqlWhere}
+		</if>
+	</select>
+	
+	<select id="select" resultType="com.xianghuan.admin.user.model.UserBase" parameterType="java.util.Map">
+		select <include refid="Base_query_column" /> from user_base where 1=1
+		<include refid="Base_query_where" />
+		<if test="sqlWhere != null">
+			 #{sqlWhere}
+		</if>
+		
+	</select>
+</mapper>

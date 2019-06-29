@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ExceptionMessage>
+<!--sys  -->
+	<Exception>
+		<Code>SYS_E000</Code>
+		<Message>测试版本，您没有删除操作的权限</Message>
+	</Exception>
+	<Exception>
+		<Code>SYS_E001</Code>
+		<Message>用户名或密码错误！</Message>
+	</Exception>	
+	<Exception>
+		<Code>SYS_E002</Code>
+		<Message>基础数据,非管理员不允许修改!</Message>
+	</Exception>
+		<Exception>
+		<Code>SYS_E003</Code>
+		<Message>[?]已增加,不能重复增加!</Message>
+	</Exception>
+	<Exception>
+		<Code>SYS_E990</Code>
+		<Message>[?]只有管理员或增加记录的本人才能进行新增，修改,删除或反审核操作</Message>
+	</Exception>	
+	<Exception>
+		<Code>SYS_E911</Code>
+		<Message>[?]只有系统管理员才有此权限</Message>
+	</Exception>	
+	<Exception>
+		<Code>Gen_E001</Code>
+		<Message>系统异常，请联系管理员！</Message>
+	</Exception>
+	<Exception>
+		<Code>STOCk_E001</Code>
+		<Message>xxxx[?]</Message>
+	</Exception>		
+</ExceptionMessage>

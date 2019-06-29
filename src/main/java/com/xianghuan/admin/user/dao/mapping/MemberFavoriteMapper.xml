@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 不使用namespace的话sql搜索定位会比较方便 -->
+<mapper namespace="com.xianghuan.admin.user.dao.IMemberFavoriteDao">
+	<sql id="Base_Column_List">
+		mf_id,mf_member_id,mf_favorite_type,mf_favoriteid,mf_url,mf_dr,mf_status,mf_add_time,mf_update_time
+	</sql>
+	<sql id="Base_Column_insert">
+        	#{mf_id,jdbcType=INTEGER},
+        	#{mf_member_id,jdbcType=INTEGER},
+        	#{mf_favorite_type,jdbcType=TINYINT},
+        	#{mf_favoriteid,jdbcType=VARCHAR},
+        	#{mf_url,jdbcType=VARCHAR},
+        	#{mf_dr,jdbcType=TINYINT},
+        	#{mf_status,jdbcType=TINYINT},
+        	#{mf_add_time,jdbcType=VARCHAR},
+        	#{mf_update_time,jdbcType=VARCHAR}
+	</sql>
+	<sql id="Base_query_column">
+		mf_id,mf_member_id,mf_favorite_type,mf_favoriteid,mf_url,mf_dr,mf_status,mf_add_time,mf_update_time
+	</sql>
+	<sql id="Base_query_where">
+		 	<if test="mf_member_id != null and mf_member_id != ''">
+	          and mf_member_id = #{mf_member_id}
+	         </if>
+		 	<if test="mf_favorite_type != null and mf_favorite_type != ''">
+	          and mf_favorite_type = #{mf_favorite_type}
+	         </if>
+		 	<if test="mf_favoriteid != null and mf_favoriteid != ''">
+	          and mf_favoriteid = #{mf_favoriteid}
+	         </if>
+		 	<if test="mf_url != null and mf_url != ''">
+	          and mf_url = #{mf_url}
+	         </if>
+		 	<if test="mf_dr != null and mf_dr != ''">
+	          and mf_dr = #{mf_dr}
+	         </if>
+		 	<if test="mf_status != null and mf_status != ''">
+	          and mf_status = #{mf_status}
+	         </if>
+		 	<if test="mf_add_time != null and mf_add_time != ''">
+	          and mf_add_time = #{mf_add_time}
+	         </if>
+		 	<if test="mf_update_time != null and mf_update_time != ''">
+	          and mf_update_time = #{mf_update_time}
+	         </if>
+	</sql>
+	
+	<insert id="insert" parameterType="com.xianghuan.admin.user.model.MemberFavorite" keyProperty="mf_id" >
+        INSERT INTO member_favorite ( <include refid="Base_Column_List" /> )  VALUES (
+            <include refid="Base_Column_insert" /> 
+        )
+	</insert>
+	
+	<insert id="insertBatch" keyProperty="mf_id">
+		insert into member_favorite  ( <include refid="Base_Column_List" /> )   values
+		<foreach collection="array" item="item" index="index" separator=",">
+		  (
+
+        		#{item.mf_id,jdbcType=INTEGER},
+        		#{item.mf_member_id,jdbcType=INTEGER},
+        		#{item.mf_favorite_type,jdbcType=TINYINT},
+        		#{item.mf_favoriteid,jdbcType=VARCHAR},
+        		#{item.mf_url,jdbcType=VARCHAR},
+        		#{item.mf_dr,jdbcType=TINYINT},
+        		#{item.mf_status,jdbcType=TINYINT},
+        		#{item.mf_add_time,jdbcType=VARCHAR},
+        		#{item.mf_update_time,jdbcType=VARCHAR}
+			)
+        </foreach>
+	</insert>
+
+	<update id="update" parameterType="com.xianghuan.admin.user.model.MemberFavorite" flushCache="true">
+        UPDATE member_favorite SET
+	        mf_member_id = #{mf_member_id,jdbcType=INTEGER} ,
+	        mf_favorite_type = #{mf_favorite_type,jdbcType=TINYINT} ,
+	        mf_favoriteid = #{mf_favoriteid,jdbcType=VARCHAR} ,
+	        mf_url = #{mf_url,jdbcType=VARCHAR} ,
+	        mf_dr = #{mf_dr,jdbcType=TINYINT} ,
+	        mf_status = #{mf_status,jdbcType=TINYINT} ,
+	        mf_add_time = #{mf_add_time,jdbcType=VARCHAR} ,
+	        mf_update_time = #{mf_update_time,jdbcType=VARCHAR} 
+        WHERE 
+	        mf_id = #{mf_id,jdbcType=INTEGER} 
+	</update> 
+	
+	
+	
+	
+	<delete id="remove" parameterType="java.util.Map">
+	    update member_favorite set 1=1
+	    <!-- set dr = 0  -->
+	    where mf_id= #{mf_id}
+	</delete>
+	
+	<delete id="removeBatch">
+	    update member_favorite where mf_id in
+	    <foreach collection="array" item="item"  open="(" separator="," close=")">
+	        #{item}
+	    </foreach>
+	</delete>
+	
+	<delete id="delete" parameterType="string">
+	    delete from member_favorite where mf_id=#mf_id
+	</delete>
+	
+	<delete id="deleteBatch">
+	    delete from member_favorite where mf_id in
+	    <foreach collection="array" item="item"  open="(" separator="," close=")">
+	        #{item}
+	    </foreach>
+	</delete>
+	
+	<select id="find" resultType="com.xianghuan.admin.user.model.MemberFavorite" parameterType="string">
+		select
+		<include refid="Base_query_column" />
+		from member_favorite where mf_id= #{mf_id}
+	</select>
+
+	<select id="queryByCondition" resultType="com.xianghuan.admin.user.vo.MemberFavoriteVO" parameterType="java.util.Map">
+		select <include refid="Base_query_column" /> from member_favorite where 1=1
+		<include refid="Base_query_where" />
+		<if test="sqlWhere != null">
+			 #{sqlWhere}
+		</if>
+	</select>
+
+	<select id="getRecordCount" resultType="int" parameterType="java.util.Map">
+		select count(1) from member_favorite where 1 = 1
+		<include refid="Base_query_where" />
+		<if test="sqlWhere != null">
+			 #{sqlWhere}
+		</if>
+	</select>
+	
+	<select id="select" resultType="com.xianghuan.admin.user.model.MemberFavorite" parameterType="java.util.Map">
+		select <include refid="Base_query_column" /> from member_favorite where 1=1
+		<include refid="Base_query_where" />
+		<if test="sqlWhere != null">
+			 #{sqlWhere}
+		</if>
+		<if test="start != null">
+			 LIMIT 
+		</if>
+	</select>
+</mapper>

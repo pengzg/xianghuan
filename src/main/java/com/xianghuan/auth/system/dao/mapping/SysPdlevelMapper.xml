@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 不使用namespace的话sql搜索定位会比较方便 -->
+<mapper namespace="com.xianghuan.auth.system.dao.ISysPdlevelDao">
+	<sql id="Base_Column_List">
+		sp_id,sp_name,sp_pdfzd,sp_pdjgtimes,sp_pduptimes,sp_status,sp_ts,sp_dr
+	</sql>
+	<sql id="Base_Column_insert">
+        	#{sp_id,jdbcType=VARCHAR} ,
+        	#{sp_name,jdbcType=VARCHAR} ,
+        	#{sp_pdfzd,jdbcType=VARCHAR} ,
+        	#{sp_pdjgtimes,jdbcType=INTEGER} ,
+        	#{sp_pduptimes,jdbcType=VARCHAR} ,
+        	#{sp_status,jdbcType=VARCHAR} ,
+        	#{sp_ts,jdbcType=VARCHAR} ,
+        	#{sp_dr,jdbcType=INTEGER} 
+	</sql>
+
+	<insert id="insert" parameterType="com.xianghuan.auth.system.model.SysPdlevel" keyProperty="sp_id" >
+        INSERT INTO sys_pdlevel ( <include refid="Base_Column_List" /> ) VALUES (
+            <include refid="Base_Column_insert" /> 
+        )
+	</insert>
+	
+	<insert id="insertBatch" keyProperty="sp_id">
+		insert into sys_pdlevel  ( <include refid="Base_Column_List" /> )   values
+		<foreach collection="array" item="item" index="index" separator=",">
+		   <include refid="Base_Column_insert" /> 
+        </foreach>
+	</insert>
+
+	<update id="update" parameterType="com.xianghuan.auth.system.model.SysPdlevel" flushCache="true">
+        UPDATE sys_pdlevel SET
+	        sp_name = #{sp_name,jdbcType=VARCHAR} ,
+	        sp_pdfzd = #{sp_pdfzd,jdbcType=VARCHAR} ,
+	        sp_pdjgtimes = #{sp_pdjgtimes,jdbcType=INTEGER} ,
+	        sp_pduptimes = #{sp_pduptimes,jdbcType=VARCHAR} ,
+	        sp_status = #{sp_status,jdbcType=VARCHAR} ,
+	        sp_ts = #{sp_ts,jdbcType=VARCHAR} ,
+	        sp_dr = #{sp_dr,jdbcType=INTEGER} 
+        WHERE 
+	        sp_id = #{sp_id,jdbcType=VARCHAR} 
+	</update>  
+	
+	<update id="updateBatch" flushCache="true">
+	    <foreach collection="array" item="item" open="begin" separator="" close="end;">
+		        UPDATE sys_pdlevel SET
+			        sp_name = #{sp_name} ,
+			        sp_pdfzd = #{sp_pdfzd} ,
+			        sp_pdjgtimes = #{sp_pdjgtimes} ,
+			        sp_pduptimes = #{sp_pduptimes} ,
+			        sp_status = #{sp_status} ,
+			        sp_ts = #{sp_ts} ,
+			        sp_dr = #{sp_dr} 
+		        WHERE 
+			        sp_id = #{sp_id} 
+		</foreach>
+	</update>
+
+	<delete id="delete" parameterType="string">
+		UPDATE 
+			sys_pdlevel SET sp_dr = 0
+        WHERE 
+	        sp_id = #{sp_id}
+	</delete>
+	
+	<delete id="deleteBatch">
+	    delete from sys_pdlevel where sp_id in
+	    <foreach collection="array" item="item"  open="(" separator="," close=")">
+	       #item#
+	    </foreach>
+	</delete>
+	
+	<select id="find" resultType="com.xianghuan.auth.system.model.SysPdlevel" parameterType="string">
+		select
+		<include refid="Base_Column_List" />
+		from sys_pdlevel where sp_id=#{sp_id} and sp_dr = 1
+	</select>
+
+	<select id="queryByCondition" resultType="com.xianghuan.auth.system.model.SysPdlevel">
+		select <include refid="Base_Column_List" /> from sys_pdlevel where 1=1 and sp_dr = 1
+		<if test="sp_name != null and sp_name != ''">
+			and t.sp_name like CONCAT('%',#{sp_name},'%')
+		</if>
+		<if test="sqlWhere != null">
+			#sqlWhere#
+		</if>
+	</select>
+	
+	<select id="getRecordCount" resultType="int">
+		select count(1) from sys_pdlevel where 1 = 1 and sp_dr = 1
+		<if test="sp_name != null and sp_name != ''">
+			and t.sp_name like CONCAT('%',#{sp_name},'%')
+		</if>
+		<if test="sqlWhere != null">
+			#sqlWhere#
+		</if>
+	</select>
+</mapper>

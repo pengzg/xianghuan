@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 不使用namespace的话sql搜索定位会比较方便 -->
+<mapper namespace="com.xianghuan.auth.system.dao.IUserOperationBehaviorDao">
+	<sql id="Base_Column_List">
+		uob_id,uob_user_id,uob_req_code,uob_req_name,uob_req_param,uob_req_url,uob_community_id,uob_shop_id,uob_source,uob_status,uob_add_time,uob_device,uob_device_type,uob_req_ip
+	</sql>
+	<sql id="Base_Column_insert">
+        	#{uob_id,jdbcType=VARCHAR},
+        	#{uob_user_id,jdbcType=INTEGER},
+        	#{uob_req_code,jdbcType=VARCHAR},
+        	#{uob_req_name,jdbcType=VARCHAR},
+        	#{uob_req_param,jdbcType=VARCHAR},
+        	#{uob_req_url,jdbcType=VARCHAR},
+        	#{uob_community_id,jdbcType=INTEGER},
+        	#{uob_shop_id,jdbcType=INTEGER},
+        	#{uob_source,jdbcType=VARCHAR},
+        	#{uob_status,jdbcType=VARCHAR},
+        	#{uob_add_time,jdbcType=VARCHAR},
+        	#{uob_device,jdbcType=VARCHAR},
+        	#{uob_device_type,jdbcType=VARCHAR},
+        	#{uob_req_ip,jdbcType=VARCHAR}
+	</sql>
+	<sql id="Base_query_column">
+		uob_id,uob_user_id,uob_req_code,uob_req_name,uob_req_param,uob_req_url,uob_community_id,uob_shop_id,uob_source,uob_status,uob_add_time,uob_device,uob_device_type,uob_req_ip
+	</sql>
+	<sql id="Base_query_where">
+		 	<if test="uob_user_id != null and uob_user_id != ''">
+	          and uob_user_id = #{uob_user_id}
+	         </if>
+		 	<if test="uob_req_code != null and uob_req_code != ''">
+	          and uob_req_code = #{uob_req_code}
+	         </if>
+		 	<if test="uob_req_name != null and uob_req_name != ''">
+	          and uob_req_name = #{uob_req_name}
+	         </if>
+		 	<if test="uob_req_param != null and uob_req_param != ''">
+	          and uob_req_param = #{uob_req_param}
+	         </if>
+		 	<if test="uob_req_url != null and uob_req_url != ''">
+	          and uob_req_url = #{uob_req_url}
+	         </if>
+		 	<if test="uob_community_id != null and uob_community_id != ''">
+	          and uob_community_id = #{uob_community_id}
+	         </if>
+		 	<if test="uob_shop_id != null and uob_shop_id != ''">
+	          and uob_shop_id = #{uob_shop_id}
+	         </if>
+		 	<if test="uob_source != null and uob_source != ''">
+	          and uob_source = #{uob_source}
+	         </if>
+		 	<if test="uob_status != null and uob_status != ''">
+	          and uob_status = #{uob_status}
+	         </if>
+		 	<if test="uob_add_time != null and uob_add_time != ''">
+	          and uob_add_time = #{uob_add_time}
+	         </if>
+	</sql>
+	
+	<insert id="insert" parameterType="com.xianghuan.auth.system.model.UserOperationBehavior" keyProperty="uob_id" >
+        INSERT INTO user_operation_behavior ( <include refid="Base_Column_List" /> )  VALUES (
+            <include refid="Base_Column_insert" /> 
+        )
+	</insert>
+	
+	<insert id="insertBatch" keyProperty="uob_id">
+		insert into user_operation_behavior  ( <include refid="Base_Column_List" /> )   values
+		<foreach collection="array" item="item" index="index" separator=",">
+		   <include refid="Base_Column_insert" /> 
+        </foreach>
+	</insert>
+
+	<update id="update" parameterType="com.xianghuan.auth.system.model.UserOperationBehavior" flushCache="true">
+        UPDATE user_operation_behavior SET
+	        uob_user_id = #{uob_user_id,jdbcType=INTEGER} ,
+	        uob_req_code = #{uob_req_code,jdbcType=VARCHAR} ,
+	        uob_req_name = #{uob_req_name,jdbcType=VARCHAR} ,
+	        uob_req_param = #{uob_req_param,jdbcType=VARCHAR} ,
+	        uob_req_url = #{uob_req_url,jdbcType=VARCHAR} ,
+	        uob_community_id = #{uob_community_id,jdbcType=INTEGER} ,
+	        uob_shop_id = #{uob_shop_id,jdbcType=INTEGER} ,
+	        uob_source = #{uob_source,jdbcType=VARCHAR} ,
+	        uob_status = #{uob_status,jdbcType=VARCHAR} ,
+	        uob_add_time = #{uob_add_time,jdbcType=VARCHAR} 
+        WHERE 
+	        uob_id = #{uob_id,jdbcType=VARCHAR} 
+	</update> 
+	
+	<update id="updateSelect" parameterType="com.xianghuan.auth.system.model.UserOperationBehavior" flushCache="true">
+        UPDATE user_operation_behavior SET
+	        	<if test=" uob_user_id!= null  and uob_user_id != ''">
+	        		uob_user_id = #{uob_user_id,jdbcType=INTEGER} ,
+	        	</if>
+	        	<if test=" uob_req_code!= null  and uob_req_code != ''">
+	        		uob_req_code = #{uob_req_code,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" uob_req_name!= null  and uob_req_name != ''">
+	        		uob_req_name = #{uob_req_name,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" uob_req_param!= null  and uob_req_param != ''">
+	        		uob_req_param = #{uob_req_param,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" uob_req_url!= null  and uob_req_url != ''">
+	        		uob_req_url = #{uob_req_url,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" uob_community_id!= null  and uob_community_id != ''">
+	        		uob_community_id = #{uob_community_id,jdbcType=INTEGER} ,
+	        	</if>
+	        	<if test=" uob_shop_id!= null  and uob_shop_id != ''">
+	        		uob_shop_id = #{uob_shop_id,jdbcType=INTEGER} ,
+	        	</if>
+	        	<if test=" uob_source!= null  and uob_source != ''">
+	        		uob_source = #{uob_source,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" uob_status!= null  and uob_status != ''">
+	        		uob_status = #{uob_status,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" uob_add_time!= null  and uob_add_time != ''">
+	        		uob_add_time = #{uob_add_time,jdbcType=VARCHAR} 
+	        	</if>
+        WHERE 
+	        uob_id = #{uob_id,jdbcType=VARCHAR} 
+	</update>   
+	
+	<update id="updateBatch" flushCache="true">
+	    <foreach collection="array" item="item" open="begin" separator="" close="end;">
+		        UPDATE user_operation_behavior SET
+			        uob_user_id = #{uob_user_id} ,
+			        uob_req_code = #{uob_req_code} ,
+			        uob_req_name = #{uob_req_name} ,
+			        uob_req_param = #{uob_req_param} ,
+			        uob_req_url = #{uob_req_url} ,
+			        uob_community_id = #{uob_community_id} ,
+			        uob_shop_id = #{uob_shop_id} ,
+			        uob_source = #{uob_source} ,
+			        uob_status = #{uob_status} ,
+			        uob_add_time = #{uob_add_time} 
+		        WHERE 
+			        uob_id = #{uob_id} 
+		</foreach>
+	</update>
+
+	<delete id="remove" parameterType="java.util.Map">
+	    update user_operation_behavior set 1=1
+	    <!-- set dr = 0  -->
+	    where uob_id= #{uob_id}
+	</delete>
+	
+	<delete id="removeBatch">
+	    update user_operation_behavior where uob_id in
+	    <foreach collection="array" item="item"  open="(" separator="," close=")">
+	        #{item}
+	    </foreach>
+	</delete>
+	
+	<delete id="delete" parameterType="string">
+	    delete from user_operation_behavior where uob_id=#uob_id
+	</delete>
+	
+	<delete id="deleteBatch">
+	    delete from user_operation_behavior where uob_id in
+	    <foreach collection="array" item="item"  open="(" separator="," close=")">
+	        #{item}
+	    </foreach>
+	</delete>
+	
+	<select id="find" resultType="com.xianghuan.auth.system.model.UserOperationBehavior" parameterType="string">
+		select
+		<include refid="Base_query_column" />
+		from user_operation_behavior where uob_id= #{uob_id}
+	</select>
+
+	<select id="queryByCondition" resultType="com.xianghuan.auth.system.model.UserOperationBehavior" parameterType="java.util.Map">
+		select <include refid="Base_query_column" /> from user_operation_behavior where 1=1
+		<include refid="Base_query_where" />
+		<if test="sqlWhere != null">
+			 #{sqlWhere}
+		</if>
+	</select>
+	
+	<select id="getRecordCount" resultType="int" parameterType="java.util.Map">
+		select count(1) from user_operation_behavior where 1 = 1
+		<include refid="Base_query_where" />
+		<if test="sqlWhere != null">
+			 #{sqlWhere}
+		</if>
+	</select>
+	
+	<select id="select" resultType="com.xianghuan.auth.system.model.UserOperationBehavior" parameterType="java.util.Map">
+		select <include refid="Base_query_column" /> from user_operation_behavior where 1=1
+		<include refid="Base_query_where" />
+		<if test="sqlWhere != null">
+			 #{sqlWhere}
+		</if>
+	</select>
+</mapper>

@@ -1,0 +1,477 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 不使用namespace的话sql搜索定位会比较方便 -->
+<mapper namespace="com.xianghuan.auth.system.dao.ISysUserDao">
+	<sql id="Base_Column_List">
+		su_id,su_loginname,su_name,su_pwd,su_sex,su_email,su_orgid,su_startdate,
+		su_enddate,su_usertype,su_createdatetime,su_modifydatetime,su_version,
+		su_errornum,su_lastlogindata,su_dr,su_ts,su_status,su_phone,su_role,
+		su_userid,su_pay_pwd,su_procice,su_city,su_district,su_wx,su_qq,su_wb,
+		su_wxid,su_token,su_address,su_isauth,su_storeid,su_communityid,su_headimgurl,su_openid
+	</sql>
+	<sql id="Base_Column_insert">
+        	#{su_id,jdbcType=VARCHAR},
+        	#{su_loginname,jdbcType=VARCHAR},
+        	#{su_name,jdbcType=VARCHAR},
+        	#{su_pwd,jdbcType=VARCHAR},
+        	#{su_sex,jdbcType=VARCHAR},
+        	#{su_email,jdbcType=VARCHAR},
+        	#{su_orgid,jdbcType=VARCHAR},
+        	#{su_startdate,jdbcType=VARCHAR},
+        	#{su_enddate,jdbcType=VARCHAR},
+        	#{su_usertype,jdbcType=VARCHAR},
+        	#{su_createdatetime,jdbcType=VARCHAR},
+        	#{su_modifydatetime,jdbcType=VARCHAR},
+        	#{su_version,jdbcType=DECIMAL},
+        	#{su_errornum,jdbcType=VARCHAR},
+        	#{su_lastlogindata,jdbcType=VARCHAR},
+        	#{su_dr,jdbcType=VARCHAR},
+        	#{su_ts,jdbcType=VARCHAR},
+        	#{su_status,jdbcType=VARCHAR},
+        	#{su_phone,jdbcType=VARCHAR},
+        	#{su_role,jdbcType=VARCHAR},
+        	#{su_userid,jdbcType=VARCHAR},
+        	#{su_pay_pwd,jdbcType=VARCHAR},
+        	#{su_procice,jdbcType=VARCHAR},
+        	#{su_city,jdbcType=VARCHAR},
+        	#{su_district,jdbcType=VARCHAR},
+        	#{su_wx,jdbcType=VARCHAR},
+        	#{su_qq,jdbcType=VARCHAR},
+        	#{su_wb,jdbcType=VARCHAR},
+        	#{su_wxid,jdbcType=VARCHAR},
+        	#{su_token,jdbcType=VARCHAR},
+        	#{su_address,jdbcType=VARCHAR},
+        	#{su_isauth,jdbcType=VARCHAR},
+        	#{su_storeid,jdbcType=VARCHAR},
+        	#{su_communityid,jdbcType=VARCHAR},
+        	#{su_headimgurl,jdbcType=VARCHAR},
+        	#{su_openid,jdbcType=VARCHAR}
+	</sql>
+	<sql id="Base_query_column">
+		su_id,su_loginname,su_name,su_pwd,su_sex,su_email,su_orgid,su_startdate,
+		su_enddate,su_usertype,su_createdatetime,su_modifydatetime,su_version,su_errornum,
+		su_lastlogindata,su_dr,su_ts,su_status,su_phone,su_role,su_userid,su_pay_pwd,su_procice,
+		su_city,su_district,su_wx,su_qq,su_wb,su_wxid,su_token,su_address,su_isauth,su_storeid,
+		su_communityid,su_headimgurl,su_openid
+	</sql>
+	<sql id="Base_query_where">
+			and su_dr = 1
+			<if test="su_loginname_query != null and su_loginname_query != ''">
+	          	and su_loginname  like CONCAT('%',#{su_loginname_query},'%') 
+	        </if>
+	        <if test="su_name_query != null and su_name_query != ''">
+	          	and su_name like CONCAT('%',#{su_name_query},'%') 
+	        </if>
+		 	<if test="su_loginname != null and su_loginname != ''">
+	          and su_loginname = #{su_loginname}
+	         </if>
+		 	<if test="su_name != null and su_name != ''">
+	          and su_name = #{su_name}
+	         </if>
+		 	<if test="su_pwd != null and su_pwd != ''">
+	          and su_pwd = #{su_pwd}
+	         </if>
+		 	<if test="su_sex != null and su_sex != ''">
+	          and su_sex = #{su_sex}
+	         </if>
+		 	<if test="su_email != null and su_email != ''">
+	          and su_email = #{su_email}
+	         </if>
+		 	<if test="su_orgid != null and su_orgid != ''">
+	          and su_orgid = #{su_orgid}
+	         </if>
+		 	<if test="su_startdate != null and su_startdate != ''">
+	          and su_startdate = #{su_startdate}
+	         </if>
+		 	<if test="su_enddate != null and su_enddate != ''">
+	          and su_enddate = #{su_enddate}
+	         </if>
+		 	<if test="su_usertype != null and su_usertype != ''">
+	          and su_usertype = #{su_usertype}
+	         </if>
+		 	<if test="su_createdatetime != null and su_createdatetime != ''">
+	          and su_createdatetime = #{su_createdatetime}
+	         </if>
+		 	<if test="su_modifydatetime != null and su_modifydatetime != ''">
+	          and su_modifydatetime = #{su_modifydatetime}
+	         </if>
+		 	<if test="su_version != null and su_version != ''">
+	          and su_version = #{su_version}
+	         </if>
+		 	<if test="su_errornum != null and su_errornum != ''">
+	          and su_errornum = #{su_errornum}
+	         </if>
+		 	<if test="su_lastlogindata != null and su_lastlogindata != ''">
+	          and su_lastlogindata = #{su_lastlogindata}
+	         </if>
+		 	<if test="su_dr != null and su_dr != ''">
+	          and su_dr = #{su_dr}
+	         </if>
+		 	<if test="su_ts != null and su_ts != ''">
+	          and su_ts = #{su_ts}
+	         </if>
+		 	<if test="su_status != null and su_status != ''">
+	          and su_status = #{su_status}
+	         </if>
+		 	<if test="su_phone != null and su_phone != ''">
+	          and su_phone = #{su_phone}
+	         </if>
+		 	<if test="su_role != null and su_role != ''">
+	          and su_role = #{su_role}
+	         </if>
+		 	<if test="su_userid != null and su_userid != ''">
+	          and su_userid = #{su_userid}
+	         </if>
+		 	<if test="su_pay_pwd != null and su_pay_pwd != ''">
+	          and su_pay_pwd = #{su_pay_pwd}
+	         </if>
+		 	<if test="su_procice != null and su_procice != ''">
+	          and su_procice = #{su_procice}
+	         </if>
+		 	<if test="su_city != null and su_city != ''">
+	          and su_city = #{su_city}
+	         </if>
+		 	<if test="su_district != null and su_district != ''">
+	          and su_district = #{su_district}
+	         </if>
+		 	<if test="su_wx != null and su_wx != ''">
+	          and su_wx = #{su_wx}
+	         </if>
+		 	<if test="su_qq != null and su_qq != ''">
+	          and su_qq = #{su_qq}
+	         </if>
+		 	<if test="su_wb != null and su_wb != ''">
+	          and su_wb = #{su_wb}
+	         </if>
+		 	<if test="su_wxid != null and su_wxid != ''">
+	          and su_wxid = #{su_wxid}
+	         </if>
+		 	<if test="su_token != null and su_token != ''">
+	          and su_token = #{su_token}
+	         </if>
+		 	<if test="su_address != null and su_address != ''">
+	          and su_address = #{su_address}
+	         </if>
+	         <if test="su_storeid != null and su_storeid != ''">
+	         	 and su_storeid = #{su_storeid}
+	         </if>
+	         <if test="su_communityid != null and su_communityid != ''">
+	         	 and su_communityid = #{su_communityid}
+	         </if>
+	         <if test="corpandcommunity != null and corpandcommunity != ''">
+	         	 and su_usertype in ('03','04')
+	         </if>
+	          <if test="su_headimgurl != null and su_headimgurl != ''">
+	         	 and su_headimgurl = #{su_headimgurl}
+	         </if>
+	          <if test="su_openid != null and su_openid != ''">
+	         	 and su_openid = #{su_openid}
+	         </if>
+	</sql>
+	
+	<insert id="insert" parameterType="com.xianghuan.auth.system.model.SysUser" keyProperty="su_id" >
+        INSERT INTO sys_user ( <include refid="Base_Column_List" /> )  VALUES (
+            <include refid="Base_Column_insert" /> 
+        )
+	</insert>
+	
+	<insert id="insertBatch" keyProperty="su_id">
+		insert into sys_user  ( <include refid="Base_Column_List" /> )   values
+		<foreach collection="array" item="item" index="index" separator=",">
+		   <include refid="Base_Column_insert" /> 
+        </foreach>
+	</insert>
+
+	<update id="update" parameterType="com.xianghuan.auth.system.model.SysUser" flushCache="true">
+        UPDATE sys_user SET
+	        su_loginname = #{su_loginname,jdbcType=VARCHAR} ,
+	        su_name = #{su_name,jdbcType=VARCHAR} ,
+	        su_pwd = #{su_pwd,jdbcType=VARCHAR} ,
+	        su_sex = #{su_sex,jdbcType=VARCHAR} ,
+	        su_email = #{su_email,jdbcType=VARCHAR} ,
+	        su_orgid = #{su_orgid,jdbcType=VARCHAR} ,
+	        su_startdate = #{su_startdate,jdbcType=VARCHAR} ,
+	        su_enddate = #{su_enddate,jdbcType=VARCHAR} ,
+	        su_usertype = #{su_usertype,jdbcType=VARCHAR} ,
+	        su_createdatetime = #{su_createdatetime,jdbcType=VARCHAR} ,
+	        su_modifydatetime = #{su_modifydatetime,jdbcType=VARCHAR} ,
+	        su_version = #{su_version,jdbcType=DECIMAL} ,
+	        su_errornum = #{su_errornum,jdbcType=VARCHAR} ,
+	        su_lastlogindata = #{su_lastlogindata,jdbcType=VARCHAR} ,
+	        su_dr = #{su_dr,jdbcType=VARCHAR} ,
+	        su_ts = #{su_ts,jdbcType=VARCHAR} ,
+	        su_status = #{su_status,jdbcType=VARCHAR} ,
+	        su_phone = #{su_phone,jdbcType=VARCHAR} ,
+	        su_role = #{su_role,jdbcType=VARCHAR} ,
+	        su_userid = #{su_userid,jdbcType=VARCHAR} ,
+	        su_pay_pwd = #{su_pay_pwd,jdbcType=VARCHAR} ,
+	        su_procice = #{su_procice,jdbcType=VARCHAR} ,
+	        su_city = #{su_city,jdbcType=VARCHAR} ,
+	        su_district = #{su_district,jdbcType=VARCHAR} ,
+	        su_wx = #{su_wx,jdbcType=VARCHAR} ,
+	        su_qq = #{su_qq,jdbcType=VARCHAR} ,
+	        su_wb = #{su_wb,jdbcType=VARCHAR} ,
+	        su_wxid = #{su_wxid,jdbcType=VARCHAR} ,
+	        su_token = #{su_token,jdbcType=VARCHAR} ,
+	        su_address = #{su_address,jdbcType=VARCHAR},
+	        su_isauth = #{su_isauth,jdbcType=VARCHAR},
+	        su_storeid = #{su_storeid,jdbcType=VARCHAR},
+	        su_communityid = #{su_communityid,jdbcType=VARCHAR},
+	        su_headimgurl = #{su_headimgurl,jdbcType=VARCHAR},
+	        su_openid = #{su_openid,jdbcType=VARCHAR}
+	        
+	        
+        WHERE 
+	        su_id = #{su_id,jdbcType=VARCHAR} 
+	</update> 
+	
+	<update id="updateSelect" parameterType="com.xianghuan.auth.system.model.SysUser" flushCache="true">
+        UPDATE sys_user SET
+	        	<if test=" su_loginname!= null  and su_loginname != ''">
+	        		su_loginname = #{su_loginname,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" su_name!= null  and su_name != ''">
+	        		su_name = #{su_name,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" su_pwd!= null  and su_pwd != ''">
+	        		su_pwd = #{su_pwd,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" su_sex!= null  and su_sex != ''">
+	        		su_sex = #{su_sex,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" su_email!= null  and su_email != ''">
+	        		su_email = #{su_email,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" su_orgid!= null  and su_orgid != ''">
+	        		su_orgid = #{su_orgid,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" su_startdate!= null  and su_startdate != ''">
+	        		su_startdate = #{su_startdate,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" su_enddate!= null  and su_enddate != ''">
+	        		su_enddate = #{su_enddate,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" su_usertype!= null  and su_usertype != ''">
+	        		su_usertype = #{su_usertype,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" su_createdatetime!= null  and su_createdatetime != ''">
+	        		su_createdatetime = #{su_createdatetime,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" su_modifydatetime!= null  and su_modifydatetime != ''">
+	        		su_modifydatetime = #{su_modifydatetime,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" su_version!= null  and su_version != ''">
+	        		su_version = #{su_version,jdbcType=DECIMAL} ,
+	        	</if>
+	        	<if test=" su_errornum!= null  and su_errornum != ''">
+	        		su_errornum = #{su_errornum,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" su_lastlogindata!= null  and su_lastlogindata != ''">
+	        		su_lastlogindata = #{su_lastlogindata,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" su_dr!= null  and su_dr != ''">
+	        		su_dr = #{su_dr,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" su_ts!= null  and su_ts != ''">
+	        		su_ts = #{su_ts,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" su_status!= null  and su_status != ''">
+	        		su_status = #{su_status,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" su_phone!= null  and su_phone != ''">
+	        		su_phone = #{su_phone,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" su_role!= null  and su_role != ''">
+	        		su_role = #{su_role,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" su_userid!= null  and su_userid != ''">
+	        		su_userid = #{su_userid,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" su_pay_pwd!= null  and su_pay_pwd != ''">
+	        		su_pay_pwd = #{su_pay_pwd,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" su_procice!= null  and su_procice != ''">
+	        		su_procice = #{su_procice,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" su_city!= null  and su_city != ''">
+	        		su_city = #{su_city,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" su_district!= null  and su_district != ''">
+	        		su_district = #{su_district,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" su_wx!= null  and su_wx != ''">
+	        		su_wx = #{su_wx,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" su_qq!= null  and su_qq != ''">
+	        		su_qq = #{su_qq,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" su_wb!= null  and su_wb != ''">
+	        		su_wb = #{su_wb,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" su_wxid!= null  and su_wxid != ''">
+	        		su_wxid = #{su_wxid,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" su_token!= null  and su_token != ''">
+	        		su_token = #{su_token,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" su_address!= null  and su_address != ''">
+	        		su_address = #{su_address,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test=" su_communityid != null  and su_communityid != ''">
+	        		su_communityid = #{su_communityid,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test="su_storeid != null  and su_storeid != ''">
+	        		su_storeid = #{su_storeid,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test="su_headimgurl != null  and su_headimgurl != ''">
+	        		su_headimgurl = #{su_headimgurl,jdbcType=VARCHAR} ,
+	        	</if>
+	        	<if test="su_openid != null  and su_openid != ''">
+	        		su_openid = #{su_openid,jdbcType=VARCHAR} 
+	        	</if>
+        WHERE 
+	        su_id = #{su_id,jdbcType=VARCHAR} 
+	</update>   
+	
+	<update id="updateBatch" flushCache="true">
+	    <foreach collection="array" item="item" open="begin" separator="" close="end;">
+		        UPDATE sys_user SET
+			        su_loginname = #{su_loginname} ,
+			        su_name = #{su_name} ,
+			        su_pwd = #{su_pwd} ,
+			        su_sex = #{su_sex} ,
+			        su_email = #{su_email} ,
+			        su_orgid = #{su_orgid} ,
+			        su_startdate = #{su_startdate} ,
+			        su_enddate = #{su_enddate} ,
+			        su_usertype = #{su_usertype} ,
+			        su_createdatetime = #{su_createdatetime} ,
+			        su_modifydatetime = #{su_modifydatetime} ,
+			        su_version = #{su_version} ,
+			        su_errornum = #{su_errornum} ,
+			        su_lastlogindata = #{su_lastlogindata} ,
+			        su_dr = #{su_dr} ,
+			        su_ts = #{su_ts} ,
+			        su_status = #{su_status} ,
+			        su_phone = #{su_phone} ,
+			        su_role = #{su_role} ,
+			        su_userid = #{su_userid} ,
+			        su_pay_pwd = #{su_pay_pwd} ,
+			        su_procice = #{su_procice} ,
+			        su_city = #{su_city} ,
+			        su_district = #{su_district} ,
+			        su_wx = #{su_wx} ,
+			        su_qq = #{su_qq} ,
+			        su_wb = #{su_wb} ,
+			        su_wxid = #{su_wxid} ,
+			        su_token = #{su_token} ,
+			        su_address = #{su_address}		         
+		        WHERE 
+			        su_id = #{su_id} 
+		</foreach>
+	</update>
+
+	<delete id="remove" parameterType="java.util.Map">
+	    update sys_user set su_dr=2
+	    <!-- set dr = 0  -->
+	    where su_id=#{su_id}
+	</delete>
+	
+	<delete id="removeBatch">
+	    update sys_user where su_id in
+	    <foreach collection="array" item="item"  open="(" separator="," close=")">
+	        #{item}
+	    </foreach>
+	</delete>
+	
+	<delete id="delete" parameterType="string">
+	  update sys_user set su_dr=2
+	    <!-- set dr = 0  -->
+	    where su_id=#{su_id}
+	</delete>
+	
+	<delete id="deleteBatch">
+	  <!--   delete from sys_user where su_id in
+	    <foreach collection="array" item="item"  open="(" separator="," close=")">
+	        #{item}
+	    </foreach> -->
+	</delete>
+	
+	<select id="find" resultType="com.xianghuan.auth.system.model.SysUser" parameterType="string">
+		select
+		<include refid="Base_query_column" />
+		from sys_user where su_id= #{su_id}
+	</select>
+
+	<select id="queryByCondition" resultType="com.xianghuan.auth.system.model.SysUser" parameterType="java.util.Map">
+		select <include refid="Base_query_column" /> from sys_user where 1=1
+		<include refid="Base_query_where" />
+		<if test="sqlWhere != null">
+			 #{sqlWhere}
+		</if>
+	</select>
+	
+	<select id="getRecordCount" resultType="int" parameterType="java.util.Map">
+		select count(1) from sys_user where 1 = 1
+		<include refid="Base_query_where" />
+		<if test="sqlWhere != null">
+			 #{sqlWhere}
+		</if>
+	</select>
+	
+	<select id="select" resultType="com.xianghuan.auth.system.model.SysUser" parameterType="java.util.Map">
+		select <include refid="Base_query_column" /> from sys_user where 1=1
+		<include refid="Base_query_where" />
+		<if test="sqlWhere != null">
+			 #{sqlWhere}
+		</if>
+	</select>
+	
+	<!-- 批量添加数据 -->
+	<insert id="insertBatch_list">
+		insert into sys_user  ( <include refid="Base_Column_List" /> ) 
+		<foreach collection="list" item="item" index="index" separator="union all" >
+		 	select 		
+				#{item.su_id,jdbcType=VARCHAR},
+	        	#{item.su_loginname,jdbcType=VARCHAR},
+	        	#{item.su_name,jdbcType=VARCHAR},
+	        	#{item.su_pwd,jdbcType=VARCHAR},
+	        	#{item.su_sex,jdbcType=VARCHAR},
+	        	#{item.su_email,jdbcType=VARCHAR},
+	        	#{item.su_orgid,jdbcType=VARCHAR},
+	        	#{item.su_startdate,jdbcType=VARCHAR},
+	        	#{item.su_enddate,jdbcType=VARCHAR},
+	        	#{item.su_usertype,jdbcType=VARCHAR},
+	        	#{item.su_createdatetime,jdbcType=VARCHAR},
+	        	#{item.su_modifydatetime,jdbcType=VARCHAR},
+	        	#{item.su_version,jdbcType=DECIMAL},
+	        	#{item.su_errornum,jdbcType=VARCHAR},
+	        	#{item.su_lastlogindata,jdbcType=VARCHAR},
+	        	#{item.su_dr,jdbcType=VARCHAR},
+	        	#{item.su_ts,jdbcType=VARCHAR},
+	        	#{item.su_status,jdbcType=VARCHAR},
+	        	#{item.su_phone,jdbcType=VARCHAR},
+	        	#{item.su_role,jdbcType=VARCHAR},
+	        	#{item.su_userid,jdbcType=VARCHAR},
+	        	#{item.su_pay_pwd,jdbcType=VARCHAR},
+	        	#{item.su_procice,jdbcType=VARCHAR},
+	        	#{item.su_city,jdbcType=VARCHAR},
+	        	#{item.su_district,jdbcType=VARCHAR},
+	        	#{item.su_wx,jdbcType=VARCHAR},
+	        	#{item.su_qq,jdbcType=VARCHAR},
+	        	#{item.su_wb,jdbcType=VARCHAR},
+	        	#{item.su_wxid,jdbcType=VARCHAR},
+	        	#{item.su_token,jdbcType=VARCHAR},
+	        	#{item.su_address,jdbcType=VARCHAR},
+	        	#{item.su_isauth,jdbcType=VARCHAR},
+	        	#{item.su_storeid,jdbcType=VARCHAR},
+	        	#{item.su_communityid,jdbcType=VARCHAR},
+	        	#{item.su_headimgurl,jdbcType=VARCHAR},
+	        	#{item.su_openid,jdbcType=VARCHAR}
+		 	from dual		 	
+        </foreach>
+	</insert>
+</mapper>

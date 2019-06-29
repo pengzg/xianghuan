@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 不使用namespace的话sql搜索定位会比较方便 -->
+<mapper namespace="com.xianghuan.auth.system.dao.ISysRoleMenuDao">
+	<sql id="Base_Column_List">
+		srm_id,srm_roleid,srm_menuid
+	</sql>
+	<sql id="Base_Column_insert">
+        	#{srm_id,jdbcType=VARCHAR},
+        	#{srm_roleid,jdbcType=VARCHAR},
+        	#{srm_menuid,jdbcType=VARCHAR}
+	</sql>
+
+	<insert id="insert" parameterType="com.xianghuan.auth.system.model.SysRoleMenu" keyProperty="srm_id" >
+        INSERT INTO sys_role_menu ( <include refid="Base_Column_List" /> )  VALUES (
+            <include refid="Base_Column_insert" /> 
+        )
+	</insert>
+	
+	<insert id="insertBatch" parameterType="java.util.List">
+		insert into sys_role_menu  ( <include refid="Base_Column_List" /> ) 
+		<foreach collection="list" item="item" index="index" separator="union all" >
+			select 
+		   		#{item.srm_id,jdbcType=VARCHAR}, 
+        		#{item.srm_roleid,jdbcType=VARCHAR}, 
+        		#{item.srm_menuid,jdbcType=VARCHAR} 
+        	from dual
+        </foreach>
+	</insert>
+
+	<update id="update" parameterType="com.xianghuan.auth.system.model.SysRoleMenu" flushCache="true">
+        UPDATE sys_role_menu SET
+	        srm_roleid = #{srm_roleid,jdbcType=VARCHAR} ,
+	        srm_menuid = #{srm_menuid,jdbcType=VARCHAR} 
+        WHERE 
+	        srm_id = #{srm_id,jdbcType=VARCHAR} 
+	</update>  
+	
+	<update id="updateBatch" flushCache="true">
+	    <foreach collection="array" item="item" open="begin" separator="" close="end;">
+		        UPDATE sys_role_menu SET
+			        srm_roleid = #{srm_roleid} ,
+			        srm_menuid = #{srm_menuid} 
+		        WHERE 
+			        srm_id = #{srm_id} 
+		</foreach>
+	</update>
+
+	<delete id="delete" parameterType="string">
+	    delete from sys_role_menu where srm_roleid= #{srm_roleid}
+	</delete>
+	
+<!-- 	<delete id="deleteMenuId" parameterType="string"> -->
+<!-- 	    delete from sys_role_menu where srm_menuid= #{srm_menuid} -->
+<!-- 	</delete> -->
+	
+	<delete id="deleteBatch">
+	    delete from sys_role_menu where srm_id in
+	    <foreach collection="array" item="item"  open="(" separator="," close=")">
+	       #item#
+	    </foreach>
+	</delete>
+	
+	<select id="find" resultType="com.xianghuan.auth.system.model.SysRoleMenu" parameterType="string">
+		select
+		<include refid="Base_Column_List" />
+		from sys_role_menu where srm_id=#{srm_id}
+	</select>
+
+	<select id="queryByCondition" resultType="com.xianghuan.auth.system.model.SysRoleMenu">
+		select 
+			<include refid="Base_Column_List" /> 
+		from 
+			sys_role_menu where 1=1
+		<if test="srm_roleid != null and srm_roleid != ''"> 
+			and srm_roleid = #{srm_roleid}
+		</if>
+	</select>
+	
+	<select id="getRecordCount" resultType="int">
+		select count(1) from sys_role_menu where 1 = 1
+		<if test="sqlWhere != null">
+			#sqlWhere#
+		</if>
+	</select>
+	
+	<sql id="Base_Column_List_menu">
+		sm_id,sm_name,sm_url,sm_pid,sm_iconcls,sm_description,sm_typeid,sm_seq,sm_target,sm_systemid,sm_status,sm_ts,sm_dr,sm_version,sm_adduser,sm_adddate,sm_modifyuser,sm_modifydate,sm_deleteuser,sm_deletedate
+	</sql>
+	
+	<select id="select" resultType="com.xianghuan.auth.system.model.SysMenu" parameterType="java.util.Map">
+		select 
+			<include refid="Base_Column_List_menu" /> 
+		 from 
+		 	sys_menu sm where sm_dr=1 and exists( select 1 from sys_role_menu srm
+		 where srm.srm_menuid = sm.sm_id
+		 <if test="srm_roleid != null and srm_roleid != ''"> 
+			and srm.srm_roleid = #{srm_roleid}
+		 </if>)
+	</select>
+</mapper>
